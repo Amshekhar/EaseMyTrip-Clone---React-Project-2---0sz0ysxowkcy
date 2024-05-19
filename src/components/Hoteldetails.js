@@ -8,12 +8,18 @@ import { FaRegEye } from "react-icons/fa";
 import LazyLoad from 'react-lazyload';
 import { FaRegCheckCircle } from "react-icons/fa";
 import { GrFormPreviousLink } from "react-icons/gr";
+import { TiTick } from "react-icons/ti";
+import { useNavigate } from 'react-router-dom';
+
 
 function Hoteldetails({ hotelList }) {
     const [hotelData, setHotelData] = useState({}); // State to store hotel information
     const token = sessionStorage.getItem(token)
     const [htlList, setHtlList] = useState(true);
     const [hotelInfo, setHoteInfo] = useState(false);
+    const navigate = useNavigate();
+
+
     const backButton = () => {
         setHoteInfo(false);
         setHtlList(true);
@@ -115,12 +121,12 @@ function Hoteldetails({ hotelList }) {
                     <div className='flex'>
                         {hotelData && hotelData?.images && hotelData?.images?.length > 0 && (<div className='flex gap-2 w-2/3'>
 
-                            <img src={hotelData.images[0]} className='h-[305px] w-3/4' alt='Hotel' />
+                            <img src={hotelData.images[0]} className='object-cover h-[305px] w-3/4' alt='Hotel' />
 
                             <div className='flex flex-col justify-between'>
-                                <img src={hotelData.images[1]} className='h-24 w-40' alt='Hotel' />
-                                <img src={hotelData.images[2]} className='h-24 w-40' alt='Hotel' />
-                                <img src={hotelData.images[3]} className='h-24 w-40' alt='Hotel' />
+                                <img src={hotelData.images[1]} className='object-cover h-24 w-40' alt='Hotel' />
+                                <img src={hotelData.images[2]} className='object-cover h-24 w-40' alt='Hotel' />
+                                <img src={hotelData.images[3]} className='object-cover h-24 w-40' alt='Hotel' />
                             </div>
                         </div>)}
 
@@ -133,7 +139,7 @@ function Hoteldetails({ hotelList }) {
                                 <div className='text-end'>
                                     <p className='text-red-500 font-semibold line-through'>₹{Math.round((hotelData.avgCostPerNight * 1.2))}</p>
                                     <p className='text-2xl font-bold my-1'>₹ {Math.round(hotelData.avgCostPerNight)}</p>
-                                    <p className='text-[13px] font-semibold text-gray-500'>₹ {Math.round(hotelData.avgCostPerNight * 0.3)} Taxes & fees</p>
+                                    <p className='text-[13px] font-semibold text-gray-500'>₹ {Math.round(hotelData.avgCostPerNight * 0.2)} Taxes & fees</p>
                                     <p className='text-gray-500 text-[13px]'>base price(Per Night)</p>
                                 </div>
                             </div>
@@ -159,22 +165,53 @@ function Hoteldetails({ hotelList }) {
                     <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Booking Policy</button>
                     <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Guest Raiting</button>
                 </div>
-                <div className='w-10/12 mx-auto bg-white rounded'>
+                <div className='w-10/12 mx-auto border border-orange-200 bg-white rounded'>
                     <div className='bg-orange-100  p-3 rounded-t flex '>
                         <div className='text-sm font-semibold w-1/4'>Room Type</div>
                         <div className='text-sm font-semibold w-1/2'>Benefits</div>
                         <div className='text-sm font-semibold w-1/4'>Per Night Price</div>
-                  .
                     </div>
                     {hotelData && hotelData?.rooms && hotelData?.rooms?.length > 0 && hotelData?.rooms.map((room, index) => {
-                        return <div key={index} className='p-3'>
-                                    <div className='w-1/4'>
-                                        <p className=''>{room.roomType}</p>
-                                    </div>
-                                    <div className=''>
-
-                                    </div>
+                        return <div key={index} className=' border-orange-200 border-b justify-between flex items-start'>
+                            <div className='w-1/5 p-3 border-orange-200 border-r'>
+                                <div className='w-1/4'>
+                                    <p className='font-bold'>{room.roomType}</p>
                                 </div>
+                                <div>
+                                    <img className='object-cover w-56 h-40 rounded' src='http://media.easemytrip.com/media/Hotel/SHL-1902876561368/Common/CommonTnleMt.jpg'/>
+                                </div>
+                                <div className='mt-2 flex gap-2'>
+                                    <p className='p-1 rounded bg-sky-100 text-xs'>{room.bedDetail}</p>
+                                    <p className='p-1 rounded bg-sky-100 text-xs'>{room.roomSize} sq.ft Sq Ft.</p>
+                                </div>
+                            </div>
+                            <div className='w-1/4 p-3 border-orange-200 border-r'>
+                                <div className='border-l-4 pl-2 mb-2 text-sm border-yellow-200 rounded text-blue-400 font-semibold'>Room With Breakfast</div>
+                                <ul>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Breakfast</li>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Parking</li>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Express check-in</li>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Free WiFi</li>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Free fitness center access</li>
+                                    <li className='text-sm '><FaRegCheckCircle className='inline text-white mr-1 bg-green-500 rounded-full ' />Booking is Non Refundable</li>
+                                </ul>
+                            </div>
+                            <div className='w-1/4 p-3 order-orange-200 border-r'>
+                                <div className='flex relative flex-col items-end'>
+                                    <p className='py-1 px-2 bg-green-200 w-48 text-xs'>Book Now and Get Rs. {Math.round(room.costPerNight * 1.2-(room.costPerNight))} Off</p>
+                                    <div className='w-2 h-2 absolute top-5 right-4 bg-green-200 rotate-45'></div>
+                                    <p className='text-red-500 mt-2 font-semibold line-through'>₹{Math.round((room.costPerNight * 1.2))}</p>
+                                    <p className='text-2xl font-bold my-1'>₹ {Math.round(room.costPerNight)}</p>
+                                    <p className='text-[13px] font-semibold text-gray-500'>₹ {Math.round(room.costDetails.taxesAndFees)} Taxes & fees</p>
+                                    <p className='text-gray-400 font-bold text-[12px]'>(Per Night)</p>
+                                    <p className='text-gray-500 text-[12px]'>Booking is Non Refundable</p>
+                                </div>
+                            </div>
+                            <div className='w-1/4 py-3 pr-8 flex flex-col items-end'>
+                            <button onClick={()=> navigate('bookhotel')} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                            <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
+                            </div>
+                        </div>
                     })
 
                     }

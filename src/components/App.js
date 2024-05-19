@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import Offers from "./Offers";
 import Hotels from "./Hotels";
 import Hoteldetails from "./Hoteldetails";
+import Bookhotel from "./Bookhotel";
 
 function App() {
   const [flightData, setFlightData] = useState([]);
@@ -37,7 +38,8 @@ function App() {
         <Route path="/railways" element={<Train />} />
         <Route path="/hotels" element={<Hotels setHotelList={setHotelList} />} />
         <Route path="/hoteldetails" element={<Hoteldetails hotelList={hotelList} />} />
-
+        <Route path="/bookhotel" element={<Bookhotel />} />
+        
       </Routes>
       <Footer />
     </Router>
