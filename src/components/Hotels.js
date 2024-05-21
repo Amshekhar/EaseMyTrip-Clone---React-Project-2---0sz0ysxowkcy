@@ -44,10 +44,11 @@ import beachicn from '../Assets/beach-icn.svg';
 import { FaStar } from "react-icons/fa6";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { FaUser } from "react-icons/fa";
+import { FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 
-
-
-function Hotels({setHotelList}) {
+function Hotels({ setHotelList }) {
 
     const [cityList, setCityList] = useState([]);
     const [showCityList, setshowCityList] = useState(false);
@@ -61,6 +62,47 @@ function Hotels({setHotelList}) {
     const [showCalendarIn, setShowCalendarIn] = useState(false);
     const [showCalendarOut, setShowCalendarOut] = useState(false);
     const navigate = useNavigate()
+    const [roomCount, setRoomCount] = useState(1);
+    const [rooms, setRooms] = useState([{ adults: 1, children: 0 }]);
+    const [addRoom, setAddRoom] = useState(false);
+    const [guestAndRoom, setGuestAndRoom] = useState(false);
+
+    const totalGuests = rooms.reduce((total, room) => total + room.adults + room.children, 0);
+
+    const handleAdultPlus = (index) => {
+        const newRooms = rooms.map((room, i) => i === index ? { ...room, adults: room.adults + 1 } : room);
+        setRooms(newRooms);
+    };
+
+    const handleChildPlus = (index) => {
+        const newRooms = rooms.map((room, i) => i === index ? { ...room, children: room.children + 1 } : room);
+        setRooms(newRooms);
+    };
+
+    const handleAdultMinus = (index) => {
+        const newRooms = rooms.map((room, i) => i === index && room.adults > 1 ? { ...room, adults: room.adults - 1 } : room);
+        setRooms(newRooms);
+    };
+
+    const handleChildMinus = (index) => {
+        const newRooms = rooms.map((room, i) => i === index && room.children > 0 ? { ...room, children: room.children - 1 } : room);
+        setRooms(newRooms);
+    };
+
+    const addNewRoom = () => {
+        setRooms([...rooms, { adults: 1, children: 0 }]);
+        setRoomCount(roomCount + 1);
+        setAddRoom(false);
+    };
+
+    const removeRoom = (index) => {
+        if (rooms.length > 1) {
+            const newRooms = rooms.filter((_, i) => i !== index);
+            setRooms(newRooms);
+            setRoomCount(roomCount - 1);
+        }
+    };
+
 
     const handleCheckInDateSelect = (date) => {
         setSelectedCheckInDate(date);
@@ -105,7 +147,7 @@ function Hotels({setHotelList}) {
         setShowCalendarIn(true)
     }
 
-    
+
 
     const handleSearch = async () => {
         try {
@@ -130,8 +172,8 @@ function Hotels({setHotelList}) {
                 }
             );
 
-            console.log('Hotels search response:', response.data.data.hotels.slice(0,1));
-            setHotelList(response.data.data.hotels.slice(0,1))
+            console.log('Hotels search response:', response.data.data.hotels.slice(0, 1));
+            setHotelList(response.data.data.hotels.slice(0, 1))
             navigate('/hoteldetails')
             // setFlightData(response.data.data);
             // setSource(airportFrom)
@@ -205,17 +247,20 @@ function Hotels({setHotelList}) {
                                     </div>
                                 </div>
                             </div>
-                            <div  className='flex'>
-                                
+                            <div className='flex'>
+                                <div onClick={()=>setGuestAndRoom(true)} className='py-2 cursor-pointer'>
+                                    <p className='text-gray-500 text-sm'>Rooms & Guests</p>
+                                    <div className='text-xs'><span className='font-bold text-2xl'>{roomCount}</span>Rooms,<span className='font-bold text-2xl'>{totalGuests}</span>Guests</div>
+                                </div>
 
 
-                                <div className=' py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                                {/* <div className=' py-2 hover:bg-sky-100 cursor-pointer pl-3'>
                                     <p className='text-gray-500 text-xs'>Price per Night</p>
                                     <div className='flex font-bold items-center'>
                                         <span className='text-2xl'>1</span><p className='text-sm'>Traveller(s)<FaChevronDown className='inline ml-2' /></p>
                                     </div>
                                     <p className='text-gray-500 text-xs'>FIRST</p>
-                                </div>
+                                </div> */}
                             </div>
 
                         </div>
@@ -510,6 +555,51 @@ function Hotels({setHotelList}) {
                     </div>
                 </div>
             </div>)}
+            {guestAndRoom && <div className='absolute w-72 bg-white top-64 right-96 p-2 rounded shadow'>
+                <div className='max-h-72 overflow-y-scroll'>
+                    {rooms.map((room, index) => (
+                        <div key={index} className={index > 0 ? 'mt-2 border-t pt-2' : ''}>
+                            <div className='flex justify-between items-center'>
+                                <p className='font-bold text-sm'>Room {index + 1}:</p>
+                                {rooms.length > 1 && (
+                                    <button onClick={() => removeRoom(index)} className='text-red-500 hover:text-red-700'>
+                                        <FaTrash />
+                                    </button>
+                                )}
+                            </div>
+                            <div className='flex justify-between'>
+                                <div>
+                                    <p className='text-sm'>Adult</p>
+                                    <p className='text-xs text-gray-500'>(Above 12 Year)</p>
+                                </div>
+                                <div className='font-bold border flex mb-1 items-center'>
+                                    <div onClick={() => handleAdultMinus(index)} className='px-2 border-r'><FaMinus /></div>
+                                    <p className='px-2'>{room.adults}</p>
+                                    <div onClick={() => handleAdultPlus(index)} className='px-2 border-l'><FaPlus /></div>
+                                </div>
+                            </div>
+                            <div className='flex mt-2 justify-between'>
+                                <div>
+                                    <p className='text-sm'>Child</p>
+                                    <p className='text-xs text-gray-500'>(Below 12 Year)</p>
+                                </div>
+                                <div className='font-bold border flex mb-1 items-center'>
+                                    <div onClick={() => handleChildMinus(index)} className='px-2 border-r'><FaMinus /></div>
+                                    <p className='px-2'>{room.children}</p>
+                                    <div onClick={() => handleChildPlus(index)} className='px-2 border-l'><FaPlus /></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
+                </div>
+
+                <div className='flex text-sm justify-between mt-4'>
+                    <button onClick={addNewRoom} className='rounded-full px-2 py-1 border hover:text-white hover:bg-green-600 border-green-600 text-green-600'>Add Room</button>
+                    <button onClick={()=>setGuestAndRoom(false)} className='rounded-full text-white py-1 hover:bg-orange-700 bg-orange-600 px-5'>Done</button>
+                </div>
+            </div>}
+
 
         </div>
     )

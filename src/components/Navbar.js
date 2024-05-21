@@ -36,6 +36,7 @@ const NavBar = () => {
   const { getToken, getName, onTokenHandler, onNameHandler } = useUser();
   const [showOptions, setShowOptions] = useState(false);
   const [showOffers, setShowOffers] = useState(false);
+  const [activeButton, setActiveButton] = useState(null);
   const navigate = useNavigate();
 
   const logoutHandler = () => {
@@ -49,7 +50,10 @@ const NavBar = () => {
     navigate('/')
   };
 
-  
+  const handleButtonClick = (buttonName, navigateTo) => {
+    setActiveButton(buttonName);
+    if (navigateTo) navigate(navigateTo);
+  };
 
   return (
     <div className='nav-bar'>
@@ -107,42 +111,73 @@ const NavBar = () => {
       </div>
       <div>
         <div className='w-9/12 mx-auto flex gap-1 my-1 text-sm'>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer bg-sky-100'>
-            <img src={Airplane} className='w-9' /><p className='mt-1'>Flights</p>
-          </div>
-          <div onClick={()=>navigate('hotels')} className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={hotel} className='w-8 h-8' /><p className='mt-1'>Hotels</p>
-          </div>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={flighthotel} className='w-8' /><p className='mt-1'>Flight + Hotels</p>
-          </div>
-          <div onClick={()=>navigate("railways")} className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={train} className='w-9' /><p className='mt-1'>Trains</p>
-          </div>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={bus} className='w-9 h-8' /><p className='mt-1'>Bus</p>
-          </div>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={holiday} className='w-8 h-8' /><p className='mt-1'>Holidays</p>
-          </div>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <img src={cab} className='w-7 h-7' /><p className='mt-1'>Cabs</p>
-          </div>
-          <div className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'>
-            <FaRegLightbulb className='w-7 h-6 mt-1' /><p className='mt-1'>Activities</p>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flights' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('flights', '/')}
+          >
+            <img src={Airplane} className='w-9' alt='Flights Icon' />
+            <p className='mt-1'>Flights</p>
           </div>
           <div
-            className='rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer hover:bg-sky-100'
-            
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'hotels' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('hotels', 'hotels')}
+          >
+            <img src={hotel} className='w-8 h-8' alt='Hotels Icon' />
+            <p className='mt-1'>Hotels</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flightHotels' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('flightHotels')}
+          >
+            <img src={flighthotel} className='w-8' alt='Flight + Hotels Icon' />
+            <p className='mt-1'>Flight + Hotels</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'trains' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('trains', 'railways')}
+          >
+            <img src={train} className='w-9' alt='Trains Icon' />
+            <p className='mt-1'>Trains</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'bus' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('bus')}
+          >
+            <img src={bus} className='w-9 h-8' alt='Bus Icon' />
+            <p className='mt-1'>Bus</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'holidays' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('holidays')}
+          >
+            <img src={holiday} className='w-8 h-8' alt='Holidays Icon' />
+            <p className='mt-1'>Holidays</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'cabs' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('cabs')}
+          >
+            <img src={cab} className='w-7 h-7' alt='Cabs Icon' />
+            <p className='mt-1'>Cabs</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'activities' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+            onClick={() => handleButtonClick('activities')}
+          >
+            <FaRegLightbulb className='w-7 h-6 mt-1' />
+            <p className='mt-1'>Activities</p>
+          </div>
+          <div
+            className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'more' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
             onMouseEnter={() => {
-              setShowOffers(!false)
-              setShowOptions(false)
+              setShowOffers(true);
+              setShowOptions(false);
             }}
+            onClick={() => handleButtonClick('more')}
           >
             <img src={more} className='w-8' alt='More Icon' />
             <p className='mt-1'>More</p>
           </div>
-
         </div>
       </div>
       {showOptions && (
@@ -266,12 +301,12 @@ const NavBar = () => {
         <div className='relative rounded-sm'>
           <div
             onMouseLeave={() => setShowOffers(false)}
-            className='bg-white rounded-sm cursor-pointer absolute top-0 right-60 z-10 shadow-2xl text-black' 
+            className='bg-white rounded-sm cursor-pointer absolute top-0 right-60 z-10 shadow-2xl text-black'
           >
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <BiSolidOffer className='text-2xl' />
-                <div onClick={()=>navigate("/offers")} className='font-bold text-sm'>
+                <div onClick={() => navigate("/offers")} className='font-bold text-sm'>
                   Offers
                   <p className='text-xs font-semibold'>Check best latest offers</p>
                 </div>
@@ -279,7 +314,7 @@ const NavBar = () => {
             </div>
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
-              <img src={Airplane} className='w-8' />
+                <img src={Airplane} className='w-8' />
                 <div className='font-bold text-sm'>
                   Charters
                   <p className='text-xs font-semibold'>Book private charter here</p>
@@ -288,7 +323,7 @@ const NavBar = () => {
             </div>
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
-              <FaCcVisa  className='text-2xl'/>
+                <FaCcVisa className='text-2xl' />
                 <div className='font-bold text-sm'>
                   Visa
                   <p className='text-xs font-semibold'>Apply for a UAE visa online</p>
@@ -297,7 +332,7 @@ const NavBar = () => {
             </div>
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
-              <RiCustomerServiceFill  className='text-2xl'/>
+                <RiCustomerServiceFill className='text-2xl' />
                 <div className='font-bold text-sm'>
                   Airport service
                   <p className='text-xs font-semibold'>Enjoy airport service</p>
@@ -306,7 +341,7 @@ const NavBar = () => {
             </div>
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
-              <GiCruiser  className='text-2xl'/>
+                <GiCruiser className='text-2xl' />
                 <div className='font-bold text-sm'>
                   Cruise
                   <p className='text-xs font-semibold'>Book cruise here</p>
@@ -315,7 +350,7 @@ const NavBar = () => {
             </div>
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
-              <ImGift  className='text-2xl'/>
+                <ImGift className='text-2xl' />
                 <div className='font-bold text-sm'>
                   Gift card
                   <p className='text-xs font-semibold'>Buy gitfcards here</p>
