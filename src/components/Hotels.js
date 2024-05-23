@@ -48,7 +48,7 @@ import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
 
-function Hotels({ setHotelList }) {
+function Hotels({ setHotelList, setGuestDetails }) {
 
     const [cityList, setCityList] = useState([]);
     const [showCityList, setshowCityList] = useState(false);
@@ -75,7 +75,17 @@ function Hotels({ setHotelList }) {
     };
 
     const handleChildPlus = (index) => {
-        const newRooms = rooms.map((room, i) => i === index ? { ...room, children: room.children + 1 } : room);
+        const newRooms = rooms.map((room, i) => {
+            if (i === index) {
+                // Check if the number of children is less than 2 before incrementing
+                if (room.children < 2) {
+                    return { ...room, children: room.children + 1 };
+                } else {
+                    return room; // No change if children count is already 2
+                }
+            }
+            return room;
+        });
         setRooms(newRooms);
     };
 
@@ -108,7 +118,6 @@ function Hotels({ setHotelList }) {
         setSelectedCheckInDate(date);
         setShowCalendarIn(false)
         setShowCalendarOut(true)
-        // Ensure check-out date is at least one day ahead of check-in date
         const nextDay = new Date(date);
         nextDay.setDate(nextDay.getDate() + 1);
         setSelectedCheckOutDate(nextDay);
@@ -150,19 +159,18 @@ function Hotels({ setHotelList }) {
 
 
     const handleSearch = async () => {
+        setGuestDetails(prevDetails => ({
+            ...prevDetails,
+            "city": city,
+            "checkIn": selectedCheckInDate,
+            "checkOut": selectedCheckOutDate,
+            "room": rooms,
+            "roomCount":roomCount,
+        }));
+          
         try {
-            // if (!selectedDate) {
-            //     alert("Please select the journey date");
-            //     return;
-            // } else if (!city) {
-            //     alert("Please select city.");
-            //     return;
-            // } else if (!airportTo.iata_code) {
-            //     alert("Please select destination.");
-            //     return;
-            // }
-
-            ;
+            
+            
             const response = await axios.get(
                 `https://academics.newtonschool.co/api/v1/bookingportals/hotel?search=${encodeURIComponent(JSON.stringify({ location: city }))}`,
                 {
@@ -175,13 +183,6 @@ function Hotels({ setHotelList }) {
             console.log('Hotels search response:', response.data.data.hotels.slice(0, 1));
             setHotelList(response.data.data.hotels.slice(0, 1))
             navigate('/hoteldetails')
-            // setFlightData(response.data.data);
-            // setSource(airportFrom)
-            // setDestination(airportTo)
-            // if (response.data.data.flights.length > 0) {
-
-            //     navigate("/flights");
-            // }
 
         } catch (error) {
             console.error('Error searching for city:', error);

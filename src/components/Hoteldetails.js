@@ -44,8 +44,13 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
         }
     };
 
-    const handleBookHotel = (hotel)=>{
-        setHotelBookingData(hotel)
+    const handleBookHotel = (hotelData,room)=>{
+        setHotelBookingData(hotelData)
+        console.log(room);
+        setHotelBookingData(prevDetails=> ({
+            ...prevDetails,
+            "roomDetails": room
+        }))
         navigate('/bookhotel')
     }
 
@@ -213,7 +218,7 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                                 </div>
                             </div>
                             <div className='w-1/4 py-3 pr-8 flex flex-col items-end'>
-                            <button onClick={()=> handleBookHotel(hotelData)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                            <button onClick={()=> handleBookHotel(hotelData,room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
                             <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
                             </div>
                         </div>

@@ -18,6 +18,7 @@ function App() {
   const [source, setSource] = useState("");
   const [destination, setDestination] = useState("");
   const [hotelBookingData, setHotelBookingData] = useState();
+  const [guestDetails, setGuestDetails] = useState({});
 
 
   return (
@@ -38,9 +39,9 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/railways" element={<Train />} />
-        <Route path="/hotels" element={<Hotels setHotelList={setHotelList} />} />
+        <Route path="/hotels" element={<Hotels setHotelList={setHotelList} setGuestDetails={setGuestDetails}/>} />
         <Route path="/hoteldetails" element={<Hoteldetails hotelList={hotelList} setHotelBookingData={setHotelBookingData}/>} />
-        <Route path="/bookhotel" element={<Bookhotel hotelBookingData={hotelBookingData}/>} />
+        <Route path="/bookhotel" element={<Bookhotel hotelBookingData={hotelBookingData} guestDetails={guestDetails}/>} />
         
       </Routes>
       <Footer />
