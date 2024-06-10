@@ -141,7 +141,7 @@ const NavBar = () => {
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'bus' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('bus')}
+            onClick={() => handleButtonClick('bus','bus')}
           >
             <img src={bus} className='w-9 h-8' alt='Bus Icon' />
             <p className='mt-1'>Bus</p>

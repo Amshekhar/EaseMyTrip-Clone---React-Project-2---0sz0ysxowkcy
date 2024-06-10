@@ -43,7 +43,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-function Home({ setSource, setDestination, setFlightData }) {
+function Home({setPassengerDetails, setSource, setDestination, setFlightData }) {
   const [bounce, setBounce] = useState(false);
   const [showListFrom, setShowListFrom] = useState(false);
   const [showListTo, setShowListTo] = useState(false);
@@ -106,6 +106,7 @@ function Home({ setSource, setDestination, setFlightData }) {
   const navigate = useNavigate();
 
   const defaultFlightSearch = async (src, dest) => {
+
     const formattedDate = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3);
     const response = await axios.get(
       `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${src.iata_code}","destination":"${dest.iata_code}"}&day=${formattedDate}`,
@@ -127,6 +128,13 @@ function Home({ setSource, setDestination, setFlightData }) {
   }
 
   const handleSearch = async () => {
+    setPassengerDetails(prevDetails => ({
+      ...prevDetails,
+      "destination":airportTo,
+      "origin":airportFrom,
+      "departureDate":selectedDate,
+    }))
+
     try {
       if (!selectedDate) {
         alert("Please select the journey date");

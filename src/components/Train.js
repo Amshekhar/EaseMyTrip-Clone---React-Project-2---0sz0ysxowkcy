@@ -15,24 +15,51 @@ import playstore from '../Assets/playstore.png';
 import iosstore from '../Assets/iosstore.png';
 import qrcode from '../Assets/qrcode.png';
 import bgtrain from '../Assets/bg_train.png';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
-function Train() {
+function Train({setTrainData}) {
     const [source, setSource] = useState('');
     const [destination, setDestination] = useState('');
     const [day, setDay] = useState('');
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     const fetchStations = async () => {
+    //         try {
+    //             const response = await fetch('https://academics.newtonschool.co/api/v1/bookingportals/train',{
+    //                 headers: {
+    //                     projectID: '0sz0ysxowkcy'
+    //                 }
+    //             })
+    //             ;
+    //             const data = await response.json();
+    //             console.log(data);
+    //             // setTrainData(data.data.trains);
+    //             // setApList(data.data.airports);
+    //         } catch (error) {
+    //             console.error('Error fetching airports:', error);
+    //             // Handle error here, such as setting a state for error message
+    //         }
+    //     };
+
+    //     fetchStations();
+
+    // },[])
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train?search={"source":"${source}","destination":"${destination}"}&day="${day}"`, {
+            const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train?&day=Fri&search={"source":"New Delhi","destination":"Pune Junction"}`, {
                 headers: {
                     projectID: '{{0sz0ysxowkcy}}' 
                 }
             });
-            console.log(response.data); // Handle the response data as needed
+            // console.log(response.data); // Handle the response data as needed
+            setTrainData(response.data.data.trains)
+            navigate('/trainlistinfo')
         } catch (error) {
             console.error('Error searching trains:', error);
         }
@@ -45,18 +72,18 @@ function Train() {
                         <div className='bg-white rounded-s-md w-full flex '>
                             <div className='w-full flex'>
                                 <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
-                                    <p className='text-gray-500 text-sm font-bold'>From</p>
+                                    <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
                                     <input
-                                        className='font-bold cursor-pointer focus:outline-none text-lg px-2'
+                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
                                         placeholder='Choose Source Station'
                                         value={source}
                                         onChange={(e) => setSource(e.target.value)}
                                     />
                                 </div>
                                 <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
-                                    <p className='text-gray-500 text-sm font-bold'>To</p>
+                                    <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
                                     <input
-                                        className='font-bold cursor-pointer focus:outline-none text-lg px-2'
+                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
                                         placeholder='Choose Destination Station'
                                         value={destination}
                                         onChange={(e) => setDestination(e.target.value)}
@@ -64,13 +91,20 @@ function Train() {
                                 </div>
                                 <div className='flex w-1/3'>
                                     <div className='py-2 pl-3 w-full rounded-s-md cursor-pointer'>
-                                        <p className='text-gray-500 text-sm font-bold'>Day</p>
+                                        <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
                                         <input
-                                            className='font-bold cursor-pointer focus:outline-none text-lg px-2'
-                                            placeholder='Enter Day (Mon, Tue, Wed, Thu, Fri, Sat, Sun)'
+                                            className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
+                                            placeholder='Depart Date'
                                             value={day}
                                             onChange={(e) => setDay(e.target.value)}
                                         />
+                                        <div className=''>
+                                            
+                                            <div className=''>
+                                                <p className=''></p>
+                                                <p className=''></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -371,6 +405,8 @@ function Train() {
                     </div>
                 </div>
             </div>
+            
+            
         </div>
     )
 }
