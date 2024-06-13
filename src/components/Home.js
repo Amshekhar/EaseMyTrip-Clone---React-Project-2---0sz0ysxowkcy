@@ -40,40 +40,64 @@ import { IoIosAirplane } from "react-icons/io";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { FaMinus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa6";
+import { FaTrash } from "react-icons/fa6";
 
 
-
-function Home({setPassengerDetails, setSource, setDestination, setFlightData }) {
+function Home({ setPassengerDetails, setSource, setDestination, setFlightData }) {
   const [bounce, setBounce] = useState(false);
   const [showListFrom, setShowListFrom] = useState(false);
   const [showListTo, setShowListTo] = useState(false);
   const [airportFrom, setAirportFrom] = useState({});
   const [airportTo, setAirportTo] = useState({});
   const [apList, setApList] = useState([]);
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
+  const [passanger, setPassanger] = useState(false);
 
-    useEffect(() => {
-      const today = new Date();
-      setSelectedDate(today)
-        const fetchAirports = async () => {
-            try {
-                const response = await fetch('https://academics.newtonschool.co/api/v1/bookingportals/airport',{
-                    headers: {
-                        projectID: '0sz0ysxowkcy'
-                    }
-                })
-                ;
-                const data = await response.json();
-                setApList(data.data.airports);
-                console.log(apList);
-            } catch (error) {
-                console.error('Error fetching airports:', error);
-                // Handle error here, such as setting a state for error message
-            }
-        };
 
-        fetchAirports();
+  const totalGuests = adults + children;
 
-    },[])
+  const handleAdultPlus = () => {
+    setAdults(adults+1)
+  };
+
+  const handleChildPlus = () => {
+    setChildren(children + 1)
+  };
+
+  const handleAdultMinus = () => {
+    setAdults(adults-1)
+  };
+
+  const handleChildMinus = () => {
+    setChildren(children - 1)
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    setSelectedDate(today)
+    const fetchAirports = async () => {
+      try {
+        const response = await fetch('https://academics.newtonschool.co/api/v1/bookingportals/airport', {
+          headers: {
+            projectID: '0sz0ysxowkcy'
+          }
+        })
+          ;
+        const data = await response.json();
+        setApList(data.data.airports);
+        console.log(apList);
+      } catch (error) {
+        console.error('Error fetching airports:', error);
+        // Handle error here, such as setting a state for error message
+      }
+    };
+
+    fetchAirports();
+
+  }, [])
 
 
   const handleFrom = () => {
@@ -130,9 +154,9 @@ function Home({setPassengerDetails, setSource, setDestination, setFlightData }) 
   const handleSearch = async () => {
     setPassengerDetails(prevDetails => ({
       ...prevDetails,
-      "destination":airportTo,
-      "origin":airportFrom,
-      "departureDate":selectedDate,
+      "destination": airportTo,
+      "origin": airportFrom,
+      "departureDate": selectedDate,
     }))
 
     try {
@@ -243,10 +267,10 @@ function Home({setPassengerDetails, setSource, setDestination, setFlightData }) 
 
 
 
-                  <div className='w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                  <div onClick={()=>setPassanger(true)} className='w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
                     <p className='text-gray-500 text-xs'>TRAVELLER & CLASS</p>
                     <div className='flex font-bold items-center'>
-                      <span className='text-2xl'>1</span><p className='text-sm'>Traveller(s)<FaChevronDown className='inline ml-2' /></p>
+                      <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='inline ml-2' /></p>
                     </div>
                     <p className='text-gray-500 text-xs'>FIRST</p>
                   </div>
@@ -560,6 +584,43 @@ function Home({setPassengerDetails, setSource, setDestination, setFlightData }) 
       <div>
 
       </div>
+
+      {passanger && <div className='absolute w-72 bg-white top-44 p-2 right-80 rounded shadow'>
+        <div className='max-h-72'>
+          
+            <div className='mt-2 border-t pt-2'>
+              <div className='flex justify-between'>
+                <div>
+                  <p className='text-sm'>Adult</p>
+                  <p className='text-xs text-gray-500'>(Above 12 Year)</p>
+                </div>
+                <div className='font-bold border flex mb-1 items-center'>
+                  <div onClick={() => handleAdultMinus()} className='px-2 border-r'><FaMinus /></div>
+                  <p className='px-2'>{adults}</p>
+                  <div onClick={() => handleAdultPlus()} className='px-2 border-l'><FaPlus /></div>
+                </div>
+              </div>
+              <div className='flex mt-2 justify-between'>
+                <div>
+                  <p className='text-sm'>Child</p>
+                  <p className='text-xs text-gray-500'>(Below 12 Year)</p>
+                </div>
+                <div className='font-bold border flex mb-1 items-center'>
+                  <div onClick={() => handleChildMinus()} className='px-2 border-r'><FaMinus /></div>
+                  <p className='px-2'>{children}</p>
+                  <div onClick={() => handleChildPlus()} className='px-2 border-l'><FaPlus /></div>
+                </div>
+              </div>
+            </div>
+          
+
+        </div>
+
+        <div className='flex text-sm justify-end mt-4'>
+          
+          <button onClick={() => setPassanger(false)} className='rounded-full text-white py-1 hover:bg-orange-700 bg-orange-600 px-5'>Done</button>
+        </div>
+      </div>}
     </div>
   );
 }

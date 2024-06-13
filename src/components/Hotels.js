@@ -156,8 +156,6 @@ function Hotels({ setHotelList, setGuestDetails }) {
         setShowCalendarIn(true)
     }
 
-
-
     const handleSearch = async () => {
         setGuestDetails(prevDetails => ({
             ...prevDetails,
