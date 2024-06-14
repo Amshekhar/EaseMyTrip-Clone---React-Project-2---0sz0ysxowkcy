@@ -5,7 +5,7 @@ import { MdPeopleAlt } from "react-icons/md";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdInfoOutline } from "react-icons/md";
 
-function Bookhotel({ hotelBookingData, guestDetails }) {
+function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
     const navigate = useNavigate();
 
     console.log(guestDetails);
@@ -16,6 +16,12 @@ function Bookhotel({ hotelBookingData, guestDetails }) {
 
     const totalNights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     // console.log((totalNights));
+
+    const handleHotelBooking = ()=>{
+        setPaymentDetails({fare:(hotelBookingData.roomDetails.costDetails.taxesAndFees * totalNights * guestDetails.roomCount) + (hotelBookingData.roomDetails.costPerNight * totalNights * guestDetails.roomCount - (hotelBookingData.roomDetails.costDetails.discount))})
+
+        navigate('/payment', { state: { hotelBookingData, guestDetails } });
+    }
 
     // Check if hotelBookingData is defined and has the necessary properties
     if (!hotelBookingData || !hotelBookingData.name || !hotelBookingData.location || !hotelBookingData.images) {
@@ -183,7 +189,7 @@ function Bookhotel({ hotelBookingData, guestDetails }) {
                                 <div className=' ml-10 mt-2 flex'>
                                     <input type='checkbox' /><p className='text-sm ml-2 text-gray-500'>I understand and agree to the rules of this fare, the <span className='text-blue-400'>Terms & Conditions</span>and <span className='text-blue-400'>Privacy Policy of EaseMyTrip.</span></p>
                                 </div>
-                                <div className='w-full my-6 flex justify-center'>
+                                <div onClick={handleHotelBooking} className='w-full my-6 flex justify-center'>
                                     <button className='bg-orange-500 font-bold text-white px-28 py-3 rounded-full text-sm'>Continue to Payment</button>
                                 </div>
                             </div>

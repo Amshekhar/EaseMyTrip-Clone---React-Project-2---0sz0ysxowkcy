@@ -68,11 +68,15 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   };
 
   const handleAdultMinus = () => {
+    if(adults > 0) {
     setAdults(adults-1)
+    }
   };
 
   const handleChildMinus = () => {
+    if(children > 0) {
     setChildren(children - 1)
+    }
   };
 
   useEffect(() => {
@@ -157,6 +161,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       "destination": airportTo,
       "origin": airportFrom,
       "departureDate": selectedDate,
+      "totalGuests": totalGuests
     }))
 
     try {

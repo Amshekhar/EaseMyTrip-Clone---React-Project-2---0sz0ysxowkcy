@@ -16,12 +16,23 @@ import { FaPersonWalking } from "react-icons/fa6";
 import { GoMail } from "react-icons/go";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdInfoOutline } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 
-function Bookflight({ flightDetails, passengerDetails }) {
+function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
     // console.log(flightDetails);
     // console.log(passengerDetails);
+
+    const navigate = useNavigate()
+
     let name = "";
+
+    const handleBooking = ()=>{
+        setPaymentDetails({
+            fare: flightDetails.ticketPrice*passengerDetails.totalGuests
+        });
+        navigate('/payment');
+    }
     const getAirlineLogo = (flightID) => {
         const prefix = flightID.substring(0, 2);
         switch (prefix) {
@@ -188,38 +199,38 @@ function Bookflight({ flightDetails, passengerDetails }) {
                                 <p class="text-red-500 text-sm mt-1">Please enter your email address *</p>
                             </div>
 
-                            <button class="w-[85%] my-2 bg-orange-500 text-white py-3 rounded-full mx-[50%] text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Continue Booking</button>
+                            <button onClick={handleBooking} class="w-[85%] my-2 bg-orange-500 text-white py-3 rounded-full mx-[50%] text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Continue Booking</button>
                         </div>
                     </div>
                     <div className='w-[26%] sticky top-4 rounded h-72 mb-10 '>
                         <div className='bg-white shadow-lg border rounded'>
 
                             <div className='bg-blue-100 text-sm flex font-bold items-end gap-2 p-2'>
-                                <HiOutlineCurrencyRupee className='text-xl' /> Room Price Details
+                                <HiOutlineCurrencyRupee className='text-xl' /> Flight Price Details
                             </div>
                             <div className=' mx-3 pb-1 pt-3 flex justify-between'>
-                                <p className='text-sm font-semibold'>...... Rooms x .... Night(s)</p>
-                                <p className='text-sm font-semibold'>....</p>
+                                <p className='text-sm font-semibold'>Total Passengers :</p>
+                                <p className='text-sm font-semibold'>{passengerDetails.totalGuests}</p>
                             </div>
                             <div className='mx-3 py-1 flex border-b pb-2 justify-between'>
                                 <p className='text-sm font-semibold text-blue-400'>Total Discount <MdInfoOutline className='inline' /></p>
-                                <p className='text-sm font-semibold text-blue-400'>...</p>
+                                <p className='text-sm font-semibold text-blue-400'>00</p>
                             </div>
                             <div className=' mx-3 py-2 flex border-b pb-2 justify-between'>
                                 <p className='text-sm font-semibold'>Price after Discount</p>
-                                <p className='text-sm font-semibold'>....</p>
+                                <p className='text-sm font-semibold'>{flightDetails.ticketPrice*passengerDetails.totalGuests}</p>
                             </div>
                             <div className=' mx-3 py-2 flex border-b pb-2 justify-between'>
                                 <p className='text-sm font-semibold'>Taxes & Service Fees</p>
-                                <p className='text-sm font-semibold'>....</p>
+                                <p className='text-sm font-semibold'>Nil</p>
                             </div>
                             <div className=' mx-3 py-2 flex font-bold text-orange-700 justify-between'>
                                 <p>Grand Total</p>
-                                <p>.....</p>
+                                <p>{flightDetails.ticketPrice*passengerDetails.totalGuests}</p>
                             </div>
                         </div>
 
-                        <button class=" w-full bg-orange-500 text-white py-2 rounded-full mt-8 text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Continue Booking</button>
+                        <button onClick={handleBooking} class=" w-full bg-orange-500 text-white py-2 rounded-full mt-8 text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Continue Booking</button>
                     </div>
 
                 </div>

@@ -4,7 +4,7 @@ import { FaArrowRight, FaStar } from "react-icons/fa";
 import { IoRibbonOutline } from "react-icons/io5";
 import SeatSelectionPopup from './SeatSelectionPopup';  // Import the new component
 
-function Buseslist({ busList }) {
+function Buseslist({ busList, setPaymentDetails }) {
     console.log(busList);
     const [selectedBus, setSelectedBus] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -94,7 +94,7 @@ function Buseslist({ busList }) {
                     })}
                 </div>
             </div>
-            {showPopup && <SeatSelectionPopup bus={selectedBus} onClose={closeSeatSelection} />}
+            {showPopup && <SeatSelectionPopup bus={selectedBus} onClose={closeSeatSelection} setPaymentDetails={setPaymentDetails}/>}
         </div>
     );
 }

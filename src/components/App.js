@@ -16,7 +16,7 @@ import Bookflight from "./Bookflight"
 import Booktrain from "./Booktrain"
 import Bus from "./Bus"
 import Buseslist from "./Buseslist"
-import Buspayment from "./Buspayment"
+import PaymentComponent from "./Payment"
 
 function App() {
   const [flightData, setFlightData] = useState([]);
@@ -28,8 +28,11 @@ function App() {
   const [flightDetails, setFlightDetails] = useState({});
   // const [passengerDetails, setPassengerDetails] = useState({});
   const [passengerDetails, setPassengerDetails] = useState({})
+  const [paymentDetails, setPaymentDetails] = useState({})
   const [trainData, setTrainData] = useState([]);
   const [busList, setBusList] = useState([]);
+  const [train, setTrain] = useState({})
+  const [coach, setCoach] = useState({})
 
 
   return (
@@ -49,20 +52,20 @@ function App() {
           destination={destination}
         />} />
 
-        <Route path="/bookflight" element={<Bookflight flightDetails={flightDetails} passengerDetails={passengerDetails}/>} />
+        <Route path="/bookflight" element={<Bookflight flightDetails={flightDetails} passengerDetails={passengerDetails} setPaymentDetails={setPaymentDetails}/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/bus" element={<Bus setBusList={setBusList} />} />
-        <Route path="/buseslist" element={<Buseslist busList={busList}  />} />
-        <Route path="/buspayment" element={<Buspayment />} />
+        <Route path="/buseslist" element={<Buseslist busList={busList} setPaymentDetails={setPaymentDetails} />} />
+        <Route path="/payment" element={<PaymentComponent paymentDetails={paymentDetails} />} />
         <Route path="/railways" element={<Train setTrainData={setTrainData} />} />
-        <Route path="/trainlistinfo" element={<Trainlistinfo  trainData={trainData} />} />
-        <Route path="/booktrain" element={<Booktrain />} />
+        <Route path="/trainlistinfo" element={<Trainlistinfo  trainData={trainData} setTrain={setTrain} setCoach={setCoach}/>} />
+        <Route path="/booktrain" element={<Booktrain  train={train} coach={coach}/>} />
 
         <Route path="/hotels" element={<Hotels setHotelList={setHotelList} setGuestDetails={setGuestDetails}/>} />
         <Route path="/hoteldetails" element={<Hoteldetails hotelList={hotelList} setHotelBookingData={setHotelBookingData}/>} />
-        <Route path="/bookhotel" element={<Bookhotel hotelBookingData={hotelBookingData} guestDetails={guestDetails}/>} />
+        <Route path="/bookhotel" element={<Bookhotel hotelBookingData={hotelBookingData} guestDetails={guestDetails} setPaymentDetails={setPaymentDetails}/>} />
         
       </Routes>
       <Footer />
