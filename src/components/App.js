@@ -61,7 +61,7 @@ function App() {
         <Route path="/payment" element={<PaymentComponent paymentDetails={paymentDetails} />} />
         <Route path="/railways" element={<Train setTrainData={setTrainData} />} />
         <Route path="/trainlistinfo" element={<Trainlistinfo  trainData={trainData} setTrain={setTrain} setCoach={setCoach}/>} />
-        <Route path="/booktrain" element={<Booktrain  train={train} coach={coach}/>} />
+        <Route path="/booktrain" element={<Booktrain  train={train} coach={coach} setPaymentDetails={setPaymentDetails} />} />
 
         <Route path="/hotels" element={<Hotels setHotelList={setHotelList} setGuestDetails={setGuestDetails}/>} />
         <Route path="/hoteldetails" element={<Hoteldetails hotelList={hotelList} setHotelBookingData={setHotelBookingData}/>} />

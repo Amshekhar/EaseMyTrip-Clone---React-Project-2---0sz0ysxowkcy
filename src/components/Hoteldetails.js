@@ -12,23 +12,68 @@ import { TiTick } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 
 
-function Hoteldetails({ hotelList, setHotelBookingData}) {
-    const [hotelData, setHotelData] = useState({}); // State to store hotel information
-    const token = sessionStorage.getItem(token)
+function Hoteldetails({ hotelList, setHotelBookingData }) {
+    console.log(hotelList);
+    const [hotelData, setHotelData] = useState({});
+    const token = sessionStorage.getItem('token');
     const [htlList, setHtlList] = useState(true);
     const [hotelInfo, setHoteInfo] = useState(false);
+    const [sortCriteria, setSortCriteria] = useState('');
+    const [filteredHotels, setFilteredHotels] = useState(hotelList);
+    const [selectedFilters, setSelectedFilters] = useState([]);
     const navigate = useNavigate();
 
+    useEffect(() => {
+        let sortedHotels = [...hotelList];
+
+        if (sortCriteria === 'Low To High') {
+            sortedHotels.sort((a, b) => a.avgCostPerNight - b.avgCostPerNight);
+        } else if (sortCriteria === 'High To Low') {
+            sortedHotels.sort((a, b) => b.avgCostPerNight - a.avgCostPerNight);
+        } else if (sortCriteria === 'Top Rating Hotel') {
+            sortedHotels.sort((a, b) => b.rating - a.rating);
+        }
+
+        setFilteredHotels(sortedHotels);
+    }, [sortCriteria, hotelList]);
+
+    useEffect(() => {
+        const applyFilters = () => {
+            let filtered = [...hotelList];
+
+            if (selectedFilters.length > 0) {
+                filtered = filtered.filter(hotel =>
+                    selectedFilters.some(range => {
+                        const [min, max] = JSON.parse(range);
+                        return hotel.avgCostPerNight >= min && hotel.avgCostPerNight <= max;
+                    })
+                );
+            }
+
+            setFilteredHotels(filtered);
+        };
+
+        applyFilters();
+    }, [selectedFilters, hotelList]);
+
+    const handleFilterChange = (range) => {
+        const rangeStr = JSON.stringify(range);
+        setSelectedFilters(prevFilters => {
+            if (prevFilters.includes(rangeStr)) {
+                return prevFilters.filter(f => f !== rangeStr);
+            } else {
+                return [...prevFilters, rangeStr];
+            }
+        });
+    };
 
     const backButton = () => {
         setHoteInfo(false);
         setHtlList(true);
     }
 
-
     const fetchHotelInfo = async (hotelId) => {
         try {
-            // console.log(hotelId);
             const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/hotel/${hotelId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -38,87 +83,132 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
             console.log(response.data.data);
             setHtlList(false)
             setHoteInfo(true)
-            setHotelData(response.data.data); // Set fetched data to state
+            setHotelData(response.data.data);
         } catch (error) {
             console.error('Error fetching hotel data:', error);
         }
     };
 
-    const handleBookHotel = (hotelData,room)=>{
-        setHotelBookingData(hotelData)
-        console.log(room);
-        setHotelBookingData(prevDetails=> ({
+    const handleBookHotel = (hotelData, room) => {
+        setHotelBookingData(hotelData);
+        setHotelBookingData(prevDetails => ({
             ...prevDetails,
-            "roomDetails": room
-        }))
-        navigate('/bookhotel')
-    }
+            roomDetails: room
+        }));
+        navigate('/bookhotel');
+    };
 
-
+    const priceRanges = [
+        [0, 1500], [1500, 2500], [2500, 5500],
+        [5500, 8500], [8500, 15500], [15500, 30000],
+        [30000, Infinity]
+    ];
 
     return (
         <div className='bg-sky-100'>
-            <div className='w-full h-20 border mx-auto bg-blue-400'></div>
-            {htlList && (<div>
-                <div className='w-11/12 mx-auto p-5 flex gap-3'>
-                    <div className='w-3/12 h-96 border bg-white rounded-lg shadow-md'></div>
-                    <div className='w-9/12'>
-                        {hotelList.map((hotel, index) => {
-                            return (
-                                <div key={index} className=' flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
-                                    <div className='w-1/3'>
-                                        <LazyLoad className='relative' height={200} offset={100}>
-                                            <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl' src={hotel.images[0]} />
-                                            <div className=' top-1 right-3 absolute font-semibold text-[10px] bg-blue-700 rounded-full py-1 px-3 text-white'>
-                                                DEAL OF THE DAY</div>
-                                        </LazyLoad>
-                                        <LazyLoad className='flex gap-[1px]'>
-                                            <img alt="Image 1" className='w-28 h-14 rounded-lg mr-1' src={hotel.images[1]} />
-                                            <img alt="Image 2" className='w-28 h-14 rounded-lg mr-1' src={hotel.images[2]} />
-                                            <img alt="Image 3" className='w-28 h-14 rounded-lg mr-1' src={hotel.images[3]} />
-                                        </LazyLoad>
+            <div className='w-full h-20 border mx-auto bg-blue-400'>
 
-                                    </div>
-                                    <div className='flex border-r  w-5/12 justify-between flex-col'>
-                                        <div>
-                                            <p className='font-bold pl-2 border-l-4 border-blue-700 rounded'>{hotel.name}</p>
-                                            <p className='text-sm my-1 flex items-center text-gray-500'><IoLocationOutline className='inline text-lg' />{hotel.location}</p>
-                                            <p className='text-xs ml-1 text-gray-400 font-bold'>{hotel.amenities.map((facility, index) => {
-                                                return <span key={index}>{facility} <BiCheckDouble className='inline text-green-600' /> </span>
-                                            })}</p>
-                                            <p className='flex ml-1 mt-3 items-center text-sm text-green-600'>Ratings: {hotel.rating} <FaStar className='inline mb-1 ml-1' /></p>
-                                            <div className='text-yellow-600 text-xs flex gap-1 items-center mt-2 ml-1'><FaRegEye /> {Math.round(hotel.rating) * 5} People viewing</div>
-                                        </div>
-                                        <div className='px-2 w-52 mb-1 ml-2 py-1 flex items-center rounded-full bg-fuchsia-200 text-xs font-bold'><BiSolidOffer className='text-lg mr-1' /> EMTSTAY Discount Applied</div>
-                                    </div>
-                                    <div className='flex w-1/4 pr-3 items-end flex-col'>
-                                        <div className='flex items-end gap-2'>
-                                            <p className='font-bold text-xs'>
-                                                {hotel.rating > 4
-                                                    ? 'Excellent'
-                                                    : hotel.rating >= 3.5
-                                                        ? 'Very Good'
-                                                        : hotel.rating >= 2.5
-                                                            ? 'Good'
-                                                            : 'Poor'
-                                                }
-                                            </p>
-                                            <div className='px-1 text-sm font-bold text-white bg-blue-950 rounded'>{hotel.rating}</div>
-                                        </div>
-                                        <p className='text-orange-600 mt-2 line-through text-sm font-bold'>₹ {Math.round(hotel.avgCostPerNight * 1.2)}</p>
-                                        <div className='font-bold text-2xl my-2'>₹ {Math.round(hotel.avgCostPerNight)}</div>
-                                        <p className='text-xs font-semibold text-gray-400'>+ {hotel.rating * 100} Taxes & fees</p>
-                                        <p className='text-xs font-semibold text-gray-400'>Per Night</p>
-                                        <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 mb-2 rounded-full'>View Room</button>
-                                        <p className='text-sky-500 w-48 font-bold text-sm text-center'>Login & Save More</p>
-
+            </div>
+            {htlList && (
+                <div>
+                    <div className='w-11/12 mx-auto p-5 flex gap-3'>
+                        <div className='w-3/12 h-96 border bg-white rounded-lg shadow-md'>
+                            <div className='font-bold  relative mx-4 mt-4 mb-2 p-2'>Sort by: 
+                                <select className='border-2 border-sky-400 absolute p-1 right-1 rounded-md' onChange={(e) => setSortCriteria(e.target.value)}>
+                                <option value="Low To High">Low To High</option>
+                                <option value="High To Low">High To Low</option>
+                                <option value="Top Rating Hotel">Top Rating Hotel</option>
+                            </select>   
+                            </div>
+                            <div className="bg-white border dark:bg-gray-800 p-4 rounded-lg max-w-sm mx-auto">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Select Filters</h2>
+                                    <a href="#" onClick={() => setSelectedFilters([])} className="text-blue-500 text-sm">Clear All</a>
+                                </div>
+                                <div>
+                                    <h3 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-2">PRICE (PER NIGHT)</h3>
+                                    <div className="space-y-2">
+                                        {priceRanges.map((range, index) => (
+                                            <label key={index} className="flex items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    className="form-checkbox h-4 w-4 text-blue-600"
+                                                    checked={selectedFilters.includes(JSON.stringify(range))}
+                                                    onChange={() => handleFilterChange(range)}
+                                                />
+                                                <span className="ml-2 text-gray-700 dark:text-gray-300">
+                                                    {range[1] === Infinity
+                                                        ? `Above ₹${range[0]}`
+                                                        : `₹${range[0]} - ₹${range[1]}`}
+                                                </span>
+                                            </label>
+                                        ))}
                                     </div>
                                 </div>
-                            );
-                        })}
+                            </div>
+                        </div>
+                        <div className='w-9/12'>
+                            {filteredHotels.length === 0 ? (
+                                <div className='font-bold text-4xl text-center py-20 bg-white'>No Hotel found in this price range</div>
+                            ) : (
+                                filteredHotels.map((hotel, index) => (
+                                    <div key={index} className='flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
+                                        <div className='w-1/3'>
+                                            <LazyLoad className='relative' height={200} offset={100}>
+                                                <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl' src={hotel.images[0]} />
+                                                <div className='top-1 right-3 absolute font-semibold text-[10px] bg-blue-700 rounded-full py-1 px-3 text-white'>
+                                                    DEAL OF THE DAY
+                                                </div>
+                                            </LazyLoad>
+                                            <LazyLoad className='flex gap-[1px]'>
+                                                {hotel.images.slice(1, 4).map((img, idx) => (
+                                                    <img key={idx} alt={`Image ${idx}`} className='w-28 h-14 rounded-lg mr-1' src={img} />
+                                                ))}
+                                            </LazyLoad>
+                                        </div>
+                                        <div className='flex border-r w-5/12 justify-between flex-col'>
+                                            <div>
+                                                <p className='font-bold pl-2 border-l-4 border-blue-700 rounded'>{hotel.name}</p>
+                                                <p className='text-sm my-1 flex items-center text-gray-500'><IoLocationOutline className='inline text-lg' />{hotel.location}</p>
+                                                <p className='text-xs ml-1 text-gray-400 font-bold'>
+                                                    {hotel.amenities.map((facility, idx) => (
+                                                        <span key={idx}>{facility} <BiCheckDouble className='inline text-green-600' /> </span>
+                                                    ))}
+                                                </p>
+                                                <p className='flex ml-1 mt-3 items-center text-sm text-green-600'>Ratings: {hotel.rating} <FaStar className='inline mb-1 ml-1' /></p>
+                                                <div className='text-yellow-600 text-xs flex gap-1 items-center mt-2 ml-1'><FaRegEye /> {Math.round(hotel.rating) * 5} People viewing</div>
+                                            </div>
+                                            <div className='px-2 w-52 mb-1 ml-2 py-1 flex items-center rounded-full bg-fuchsia-200 text-xs font-bold'><BiSolidOffer className='text-lg mr-1' /> EMTSTAY Discount Applied</div>
+                                        </div>
+                                        <div className='flex w-1/4 pr-3 items-end flex-col'>
+                                            <div className='flex items-end gap-2'>
+                                                <p className='font-bold text-xs'>
+                                                    {hotel.rating > 4
+                                                        ? 'Excellent'
+                                                        : hotel.rating >= 3.5
+                                                            ? 'Very Good'
+                                                            : hotel.rating >= 2.5
+                                                                ? 'Good'
+                                                                : 'Poor'
+                                                    }
+                                                </p>
+                                                <div className='px-1 text-sm font-bold text-white bg-blue-950 rounded'>{hotel.rating}</div>
+                                            </div>
+                                            <p className='text-orange-600 mt-2 line-through text-sm font-bold'>₹ {Math.round(hotel.avgCostPerNight * 1.2)}</p>
+                                            <div className='font-bold text-2xl my-2'>₹ {Math.round(hotel.avgCostPerNight)}</div>
+                                            <p className='text-xs font-semibold text-gray-400'>+ {hotel.rating * 100} Taxes & fees</p>
+                                            <p className='text-xs font-semibold text-gray-400'>Per Night</p>
+                                            <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 mb-2 rounded-full'>View Room</button>
+                                            <p className='text-sky-500 w-48 font-bold text-sm text-center'>Login & Save More</p>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+
                     </div>
                 </div>
-            </div>)}
+            )}
 
             {hotelInfo && (<div className='w-full relative'>
                 <button onClick={backButton} className='border text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-white  rounded-full px-2 py-1 text-sm m-2 absolute right-28 font-semibold -top-14 flex items-center gap-1'><GrFormPreviousLink className='text-lg' /> Back to Hotel List</button>
@@ -130,7 +220,6 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                     </div>
                     <div className='flex'>
                         {hotelData && hotelData?.images && hotelData?.images?.length > 0 && (<div className='flex gap-2 w-2/3'>
-
                             <img src={hotelData.images[0]} className='object-cover h-[305px] w-3/4' alt='Hotel' />
 
                             <div className='flex flex-col justify-between'>
@@ -139,7 +228,7 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                                 <img src={hotelData.images[3]} className='object-cover h-24 w-40' alt='Hotel' />
                             </div>
                         </div>)}
-
+                        1
                         <div className='flex flex-col justify-between w-1/3'>
                             <div className='flex justify-between'>
                                 <div>
@@ -188,7 +277,7 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                                     <p className='font-bold'>{room.roomType}</p>
                                 </div>
                                 <div>
-                                    <img className='object-cover w-56 h-40 rounded' src='http://media.easemytrip.com/media/Hotel/SHL-1902876561368/Common/CommonTnleMt.jpg'/>
+                                    <img className='object-cover w-56 h-40 rounded' src='http://media.easemytrip.com/media/Hotel/SHL-1902876561368/Common/CommonTnleMt.jpg' />
                                 </div>
                                 <div className='mt-2 flex gap-2'>
                                     <p className='p-1 rounded bg-sky-100 text-xs'>{room.bedDetail}</p>
@@ -208,7 +297,7 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                             </div>
                             <div className='w-1/4 p-3 order-orange-200 border-r'>
                                 <div className='flex relative flex-col items-end'>
-                                    <p className='py-1 px-2 bg-green-200 w-48 text-xs'>Book Now and Get Rs. {Math.round(room.costPerNight * 1.2-(room.costPerNight))} Off</p>
+                                    <p className='py-1 px-2 bg-green-200 w-48 text-xs'>Book Now and Get Rs. {Math.round(room.costPerNight * 1.2 - (room.costPerNight))} Off</p>
                                     <div className='w-2 h-2 absolute top-5 right-4 bg-green-200 rotate-45'></div>
                                     <p className='text-red-500 mt-2 font-semibold line-through'>₹{Math.round((room.costPerNight * 1.2))}</p>
                                     <p className='text-2xl font-bold my-1'>₹ {Math.round(room.costPerNight)}</p>
@@ -218,8 +307,8 @@ function Hoteldetails({ hotelList, setHotelBookingData}) {
                                 </div>
                             </div>
                             <div className='w-1/4 py-3 pr-8 flex flex-col items-end'>
-                            <button onClick={()=> handleBookHotel(hotelData,room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
-                            <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
+                                <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                                <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
                             </div>
                         </div>
                     })

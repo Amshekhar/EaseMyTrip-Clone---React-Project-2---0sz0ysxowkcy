@@ -18,102 +18,129 @@ import bgtrain from '../Assets/bg_train.png';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 
-
-function Train({setTrainData}) {
-    const [source, setSource] = useState('');
-    const [destination, setDestination] = useState('');
-    const [day, setDay] = useState('');
+function Train({ setTrainData }) {
+    const [source, setSource] = useState(null);
+    const [destination, setDestination] = useState(null);
+    const [day, setDay] = useState(null);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const fetchStations = async () => {
-    //         try {
-    //             const response = await fetch('https://academics.newtonschool.co/api/v1/bookingportals/train',{
-    //                 headers: {
-    //                     projectID: '0sz0ysxowkcy'
-    //                 }
-    //             })
-    //             ;
-    //             const data = await response.json();
-    //             console.log(data);
-    //             // setTrainData(data.data.trains);
-    //             // setApList(data.data.airports);
-    //         } catch (error) {
-    //             console.error('Error fetching airports:', error);
-    //             // Handle error here, such as setting a state for error message
-    //         }
-    //     };
-
-    //     fetchStations();
-
-    // },[])
+    const trainCityOptions = [
+        { value: 'New Delhi', label: 'New Delhi' },
+        { value: 'Delhi Junction', label: 'Delhi Junction' },
+        { value: 'Dhanbad Junction', label: 'Dhanbad Junction' },
+        { value: 'Surat', label: 'Surat' },
+        { value: 'Katpadi Junction', label: 'Katpadi Junction' },
+        { value: 'Kanpur Central', label: 'Kanpur Central' },
+        { value: 'Kharagpur Junction', label: 'Kharagpur Junction' },
+        { value: 'Thiruvananthapuram Central', label: 'Thiruvananthapuram Central' },
+        { value: 'Indore Junction', label: 'Indore Junction' },
+        { value: 'Chandigarh', label: 'Chandigarh' },
+        { value: 'Gwalior Junction', label: 'Gwalior Junction' },
+        { value: 'Agra Cantonment', label: 'Agra Cantonment' },
+        { value: 'Ambala Cantonment', label: 'Ambala Cantonment' },
+        { value: 'Bhusaval Junction', label: 'Bhusaval Junction' },
+        { value: 'Manmad Junction', label: 'Manmad Junction' },
+        { value: 'Thrissur', label: 'Thrissur' },
+        { value: 'Visakhapatnam Junction', label: 'Visakhapatnam Junction' },
+        { value: 'Khurda Road Junction', label: 'Khurda Road Junction' },
+        { value: 'Ahmedabad Junction', label: 'Ahmedabad Junction' },
+        { value: 'Moradabad Junction', label: 'Moradabad Junction' },
+        { value: 'Secunderabad Junction', label: 'Secunderabad Junction' },
+        { value: 'Nagpur Junction', label: 'Nagpur Junction' },
+        { value: 'Howrah Junction', label: 'Howrah Junction' },
+        { value: 'Mysuru Junction', label: 'Mysuru Junction' },
+        { value: 'Amritsar Junction', label: 'Amritsar Junction' },
+        { value: 'Pune Junction', label: 'Pune Junction' },
+        { value: 'Raipur Junction', label: 'Raipur Junction' },
+        { value: 'Jhansi Junction', label: 'Jhansi Junction' },
+        { value: 'Varanasi Junction', label: 'Varanasi Junction' },
+        { value: 'Guwahati', label: 'Guwahati' },
+        { value: 'Asansol Junction', label: 'Asansol Junction' },
+        { value: 'Nadiad Junction', label: 'Nadiad Junction' },
+        { value: 'Bhopal Junction', label: 'Bhopal Junction' },
+        { value: 'Yesvantpur Junction', label: 'Yesvantpur Junction' },
+        { value: 'Kollam Junction', label: 'Kollam Junction' },
+        { value: 'Ludhiana Junction', label: 'Ludhiana Junction' },
+        { value: 'Bengaluru Cantt', label: 'Bengaluru Cantt' },
+        { value: 'Vijayawada Junction', label: 'Vijayawada Junction' },
+        { value: 'Warangal', label: 'Warangal' },
+        { value: 'Anand Junction', label: 'Anand Junction' },
+        { value: 'Hubli Junction', label: 'Hubli Junction' },
+        { value: 'Jodhpur Junction', label: 'Jodhpur Junction' },
+        // Add any other necessary options here
+    ];
 
     const handleSearch = async () => {
+        const dayAbbreviation = day ? day.toLocaleDateString('en-US', { weekday: 'short' }) : '';
         try {
-            const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train?&day=Fri&search={"source":"New Delhi","destination":"Pune Junction"}`, {
+            const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${dayAbbreviation}&search={"source":"${source.value}","destination":"${destination.value}"}`, {
                 headers: {
-                    projectID: '{{0sz0ysxowkcy}}' 
+                    projectID: '{{0sz0ysxowkcy}}'
                 }
             });
-            // console.log(response.data); // Handle the response data as needed
-            setTrainData(response.data.data.trains)
-            navigate('/trainlistinfo')
+            setTrainData(response.data.data.trains);
+            navigate('/trainlistinfo');
         } catch (error) {
             console.error('Error searching trains:', error);
         }
     };
+
     return (
         <div>
-            <div className=" bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+            <div className="bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='bg-white rounded-s-md w-full flex '>
                             <div className='w-full flex'>
-                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
+                                <div className='py-2 pl-3 w-1/3 cursor-pointer'>
                                     <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
-                                    <input
-                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
-                                        placeholder='Choose Source Station'
+                                    <Select
+                                        className='my-2 font-bold'
+                                        options={trainCityOptions}
                                         value={source}
-                                        onChange={(e) => setSource(e.target.value)}
+                                        onChange={setSource}
+                                        placeholder='Choose Source Station'
                                     />
                                 </div>
                                 <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
                                     <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
-                                    <input
-                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
-                                        placeholder='Choose Destination Station'
+                                    <Select
+                                        className='my-2'
+                                        options={trainCityOptions}
                                         value={destination}
-                                        onChange={(e) => setDestination(e.target.value)}
+                                        onChange={setDestination}
+                                        placeholder='Choose Destination Station'
+                                        isDisabled={!source}
                                     />
                                 </div>
                                 <div className='flex w-1/3'>
                                     <div className='py-2 pl-3 w-full rounded-s-md cursor-pointer'>
                                         <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
-                                        <input
-                                            className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
-                                            placeholder='Depart Date'
-                                            value={day}
-                                            onChange={(e) => setDay(e.target.value)}
+                                        <DatePicker
+                                            className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2 w-full'
+                                            selected={day}
+                                            onChange={date => setDay(date)}
+                                            placeholderText='Select Date'
+                                            dateFormat='yyyy-MM-dd'
+                                            isClearable
+                                            disabled={!destination}
                                         />
-                                        <div className=''>
-                                            
-                                            <div className=''>
-                                                <p className=''></p>
-                                                <p className=''></p>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold' onClick={handleSearch}>
+                        <button
+                            className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold'
+                            onClick={handleSearch}
+                            disabled={!day}
+                        >
                             SEARCH
                         </button>
-
-
                     </div>
                 </div>
             </div>
@@ -405,8 +432,8 @@ function Train({setTrainData}) {
                     </div>
                 </div>
             </div>
-            
-            
+
+
         </div>
     )
 }

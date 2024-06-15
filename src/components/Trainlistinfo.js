@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 
-function Trainlistinfo({ trainData , setTrain, setCoach}) {
-    console.log(trainData);
+function Trainlistinfo({ trainData, setTrain, setCoach }) {
     const navigate = useNavigate();
+    const [sortOption, setSortOption] = useState('priceLowToHigh');
+    const [filters, setFilters] = useState({
+        fareClasses: {
+            SL: false,
+            '3A': false,
+            '2A': false,
+            '1A': false,
+        },
+        trainTypes: {
+            Rajdhani: false,
+            Duranto: false,
+            Others: false,
+        },
+    });
 
     const getCoachDescription = (coachType) => {
         switch (coachType) {
@@ -39,10 +52,12 @@ function Trainlistinfo({ trainData , setTrain, setCoach}) {
     };
 
     const handleTrainBooking = (baseFare, coachType, train, coach) => {
-       setTrain(train);
-       setCoach(coach);
-        console.log(Math.round(baseFare * (coachMultipliers[coachType] || 1)));
-
+        setTrain(train);
+        setCoach((prev) => ({
+            ...prev,
+            coach,
+            finalFare: Math.round(baseFare * (coachMultipliers[coachType] || 1))
+        }));
         navigate("/booktrain");
     };
 
@@ -50,11 +65,128 @@ function Trainlistinfo({ trainData , setTrain, setCoach}) {
         return Math.round(baseFare * (coachMultipliers[coachType] || 1));
     };
 
+    const sortTrainData = () => {
+        switch (sortOption) {
+            case 'priceLowToHigh':
+                return [...trainData].sort((a, b) => a.fare - b.fare);
+            case 'priceHighToLow':
+                return [...trainData].sort((a, b) => b.fare - a.fare);
+            case 'availabilityHighToLow':
+                return [...trainData].sort((a, b) => {
+                    const totalSeatsA = a.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0);
+                    const totalSeatsB = b.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0);
+                    return totalSeatsB - totalSeatsA;
+                });
+            case 'departureTimeHighToLow':
+                return [...trainData].sort((a, b) => new Date(b.departureTime) - new Date(a.departureTime));
+            default:
+                return trainData;
+        }
+    };
+
+    const handleSortChange = (option) => {
+        setSortOption(option);
+    };
+
+    const applyFilters = () => {
+        let filteredData = [...trainData];
+
+        // Apply fare class filters
+        filteredData = filteredData.filter(train => {
+            for (let fareClass in filters.fareClasses) {
+                if (filters.fareClasses[fareClass] && train.coaches.some(coach => coach.coachType === fareClass)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        // Apply train type filters
+        filteredData = filteredData.filter(train => {
+            for (let trainType in filters.trainTypes) {
+                if (filters.trainTypes[trainType] && train.trainType === trainType) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        return filteredData;
+    };
+
+    const handleFilterChange = (category, value) => {
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [category]: {
+                ...prevFilters[category],
+                [value]: !prevFilters[category][value],
+            },
+        }));
+    };
+
+    const filteredTrainData = applyFilters(); // Applying sorting
+
     return (
         <div>
             <div className='h-40 bg-blue-400'></div>
             <div className='flex w-[84%] pt-10 mx-auto justify-between'>
-                <div className='w-[20%] bg-gray-100 h-52 border'></div>
+                <div className='w-[20%] bg-gray-100 h-52 border'>
+                    <select
+                        value={sortOption}
+                        onChange={(e) => handleSortChange(e.target.value)}
+                        className='p-1 text-sm w-full rounded-full border'
+                    >
+                        <option value='priceLowToHigh'>Price (Low to High)</option>
+                        <option value='priceHighToLow'>Price (High to Low)</option>
+                        <option value='availabilityHighToLow'>Availability (High to Low)</option>
+                        <option value='departureTimeHighToLow'>Departure Time (High to Low)</option>
+                    </select>
+                    {/* Add filters here */}
+                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md w-64 text-sm mt-4">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="font-semibold">Filter By</h2>
+                            <a href="#" className="text-blue-500 text-xs">Reset All</a>
+                        </div>
+                        <div className="mb-4">
+                            <button className="w-full text-left flex justify-between items-center font-semibold mb-2">
+                                Fare Classes
+                                <span>▾</span>
+                            </button>
+                            <div className="pl-4">
+                                {Object.keys(filters.fareClasses).map(fareClass => (
+                                    <label key={fareClass} className="flex items-center mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={filters.fareClasses[fareClass]}
+                                            onChange={() => handleFilterChange('fareClasses', fareClass)}
+                                            className="mr-2"
+                                        />
+                                        {getCoachDescription(fareClass)} ({fareClass})
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="mb-4">
+                            <button className="w-full text-left flex justify-between items-center font-semibold mb-2">
+                                Train Types
+                                <span>▾</span>
+                            </button>
+                            <div className="pl-4">
+                                {Object.keys(filters.trainTypes).map(trainType => (
+                                    <label key={trainType} className="flex items-center mb-2">
+                                        <input
+                                            type="checkbox"
+                                            checked={filters.trainTypes[trainType]}
+                                            onChange={() => handleFilterChange('trainTypes', trainType)}
+                                            className="mr-2"
+                                        />
+                                        {trainType}
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className='w-[78%]'>
                     {trainData && trainData.map((train, index) => (
                         <div key={index} className='rounded mb-5 border'>

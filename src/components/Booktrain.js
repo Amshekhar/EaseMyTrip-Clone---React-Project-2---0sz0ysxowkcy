@@ -8,9 +8,14 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { TfiEmail } from "react-icons/tfi";
 import { FiPhone } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 
-function Booktrain({ train, coach }) {
-    console.log(train, coach);
+function Booktrain({ train, coach, setPaymentDetails }) {
+    // console.log(train, coach);
+    // console.log(coach);
+
+    const navigate = useNavigate()
+
     const [adults, setAdults] = useState([]);
     const [children, setChildren] = useState([]);
     const [fare, setFare] = useState(0);
@@ -51,16 +56,25 @@ function Booktrain({ train, coach }) {
     const calculateFare = () => {
         let totalFare = 0;
 
-        totalFare += adults.length * baseFare;
+        totalFare += adults.length * coach.finalFare;
         children.forEach(child => {
             if (child.age >= 5) {
-                totalFare += baseFare;
+                totalFare += coach.finalFare;
             }
         });
 
         totalFare += tax + reservationCharge + superFastCharge;
         setFare(totalFare);
     };
+
+    const handleContinue = ()=>{
+        if(adults.length === 0){
+            alert("Please add at least one adult");
+            return;
+        }
+        setPaymentDetails({fare:fare+reservationCharge+superFastCharge})
+        navigate("/payment")
+    }
 
     return (
         <div className="bg-sky-50">
@@ -274,12 +288,12 @@ function Booktrain({ train, coach }) {
                                 </div>
                             </div>
                             <div class="flex justify-center">
-                                <button class="bg-orange-500 text-white px-20 py-2 text-lg rounded-full">Continue Booking</button>
+                                <button onClick={handleContinue} class="bg-orange-500 text-white px-20 py-2 text-lg rounded-full">Continue Booking</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded w-[26%] mt-9 h-72 shadow-md overflow-hidden">
+                <div className="bg-white dark:bg-gray-800 rounded w-[26%] mt-9 h-60 shadow-md overflow-hidden">
                     <div className="bg-blue-200 dark:bg-blue-900 p-3 flex items-center">
                         <img src="https://placehold.co/20x20" alt="currency symbol" className="mr-2" />
                         <h2 className="text-lg text-gray-700 dark:text-gray-300">Price Summary</h2>
@@ -287,7 +301,7 @@ function Booktrain({ train, coach }) {
                     <div className="p-4">
                         <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
                             <span>Single Passenger Fare</span>
-                            <span>₹ {baseFare}</span>
+                            <span>₹ {fare}</span>
                         </div>
                         <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
                             <span>Tax</span>
@@ -301,9 +315,9 @@ function Booktrain({ train, coach }) {
                             <span>SuperFast Charge</span>
                             <span>₹ {superFastCharge}</span>
                         </div>
-                        <div className="flex justify-between text-sm font-semibold mt-4 border-t pt-2">
+                        <div className="flex justify-between font-semibold mt-4 border-t pt-2">
                             <span className="text-red-600 dark:text-red-400">Grand Total</span>
-                            <span className="text-red-600 dark:text-red-400">₹{fare}</span>
+                            <span className="text-red-600 dark:text-red-400">₹{fare+reservationCharge+superFastCharge}</span>
                         </div>
                     </div>
                 </div>
