@@ -9,8 +9,13 @@ import { MdOutlinePeopleAlt } from "react-icons/md";
 import { TfiEmail } from "react-icons/tfi";
 import { FiPhone } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 function Booktrain({ train, coach, setPaymentDetails }) {
+
+    const [userId, setUserId] = useState('');
+    const [isChecked, setIsChecked] = useState(false);
+    const [error, setError] = useState('');
     // console.log(train, coach);
     // console.log(coach);
 
@@ -67,14 +72,106 @@ function Booktrain({ train, coach, setPaymentDetails }) {
         setFare(totalFare);
     };
 
-    const handleContinue = ()=>{
-        if(adults.length === 0){
-            alert("Please add at least one adult");
+    // const handleContinue = () => {
+    //     if (adults.length === 0) {
+    //         alert("Please add at least one adult");
+    //         return;
+    //     }
+    //     setPaymentDetails({ fare: fare + reservationCharge + superFastCharge })
+    //     navigate("/payment")
+    // }
+
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setUserId(value);
+
+        // Simple validation: User ID should not be empty and should match a specific pattern
+        const pattern = /^[a-zA-Z0-9]+$/; // alphanumeric pattern as an example
+        if (value === '') {
+            setError('User ID cannot be empty');
+            toast.error(error)
+        } else if (!pattern.test(value)) {
+            setError('User ID must be alphanumeric');
+            toast.error(error)
+        } else {
+            setError('');
+        }
+    };
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        if (error === '' && userId !== '') {
+            // Handle form submission
+            toast.success("User ID saved successfully!")
+
+            //   console.log('User ID:', userId);
+        } else {
+            setError('Please enter a valid User ID');
+            toast.error(error)
+        }
+    };
+    const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [mobileError, setMobileError] = useState('');
+
+    const validateEmail = (value) => {
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(value);
+    };
+
+    const validateMobile = (value) => {
+        const mobilePattern = /^[0-9]{10}$/;
+        return mobilePattern.test(value);
+    };
+
+    const handleEmailChange = (e) => {
+        const value = e.target.value;
+        setEmail(value);
+        if (!validateEmail(value)) {
+            toast.error('Please enter a valid email address');
+        } else {
+            setEmailError('');
+        }
+    };
+
+    const handleMobileChange = (e) => {
+        const value = e.target.value;
+        setMobile(value);
+        if (!validateMobile(value)) {
+            toast.error('Please enter a valid 10-digit mobile number');
+        } else {
+            setMobileError('');
+        }
+    };
+
+    const handleContinue = (e) => {
+        if (adults.length === 0) {
+            toast.info("Please add at least one adult!");
             return;
         }
-        setPaymentDetails({fare:fare+reservationCharge+superFastCharge})
-        navigate("/payment")
-    }
+        if (!isChecked) {
+            toast.info('You must agree to the terms and conditions');
+          }
+        setPaymentDetails({ fare: fare + reservationCharge + superFastCharge })
+        if (emailError === '' && mobileError === '' && email !== '' && mobile !== '') {
+            // Handle form submission
+            console.log('Email:', email);
+            console.log('Mobile:', mobile);
+            navigate("/payment")
+
+        } else {
+            if (email === '') toast.error('Email is required');
+            if (mobile === '') toast.error('Mobile number is required');
+        }
+    };
+    const handleCheckboxChange = (e) => {
+        setIsChecked(e.target.checked);
+        if (e.target.checked) {
+            setError('');
+        }
+    };
+
 
     return (
         <div className="bg-sky-50">
@@ -94,8 +191,14 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                             <div className="p-4 items-center mb-4">
                                 <p className='text-sm font-bold '>IRCTC User Id</p>
                                 <div className='flex w-72'>
-                                    <input type="text" placeholder="User id is case sensitive" className="border-gray-500 border p-1 flex-grow text-sm outline-none" />
-                                    <button className="bg-blue-500 text-white px-3 text-sm">Save</button>
+                                    <input
+                                        type="text"
+                                        placeholder="User id is case sensitive"
+                                        className="border-gray-500 border p-1 flex-grow text-sm outline-none"
+                                        value={userId}
+                                        onChange={handleChange}
+                                    />
+                                    <button onClick={handleSave} className="bg-blue-500 text-white px-3 text-sm">Save</button>
                                 </div>
                             </div>
                             <div className="mb-4">
@@ -179,19 +282,37 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                             </div>
                             <div className="grid p-4 grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Enter Your Email id <span className="text-red-500">*</span></label>
+                                    <label className="block text-sm font-medium mb-1">
+                                        Enter Your Email id <span className="text-red-500">*</span>
+                                    </label>
                                     <div className="relative">
-                                        <input type="email" className="w-full border rounded-lg p-2 text-sm" placeholder="Email" />
+                                        <input
+                                            type="email"
+                                            className="w-full border rounded-lg p-2 text-sm"
+                                            placeholder="Email"
+                                            value={email}
+                                            onChange={handleEmailChange}
+                                        />
                                         <TfiEmail aria-hidden="true" alt="email" className="absolute text-gray-300 text-2xl right-2 top-2" />
                                     </div>
+                                    {emailError && <p className="text-red-500 text-xs mt-1">{emailError}</p>}
                                     <p className="text-xs text-gray-500 mt-1">Your email id will be used only for sending Train related communication.</p>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium mb-1">Enter Your Mobile Number <span className="text-red-500">*</span></label>
+                                    <label className="block text-sm font-medium mb-1">
+                                        Enter Your Mobile Number <span className="text-red-500">*</span>
+                                    </label>
                                     <div className="relative">
-                                        <input type="tel" className="w-full border rounded-lg p-2 text-sm" placeholder="Mobile Number" />
+                                        <input
+                                            type="tel"
+                                            className="w-full border rounded-lg p-2 text-sm"
+                                            placeholder="Mobile Number"
+                                            value={mobile}
+                                            onChange={handleMobileChange}
+                                        />
                                         <FiPhone aria-hidden="true" alt="phone" className="absolute text-gray-300 text-2xl right-2 top-2" />
                                     </div>
+                                    {mobileError && <p className="text-red-500 text-xs mt-1">{mobileError}</p>}
                                     <p className="text-xs text-gray-500 mt-1">Your Mobile No. will be used to send Booking & Travel related communication.</p>
                                 </div>
                             </div>
@@ -282,7 +403,8 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                             </div>
 
                             <div class="flex items-start space-x-2 p-4 rounded-lg">
-                                <input type="checkbox" class="mt-1" />
+                                <input type="checkbox" class="mt-1" checked={isChecked}
+                                    onChange={handleCheckboxChange} />
                                 <div>
                                     <p class="text-xs">I understand and agree to the rules of this fare, and the <a href="#" class="text-blue-600  cursor-not-allowed">Terms & Conditions</a>, <a href="#" class=" cursor-not-allowed text-blue-600">Privacy Policy</a> and, <a href="#" class="text-blue-600  cursor-not-allowed">Cancellation and Refund Policy</a></p>
                                 </div>
@@ -317,7 +439,7 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                         </div>
                         <div className="flex justify-between font-semibold mt-4 border-t pt-2">
                             <span className="text-red-600 dark:text-red-400">Grand Total</span>
-                            <span className="text-red-600 dark:text-red-400">₹{fare+reservationCharge+superFastCharge}</span>
+                            <span className="text-red-600 dark:text-red-400">₹{fare + reservationCharge + superFastCharge}</span>
                         </div>
                     </div>
                 </div>
