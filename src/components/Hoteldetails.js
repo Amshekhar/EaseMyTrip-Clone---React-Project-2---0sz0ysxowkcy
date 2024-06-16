@@ -10,10 +10,11 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { GrFormPreviousLink } from "react-icons/gr";
 import { TiTick } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 function Hoteldetails({ hotelList, setHotelBookingData }) {
-    console.log(hotelList);
+    // console.log(hotelList);
     const [hotelData, setHotelData] = useState({});
     const token = sessionStorage.getItem('token');
     const [htlList, setHtlList] = useState(true);
@@ -90,6 +91,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
     };
 
     const handleBookHotel = (hotelData, room) => {
+        console.log(room);
         setHotelBookingData(hotelData);
         setHotelBookingData(prevDetails => ({
             ...prevDetails,
@@ -97,7 +99,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
         }));
         navigate('/bookhotel');
     };
-
+    // console.log(hotelData);
     const priceRanges = [
         [0, 1500], [1500, 2500], [2500, 5500],
         [5500, 8500], [8500, 15500], [15500, 30000],
@@ -246,11 +248,11 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 {hotelData && hotelData?.amenities && hotelData.amenities.length > 0 && (<p className='text-xs ml-1 w-44 flex flex-wrap gap-1  text-gray-400 font-bold'>{hotelData.amenities.map((facility, index) => {
                                     return <span key={index} className='p-1 bg-sky-50 hover:bg-sky-100'>{facility} <FaRegCheckCircle className='inline text-white bg-green-500 rounded-full ' /> </span>
                                 })}</p>)}
-                                <p className='text-sm text-blue-500 cursor-pointer w-[125px] hover:bg-blue-200 p-1 mt-2'>+ More Amenities</p>
+                                <p onClick={()=>toast.info('For more information check below!')} className='text-sm text-blue-500 cursor-pointer w-[125px] hover:bg-blue-200 p-1 mt-2'>+ More Amenities</p>
                             </div>
                             <div className='flex justify-between'>
-                                <button className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-md '>SELECT ROOMS</button>
-                                <button className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                                <button onClick={()=>toast.info('For more information check below!')} className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-md '>SELECT ROOMS</button>
+                                <button onClick={()=>toast.info("Select room from below!")} className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
                             </div>
                         </div>
                     </div>
@@ -258,11 +260,11 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                 </div>
                 <div className='bg-white px-2 pt-3 my-5 w-10/12 mx-auto pb-1 rounded-md shadow-md'>
                     <button className='px-8 mr-3 py-3 border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Rooms</button>
-                    <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Overview</button>
-                    <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Amanities</button>
-                    <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Location</button>
-                    <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Booking Policy</button>
-                    <button className='px-8 mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Guest Raiting</button>
+                    <button className='px-8 cursor-not-allowed mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Overview</button>
+                    <button className='px-8 cursor-not-allowed  mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Amanities</button>
+                    <button className='px-8 cursor-not-allowed  mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Location</button>
+                    <button className='px-8 mr-3 cursor-not-allowed  py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Booking Policy</button>
+                    <button className='px-8 mr-3 cursor-not-allowed py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Guest Raiting</button>
                 </div>
                 <div className='w-10/12 mx-auto border border-orange-200 bg-white rounded'>
                     <div className='bg-orange-100  p-3 rounded-t flex '>

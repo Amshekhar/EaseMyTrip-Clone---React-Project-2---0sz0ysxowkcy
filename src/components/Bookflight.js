@@ -1,4 +1,3 @@
-import React from 'react'
 import { GrNext } from "react-icons/gr";
 import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
@@ -17,19 +16,30 @@ import { GoMail } from "react-icons/go";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdInfoOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 
 function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
     // console.log(flightDetails);
     // console.log(passengerDetails);
-
+    const [email, setEmail] = useState('');
     const navigate = useNavigate()
 
     let name = "";
 
-    const handleBooking = ()=>{
+    const handleBooking = () => {
+        if (!email) {
+            toast.error("Please enter your email address")
+            return;
+        }else if(passengerDetails.totalGuests==0){
+            toast.info("Please add at least one Traveller!")
+            navigate('/')
+            return;
+        }
+
         setPaymentDetails({
-            fare: flightDetails.ticketPrice*passengerDetails.totalGuests
+            fare: flightDetails.ticketPrice * passengerDetails.totalGuests
         });
         navigate('/payment');
     }
@@ -54,6 +64,11 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
 
         }
     };
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+
     return (
         <div className='bg-blue-50 p-2'>
             <div className='w-[76%] mx-auto'>
@@ -186,20 +201,31 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-blue-50 w-[70%] py-6 rounded-lg max-w-lg">
-                            <div class="mb-4 flex items-baseline gap-2">
-                                <h2 class="text-xl font-semibold">Contact Information</h2>
-                                <p class="text-xs text-gray-600">Your ticket will be sent to this email address</p>
+                        <div className="bg-blue-50 w-[70%] py-6 rounded-lg max-w-lg">
+                            <div className="mb-4 flex items-baseline gap-2">
+                                <h2 className="text-xl font-semibold">Contact Information</h2>
+                                <p className="text-xs text-gray-600">Your ticket will be sent to this email address</p>
                             </div>
-                            <div class="mb-4">
-                                <div class="relative">
-                                    <input type="email" placeholder="Enter Email Address" class="w-full p-4 pl-12 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                                    <GoMail aria-hidden="true" alt="email icon" class="absolute left-4 top-1/2 transform text-2xl text-gray-300 -translate-y-1/2" />
+                            <div className="mb-4">
+                                <div className="relative">
+                                    <input
+                                        type="email"
+                                        placeholder="Enter Email Address"
+                                        value={email}
+                                        onChange={handleEmailChange}
+                                        className="w-full p-4 pl-12 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    <GoMail aria-hidden="true" alt="email icon" className="absolute left-4 top-1/2 transform text-2xl text-gray-300 -translate-y-1/2" />
                                 </div>
-                                <p class="text-red-500 text-sm mt-1">Please enter your email address *</p>
+                                {!email && <p className="text-red-500 text-sm mt-1">Please enter your email address *</p>}
                             </div>
 
-                            <button onClick={handleBooking} class="w-[85%] my-2 bg-orange-500 text-white py-3 rounded-full mx-[50%] text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500">Continue Booking</button>
+                            <button
+                                onClick={handleBooking}
+                                className="w-[85%] my-2 bg-orange-500 text-white py-3 rounded-full mx-[50%] text-lg font-semibold hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
+                            >
+                                Continue Booking
+                            </button>
                         </div>
                     </div>
                     <div className='w-[26%] sticky top-4 rounded h-72 mb-10 '>
@@ -218,7 +244,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                             </div>
                             <div className=' mx-3 py-2 flex border-b pb-2 justify-between'>
                                 <p className='text-sm font-semibold'>Price after Discount</p>
-                                <p className='text-sm font-semibold'>{flightDetails.ticketPrice*passengerDetails.totalGuests}</p>
+                                <p className='text-sm font-semibold'>{flightDetails.ticketPrice * passengerDetails.totalGuests}</p>
                             </div>
                             <div className=' mx-3 py-2 flex border-b pb-2 justify-between'>
                                 <p className='text-sm font-semibold'>Taxes & Service Fees</p>
@@ -226,7 +252,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                             </div>
                             <div className=' mx-3 py-2 flex font-bold text-orange-700 justify-between'>
                                 <p>Grand Total</p>
-                                <p>{flightDetails.ticketPrice*passengerDetails.totalGuests}</p>
+                                <p>{flightDetails.ticketPrice * passengerDetails.totalGuests}</p>
                             </div>
                         </div>
 

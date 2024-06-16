@@ -156,6 +156,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   }
 
   const handleSearch = async () => {
+    if (totalGuests==0){
+      toast.info("Please select the number of Traveller!");
+    }
     setPassengerDetails(prevDetails => ({
       ...prevDetails,
       "destination": airportTo,
@@ -166,13 +169,13 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
 
     try {
       if (!selectedDate) {
-        alert("Please select the journey date");
+        toast.info("Please select the journey date");
         return;
       } else if (!airportFrom.iata_code) {
-        alert("Please select source.");
+        toast.info("Please select source.");
         return;
       } else if (!airportTo.iata_code) {
-        alert("Please select destination.");
+        toast.info("Please select destination.");
         return;
       }
 

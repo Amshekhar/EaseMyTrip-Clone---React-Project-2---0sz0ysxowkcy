@@ -12,6 +12,7 @@ import { FaHotjar } from "react-icons/fa";
 import { FaHotel } from "react-icons/fa6";
 import { FaBus } from "react-icons/fa";
 import { FaTrainSubway } from "react-icons/fa6";
+import { toast } from 'react-toastify';
 
 function Offers() {
     const [offers, setOffers] = useState([]);
@@ -46,6 +47,10 @@ function Offers() {
         return `Valid until ${endDate}`;
     };
 
+    const offerHandler = ()=>{
+        toast.info('NO offer avilable this time!');
+    }
+
     return (
         <div>
             <div className=''>
@@ -56,7 +61,7 @@ function Offers() {
                 <div className='flex absolute font-bold w-full shadow-lg border -top-20 rounded-lg p-2 bg-white justify-around'>
                     <div style={{display:"flex"}} className={selectedCategory === 'ALL' ? 'bg-blue-500 text-sm text-white rounded-md p-2 justify-center items-center cursor-pointer' : 'justify-center hover:bg-gray-200 p-2 text-gray-800 text-sm items-center rounded-md px-2 cursor-pointer'} onClick={() => handleCategoryClick('ALL')}><BiSolidOffer className='text-xl' />Spacial Offers</div>
 
-                    <div className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
+                    <div onClick={offerHandler} className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
                         <BsBank className='mr-1 text-lg ' />Bank offers
                     </div>
                     <div style={{display:"flex"}} className={selectedCategory === 'FLIGHTS' ? 'bg-blue-500 text-white rounded-md px-2 justify-center items-center cursor-pointer' : 'justify-center   text-gray-800 items-center cursor-pointer rounded-md px-2 hover:bg-gray-200'} onClick={() => handleCategoryClick('FLIGHTS')}><IoAirplane className='mr-1 text-lg'/>Flights</div>
@@ -67,15 +72,15 @@ function Offers() {
 
                     <div style={{display:"flex"}} className={selectedCategory === 'RAILS' ? 'bg-blue-500 text-white rounded-md text-sm px-2 justify-center items-center cursor-pointer' : 'justify-center text-sm text-gray-800 items-center cursor-pointer rounded-md px-2 hover:bg-gray-200'} onClick={() => handleCategoryClick('RAILS')}><FaTrainSubway className='mr-1 text-lg'/>Trains</div>
 
-                    <div className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
+                    <div onClick={offerHandler} className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
                         <FaCar className='mr-1 text-xl ' />Cab offers
                     </div>
 
-                    <div className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
+                    <div onClick={offerHandler} className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
                         <FaUmbrellaBeach className='mr-1 text-xl ' />Holidays offers
                     </div>
 
-                    <div className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
+                    <div onClick={offerHandler} className='flex justify-center items-center hover:bg-gray-200 text-sm px-2 p-1 rounded-md cursor-pointer'>
                         <FaHotjar className='mr-1 text-lg ' />Hot Deals
                     </div>                    
 
@@ -100,7 +105,7 @@ function Offers() {
                             </div>
                         </div>
                     ))}
-                    {offers.length === 0 && <p>No offers available for this category.</p>}
+                    {offers.length === 0 && <p className='text-4xl font-bold shadow-lg mb-20 p-20 border rounded-lg text-center w-full'>Oop's! No offers available for this category.</p>}
                 </div>
             </div>
         </div>

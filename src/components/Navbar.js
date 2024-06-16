@@ -256,7 +256,7 @@ const NavBar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="block px-4 pt-2  hover:bg-sky-100 "
+                  className="block px-4 pt-2  hover:bg-sky-100 cursor-not-allowed"
                   role="menuitem"
                 >
                   <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
@@ -268,7 +268,7 @@ const NavBar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="block px-4 pt-2 hover:bg-sky-100 "
+                  className="block px-4 pt-2 hover:bg-sky-100  cursor-not-allowed"
                   role="menuitem"
                 >
                   <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
@@ -280,7 +280,7 @@ const NavBar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="block px-4 pt-2 hover:bg-sky-100 "
+                  className="block px-4 pt-2 hover:bg-sky-100  cursor-not-allowed"
                   role="menuitem"
                 >
                   <div className='border-b-2  pb-3 flex gap-3 justify-start items-center'>
@@ -312,7 +312,7 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100'>
+            <div className='block px-4 pt-2 hover:bg-sky-100  cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <img src={Airplane} className='w-8' />
                 <div className='font-bold text-sm'>
@@ -321,7 +321,7 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100'>
+            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <FaCcVisa className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -330,7 +330,7 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100'>
+            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <RiCustomerServiceFill className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -339,7 +339,7 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100'>
+            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <GiCruiser className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -348,7 +348,7 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100'>
+            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <ImGift className='text-2xl' />
                 <div className='font-bold text-sm'>

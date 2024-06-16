@@ -63,9 +63,9 @@ function Login() {
 
     return (
         <div className="container pt-3 mt-10 flex justify-center items-center">
-            <div className="mainDiv w-2/3 items-end flex border rounded-3xl shadow-lg p-8">
+            <div className="mainDiv w-2/3 mb-20 items-end flex border rounded-3xl shadow-lg p-8">
                 <div className="w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
-                    {/* Slider component */}
+                    
                     <Slider className='flex justify-center items-center' {...settings}>
                         <div>
                             <img src={img1} className='mx-auto mt-5' alt="Slide 1" />

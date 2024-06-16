@@ -17,6 +17,7 @@ import Booktrain from "./Booktrain"
 import Bus from "./Bus"
 import Buseslist from "./Buseslist"
 import PaymentComponent from "./Payment"
+import TicketConfirmation from "./TicketConfirmation"
 
 function App() {
   const [flightData, setFlightData] = useState([]);
@@ -51,9 +52,9 @@ function App() {
           flightData={flightData}
           destination={destination}
         />} />
-
         <Route path="/bookflight" element={<Bookflight flightDetails={flightDetails} passengerDetails={passengerDetails} setPaymentDetails={setPaymentDetails}/>} />
         <Route path="/login" element={<Login />} />
+        <Route path="/ticketconfirm" element={<TicketConfirmation />} />
         <Route path="/register" element={<Register />} />
         <Route path="/offers" element={<Offers />} />
         <Route path="/bus" element={<Bus setBusList={setBusList} />} />

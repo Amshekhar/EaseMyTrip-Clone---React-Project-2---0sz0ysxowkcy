@@ -58,10 +58,10 @@ function Register() {
     };
 
     return (
-        <div className="container mt-10 w-full pt-5 bg-transparent flex justify-center items-center">
-            <div className="register shadow-md pl-8 py-4 justify-center rounded-3xl w-2/3 flex items-end relative"> {/* Updated container */}
+        <div className="container mt-10 w-full pt-5 bg-transparent flex justify-center mb-20 items-center">
+            <div className="register shadow-md pl-8 py-4 justify-center border rounded-3xl w-2/3 flex items-end relative">
                 <div className="w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
-                    {/* Slider component */}
+                   
                     <Slider className='flex justify-center items-center' {...settings}>
                         <div>
                             <img src={img1} className='mx-auto mt-5' alt="Slide 1" />

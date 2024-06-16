@@ -10,6 +10,7 @@ import { IoSend } from "react-icons/io5";
 import { LuAlarmClock } from "react-icons/lu";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 function Flights({ setFlightDetails, source, destination, flightData }) {
@@ -23,14 +24,22 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
   });
   const [sortOption, setSortOption] = useState(null);
   const navigate = useNavigate();
+  const token = sessionStorage.getItem('token')
+  // console.log(token);
 
   const handleFlightDetailsClick = (index) => {
     setSelectedFlightIndex(index);
   };
 
   const handleFlightBooking = (flight) => {
-    setFlightDetails(flight);
-    navigate('/bookFlight');
+    if (token) {
+      setFlightDetails(flight);
+      navigate('/bookFlight');
+    }else{
+      toast.info("Please Login First!")
+      navigate('/login');
+    } 
+    
   };
 
   let name = '';
@@ -218,7 +227,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
 
           </div>
           <div className='flex-1'>
-            {sortedFilteredFlights.map((flight, index) => (
+            {sortedFilteredFlights && sortedFilteredFlights.length==0?(<div className='text-4xl font-bold py-28 mt-2 text-center bg-white border rounded-lg shadow-md '>Oop's! No flight found in this price range!</div>) : (sortedFilteredFlights.map((flight, index) => (
               <div key={index} className='bg-white mt-2 mb-4 hover:shadow-xl cursor-pointer rounded-xl shadow-md'>
                 <div className='flex text-xs p-1 gap-1 font-semibold items-center bg-gradient-to-r from-yellow-200 w-1/6 to-white'>
                   <img className='w-4' src={mealicon} /><p>Enjoy Free Meals</p>
@@ -554,7 +563,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
 
                 </div>}
               </div>
-            ))}
+            )))}
           </div>
         </div>
 
