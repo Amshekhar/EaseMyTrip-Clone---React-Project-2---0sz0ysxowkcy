@@ -30,6 +30,7 @@ import { FaCcVisa } from "react-icons/fa";
 import { RiCustomerServiceFill } from "react-icons/ri";
 import { GiCruiser } from "react-icons/gi";
 import { ImGift } from "react-icons/im";
+import { toast } from 'react-toastify';
 
 
 const NavBar = () => {
@@ -63,23 +64,23 @@ const NavBar = () => {
             <img src={logo} className='w-36' />
           </Link>
           <div className='flex gap-5'>
-            <div className='cursor-pointer'>
+            <div className='cursor-not-allowed'>
               <p className='font-semibold flex gap-1 items-center text-sm'> <FaUserTie className='' />EMTMate</p>
               <p className='text-[11px] text-gray-600'>Agent travel solution</p>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><PiBagBold />EMTDesk</p>
               <p className='text-[11px] text-gray-600'>Corporate travel program</p>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><IoDiamondOutline />EMTRoyale</p>
               <p className='text-[11px] text-gray-600'>For Prime Members</p>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><img className='w-4' src={indiaMap} />Explore Bharat</p>
               <p className='text-[11px] text-gray-600'>A Tour to India</p>
             </div>
-            <div className='cursor-pointer'>
+            <div className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><LiaCrownSolid />Join EMTPro</p>
               <p className='text-[11px] text-gray-600'>Enjoy More Benefits</p>
             </div>
@@ -109,7 +110,7 @@ const NavBar = () => {
 
 
       </div>
-      <div>
+      <div className=' border shadow-lg'>
         <div className='w-9/12 mx-auto flex gap-1 my-1 text-sm'>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flights' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
@@ -127,7 +128,7 @@ const NavBar = () => {
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flightHotels' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('flightHotels')}
+            onClick={() => toast.info("This feature will update soon!")}
           >
             <img src={flighthotel} className='w-8' alt='Flight + Hotels Icon' />
             <p className='mt-1'>Flight + Hotels</p>
@@ -148,21 +149,21 @@ const NavBar = () => {
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'holidays' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('holidays')}
+            onClick={() => toast.info("This feature will update soon!")}
           >
             <img src={holiday} className='w-8 h-8' alt='Holidays Icon' />
             <p className='mt-1'>Holidays</p>
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'cabs' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('cabs')}
+            onClick={() => toast.info("This feature will update soon!")}
           >
             <img src={cab} className='w-7 h-7' alt='Cabs Icon' />
             <p className='mt-1'>Cabs</p>
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'activities' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('activities')}
+            onClick={() => toast.info("This feature will update soon!")}
           >
             <FaRegLightbulb className='w-7 h-6 mt-1' />
             <p className='mt-1'>Activities</p>
@@ -195,7 +196,7 @@ const NavBar = () => {
                   className="block px-4 pt-2 hover:bg-sky-100 "
                   role="menuitem"
                 >
-                  <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
+                  <div className='border-b-2 pb-3 flex gap-3 cursor-not-allowed justify-start items-center'>
                     <LiaUserEditSolid className='text-3xl' />
                     <div className="font-bold text-sm">My Profile
                       <p className=' text-xs font-semibold'>Manage your profile and password</p>
@@ -204,7 +205,7 @@ const NavBar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="block px-4 pt-2  hover:bg-sky-100 "
+                  className="block px-4 pt-2  cursor-not-allowed  hover:bg-sky-100 "
                   role="menuitem"
                 >
                   <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
@@ -217,7 +218,7 @@ const NavBar = () => {
 
                 <Link
                   to="/register"
-                  className="block px-4 pt-2 hover:bg-sky-100 "
+                  className="block px-4 pt-2 cursor-not-allowed  hover:bg-sky-100 "
                   role="menuitem"
                 >
                   <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>

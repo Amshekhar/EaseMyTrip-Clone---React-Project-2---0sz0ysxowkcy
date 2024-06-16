@@ -4,12 +4,14 @@ import { GrNext } from "react-icons/gr";
 import { MdPeopleAlt } from "react-icons/md";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdInfoOutline } from "react-icons/md";
+import { toast } from 'react-toastify';
 
 function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
     const navigate = useNavigate();
+    const token = sessionStorage.getItem('token')
 
-    console.log(guestDetails);
-    console.log(hotelBookingData);
+    // console.log(guestDetails);
+    // console.log(hotelBookingData);
 
     const checkIn = new Date(guestDetails.checkIn);
     const checkOut = new Date(guestDetails.checkOut);
@@ -18,6 +20,11 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
     // console.log((totalNights));
 
     const handleHotelBooking = ()=>{
+        if(!token){
+            toast.info("Please login first!")
+            navigate('/login');
+            return
+        }
         setPaymentDetails({fare:(hotelBookingData.roomDetails.costDetails.taxesAndFees * totalNights * guestDetails.roomCount) + (hotelBookingData.roomDetails.costPerNight * totalNights * guestDetails.roomCount - (hotelBookingData.roomDetails.costDetails.discount))})
 
         navigate('/payment', { state: { hotelBookingData, guestDetails } });
@@ -25,7 +32,7 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
 
     // Check if hotelBookingData is defined and has the necessary properties
     if (!hotelBookingData || !hotelBookingData.name || !hotelBookingData.location || !hotelBookingData.images) {
-        return <div>Loading...</div>;
+        return <div className='text-4xl font-bold w-full text-center py-64'>Loading...</div>;
     }
 
     return (

@@ -91,7 +91,12 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
     };
 
     const handleBookHotel = (hotelData, room) => {
-        console.log(room);
+        // console.log(room);
+        if(!token){
+            toast.info("Please login first!")
+            navigate('/login');
+            return
+        }
         setHotelBookingData(hotelData);
         setHotelBookingData(prevDetails => ({
             ...prevDetails,
@@ -157,7 +162,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                     <div key={index} className='flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
                                         <div className='w-1/3'>
                                             <LazyLoad className='relative' height={200} offset={100}>
-                                                <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl' src={hotel.images[0]} />
+                                                <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl object-cover' src={hotel.images[0]} />
                                                 <div className='top-1 right-3 absolute font-semibold text-[10px] bg-blue-700 rounded-full py-1 px-3 text-white'>
                                                     DEAL OF THE DAY
                                                 </div>
@@ -200,8 +205,8 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                             <div className='font-bold text-2xl my-2'>₹ {Math.round(hotel.avgCostPerNight)}</div>
                                             <p className='text-xs font-semibold text-gray-400'>+ {hotel.rating * 100} Taxes & fees</p>
                                             <p className='text-xs font-semibold text-gray-400'>Per Night</p>
-                                            <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 mb-2 rounded-full'>View Room</button>
-                                            <p className='text-sky-500 w-48 font-bold text-sm text-center'>Login & Save More</p>
+                                            <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 cursor-pointer mb-2 hover:scale-[1.05] rounded-full'>View Room</button>
+                                            <p className='text-sky-500 w-48 font-bold text-sm text-center'>Hurry Up! & Save More</p>
                                         </div>
                                     </div>
                                 ))
@@ -218,7 +223,6 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                     <h1 className='text-xl font-bold'>{hotelData.name}</h1>
                     <div>
                         <p className='text-gray-400 font-bold text-sm'>{hotelData.location}</p>
-
                     </div>
                     <div className='flex'>
                         {hotelData && hotelData?.images && hotelData?.images?.length > 0 && (<div className='flex gap-2 w-2/3'>
@@ -309,7 +313,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 </div>
                             </div>
                             <div className='w-1/4 py-3 pr-8 flex flex-col items-end'>
-                                <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                               <a href='#'> <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button></a>
                                 <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
                             </div>
                         </div>

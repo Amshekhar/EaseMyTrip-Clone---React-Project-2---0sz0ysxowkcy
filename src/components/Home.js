@@ -52,7 +52,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   const [airportFrom, setAirportFrom] = useState({});
   const [airportTo, setAirportTo] = useState({});
   const [apList, setApList] = useState([]);
-  const [adults, setAdults] = useState(0);
+  const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [passanger, setPassanger] = useState(false);
 

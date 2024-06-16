@@ -19,7 +19,7 @@ const PaymentComponent = ({paymentDetails}) => {
     const handlePaymentfromUpi = () => {
         if (upi !== '' && upi.includes('@')) {
             console.log("UPI Payment Done");
-            navigate('/');
+            navigate('/ticketconfirm');
         } else {
             console.error('Enter correct UPI');
         }
@@ -33,7 +33,7 @@ const PaymentComponent = ({paymentDetails}) => {
     
         if (isValidCardNo && isValidCVV && isValidMonth && isValidYear) {
             console.log("Card Payment Done");
-            navigate('/');
+            navigate('/ticketconfirm');
         } else {
             console.error('Enter correct card details');
         }

@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useSpring, animated } from 'react-spring';
+import { useSpring, animated, useTrail } from 'react-spring';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 80vh;
   background: #f0f4f8;
 `;
 
@@ -33,41 +33,39 @@ const Message = styled.p`
   margin: 0 0 20px;
 `;
 
-const Button = styled.button`
+const Button = styled(animated.button)`
   background: #4caf50;
   color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: #45a049;
-  }
+  font-size: 16px;
 `;
 
 const TicketConfirmation = () => {
-  const fadeInProps = useSpring({
+  const cardProps = useSpring({
     opacity: 1,
-    transform: 'translateY(0)',
-    from: { opacity: 0, transform: 'translateY(-20px)' },
+    transform: 'scale(1) rotate(0deg)',
+    from: { opacity: 0, transform: 'scale(0.8) rotate(-15deg)' },
+    config: { tension: 200, friction: 20 },
   });
 
-  const buttonProps = useSpring({
-    to: { opacity: 1, transform: 'scale(1)' },
-    from: { opacity: 0, transform: 'scale(0.9)' },
-    delay: 500,
+  const buttonTrail = useTrail(1, {
+    opacity: 1,
+    transform: 'scale(1)',
+    from: { opacity: 0, transform: 'scale(0.5)' },
+    delay: 700,
   });
 
   return (
     <Container>
-      <ConfirmationCard style={fadeInProps}>
+      <ConfirmationCard style={cardProps}>
         <Title>Ticket Confirmed!</Title>
         <Message>Your ticket has been successfully confirmed.</Message>
-        <animated.div style={buttonProps}>
-          <Button>View Ticket</Button>
-        </animated.div>
+        {buttonTrail.map((style, index) => (
+          <Button key={index} style={style}>
+            Thanks for trusting US! 🙏😊
+          </Button>
+        ))}
       </ConfirmationCard>
     </Container>
   );
