@@ -1,44 +1,25 @@
-import React, { useState } from 'react';
 import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 
 function Trainlistinfo({ trainData, setTrain, setCoach }) {
     const navigate = useNavigate();
     const [sortOption, setSortOption] = useState('priceLowToHigh');
     const [filters, setFilters] = useState({
-        fareClasses: {
-            SL: false,
-            '3A': false,
-            '2A': false,
-            '1A': false,
-        },
-        trainTypes: {
-            Rajdhani: false,
-            Duranto: false,
-            Others: false,
-        },
+        timeOfDay: [],
+        fareClasses: [],
+        trainTypes: [],
     });
 
-    const getCoachDescription = (coachType) => {
-        switch (coachType) {
-            case 'SL':
-                return 'Sleeper Class';
-            case 'EA':
-                return 'Executive Class';
-            case '2S':
-                return 'Second Seater';
-            case '1A':
-                return 'First AC';
-            case '3E':
-                return 'Third Economy';
-            case '2A':
-                return 'Second AC';
-            case 'CC':
-                return 'Chair Car';
-            default:
-                return coachType;
-        }
+    const coachDescriptions = {
+        'SL': 'Sleeper Class',
+        'EA': 'Executive Class',
+        '2S': 'Second Seater',
+        '1A': 'First AC',
+        '3E': 'Third Economy',
+        '2A': 'Second AC',
+        'CC': 'Chair Car'
     };
 
     const coachMultipliers = {
@@ -48,204 +29,181 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
         'CC': 1.5,
         '2A': 1.7,
         '1A': 1.9,
-        'EA': 2.1,
+        'EA': 2.1
     };
 
     const handleTrainBooking = (baseFare, coachType, train, coach) => {
         setTrain(train);
-        setCoach((prev) => ({
-            ...prev,
-            coach,
-            finalFare: Math.round(baseFare * (coachMultipliers[coachType] || 1))
-        }));
+        setCoach({ ...coach, finalFare: Math.round(baseFare * (coachMultipliers[coachType] || 1)) });
         navigate("/booktrain");
     };
 
-    const calculateFare = (baseFare, coachType) => {
-        return Math.round(baseFare * (coachMultipliers[coachType] || 1));
+    const handleSortChange = (e) => {
+        setSortOption(e.target.value);
     };
 
-    const sortTrainData = () => {
-        switch (sortOption) {
-            case 'priceLowToHigh':
-                return [...trainData].sort((a, b) => a.fare - b.fare);
-            case 'priceHighToLow':
-                return [...trainData].sort((a, b) => b.fare - a.fare);
-            case 'availabilityHighToLow':
-                return [...trainData].sort((a, b) => {
-                    const totalSeatsA = a.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0);
-                    const totalSeatsB = b.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0);
-                    return totalSeatsB - totalSeatsA;
+    const handleFilterChange = (type, value) => {
+        setFilters(prev => ({
+            ...prev,
+            [type]: prev[type].includes(value) ? prev[type].filter(item => item !== value) : [...prev[type], value]
+        }));
+    };
+
+    const applyFilters = (data) => {
+        let filteredData = data;
+
+        if (filters.timeOfDay.length > 0) {
+            filteredData = filteredData.filter(train => {
+                const hour = new Date(train.departureTime).getHours();
+                return filters.timeOfDay.some(range => {
+                    if (range === 'Early Morning' && hour >= 0 && hour < 6) return true;
+                    if (range === 'Morning' && hour >= 6 && hour < 12) return true;
+                    if (range === 'Afternoon' && hour >= 12 && hour < 18) return true;
+                    if (range === 'Night' && hour >= 18 && hour < 24) return true;
+                    return false;
                 });
-            case 'departureTimeHighToLow':
-                return [...trainData].sort((a, b) => new Date(b.departureTime) - new Date(a.departureTime));
-            default:
-                return trainData;
+            });
         }
-    };
 
-    const handleSortChange = (option) => {
-        setSortOption(option);
-    };
+        if (filters.fareClasses.length > 0) {
+            filteredData = filteredData.filter(train =>
+                train.coaches.some(coach => filters.fareClasses.includes(coach.coachType))
+            );
+        }
 
-    const applyFilters = () => {
-        let filteredData = [...trainData];
-
-        // Apply fare class filters
-        filteredData = filteredData.filter(train => {
-            for (let fareClass in filters.fareClasses) {
-                if (filters.fareClasses[fareClass] && train.coaches.some(coach => coach.coachType === fareClass)) {
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        // Apply train type filters
-        filteredData = filteredData.filter(train => {
-            for (let trainType in filters.trainTypes) {
-                if (filters.trainTypes[trainType] && train.trainType === trainType) {
-                    return true;
-                }
-            }
-            return false;
-        });
+        if (filters.trainTypes.length > 0) {
+            filteredData = filteredData.filter(train => filters.trainTypes.includes(train.trainType));
+        }
 
         return filteredData;
     };
 
-    const handleFilterChange = (category, value) => {
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            [category]: {
-                ...prevFilters[category],
-                [value]: !prevFilters[category][value],
-            },
-        }));
+    const sortTrainData = (data) => {
+        switch (sortOption) {
+            case 'priceLowToHigh':
+                return data.sort((a, b) => a.fare - b.fare);
+            case 'priceHighToLow':
+                return data.sort((a, b) => b.fare - a.fare);
+            case 'availabilityHighToLow':
+                return data.sort((a, b) =>
+                    b.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0) -
+                    a.coaches.reduce((acc, coach) => acc + coach.numberOfSeats, 0)
+                );
+            case 'departureTimeHighToLow':
+                return data.sort((a, b) => new Date(b.departureTime) - new Date(a.departureTime));
+            default:
+                return data;
+        }
     };
 
-    const filteredTrainData = applyFilters(); // Applying sorting
+    const sortedAndFilteredData = sortTrainData(applyFilters(trainData));
 
     return (
         <div>
-            <div className='h-40 bg-blue-400'></div>
-            <div className='flex w-[84%] pt-10 mx-auto justify-between'>
-                <div className='w-[20%] bg-gray-100 h-52 border'>
-                    <select
-                        value={sortOption}
-                        onChange={(e) => handleSortChange(e.target.value)}
-                        className='p-1 text-sm w-full rounded-full border'
-                    >
-                        <option value='priceLowToHigh'>Price (Low to High)</option>
-                        <option value='priceHighToLow'>Price (High to Low)</option>
-                        <option value='availabilityHighToLow'>Availability (High to Low)</option>
-                        <option value='departureTimeHighToLow'>Departure Time (High to Low)</option>
-                    </select>
-                    {/* Add filters here */}
-                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md w-64 text-sm mt-4">
-                        <div className="flex justify-between items-center mb-4">
-                            <h2 className="font-semibold">Filter By</h2>
-                            <a href="#" className="text-blue-500 text-xs">Reset All</a>
+            <div className='h-20 bg-blue-400'></div>
+            <div className="bg-sky-50">
+                <div className='flex w-[84%] pt-10 mx-auto justify-between'>
+                    <div className='w-[20%] bg-white rounded-md shadow-md h-60 border pt-4'>
+                        <div className="flex justify-between  mx-4 items-center">
+                            <p className="font-bold">Sort by:</p>
+                            <select value={sortOption} onChange={handleSortChange} className='p-1 text-sm w-2/3 rounded-full border-2 border-blue-400'>
+                                <option value='priceLowToHigh'>Price (Low to High)</option>
+                                <option value='priceHighToLow'>Price (High to Low)</option>
+                                <option value='availabilityHighToLow'>Availability (High to Low)</option>
+                                <option value='departureTimeHighToLow'>Departure Time (High to Low)</option>
+                            </select>
                         </div>
-                        <div className="mb-4">
-                            <button className="w-full text-left flex justify-between items-center font-semibold mb-2">
-                                Fare Classes
-                                <span>▾</span>
-                            </button>
+                        <div className=" dark:bg-gray-800 p-4 rounded-lg w-64 text-sm">
+                            <div className="flex justify-between items-center mb-4">
+                                <h2 className="font-semibold">Filter By</h2>
+                                <button onClick={() => setFilters({ timeOfDay: [], fareClasses: [], trainTypes: [] })} className="text-blue-500 text-xs">Reset All</button>
+                            </div>
+                            {/* <div className="mb-4">
                             <div className="pl-4">
-                                {Object.keys(filters.fareClasses).map(fareClass => (
-                                    <label key={fareClass} className="flex items-center mb-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={filters.fareClasses[fareClass]}
-                                            onChange={() => handleFilterChange('fareClasses', fareClass)}
-                                            className="mr-2"
-                                        />
-                                        {getCoachDescription(fareClass)} ({fareClass})
+                                {['Early Morning', 'Morning', 'Afternoon', 'Night'].map(time => (
+                                    <label key={time} className="flex items-center mb-2">
+                                        <input type="checkbox" className="mr-2" onChange={() => handleFilterChange('timeOfDay', time)} checked={filters.timeOfDay.includes(time)} />
+                                        {time}
                                     </label>
                                 ))}
                             </div>
-                        </div>
-                        <div className="mb-4">
-                            <button className="w-full text-left flex justify-between items-center font-semibold mb-2">
-                                Train Types
-                                <span>▾</span>
-                            </button>
+                        </div> */}
+                            <div className="mb-4">
+                                <div className="pl-4">
+                                    {['SL', '3A', '2A', '1A'].map(fareClass => (
+                                        <label key={fareClass} className="flex items-center mb-2">
+                                            <input type="checkbox" className="mr-2" onChange={() => handleFilterChange('fareClasses', fareClass)} checked={filters.fareClasses.includes(fareClass)} />
+                                            {coachDescriptions[fareClass]} ({fareClass})
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                            {/* <div className="mb-4">
                             <div className="pl-4">
-                                {Object.keys(filters.trainTypes).map(trainType => (
+                                {['OTHERS', 'Rajdhani', 'Duranto'].map(trainType => (
                                     <label key={trainType} className="flex items-center mb-2">
-                                        <input
-                                            type="checkbox"
-                                            checked={filters.trainTypes[trainType]}
-                                            onChange={() => handleFilterChange('trainTypes', trainType)}
-                                            className="mr-2"
-                                        />
+                                        <input type="checkbox" className="mr-2" onChange={() => handleFilterChange('trainTypes', trainType)} checked={filters.trainTypes.includes(trainType)} />
                                         {trainType}
                                     </label>
                                 ))}
                             </div>
+                        </div> */}
                         </div>
                     </div>
-                </div>
-                <div className='w-[78%]'>
-                    {trainData && trainData.map((train, index) => (
-                        <div key={index} className='rounded mb-5 border'>
-                            <div className='bg-blue-50 flex py-1 px-2 justify-between'>
-                                <div className='text-sm'>NDLS -- PUNE</div>
-                                <div className='text-xs'>Runs on: {train.daysOfOperation.join(', ')}</div>
-                            </div>
-                            <div className='flex border-b pb-5 my-5'>
-                                <div className='w-1/5 px-3'>
-                                    <div className='font-bold '>{train.trainName}</div>
-                                    <div className='text-sm font-semibold border w-14 rounded bg-blue-50 p-1 '>{train.trainNumber}</div>
+                    <div className='w-[78%]'>
+                        {sortedAndFilteredData.map((train, index) => (
+                            <div key={index} className='rounded-lg shadow-lg bg-white mb-5 border'>
+                                <div className='bg-blue-100 flex py-1 px-4 justify-between'>
+                                    <div className='text-sm'>NDLS -- PUNE</div>
+                                    <div className='text-xs'>Runs on: {train.daysOfOperation.join(', ')}</div>
                                 </div>
-                                <div className='w-1/5'>
-                                    <p className='font-bold text-xl'>{train.arrivalTime}</p>
-                                    <p className='text-gray-500 font-semibold text-xs'>{train.source}</p>
-                                    <p className='text-xs text-gray-500'>-</p>
-                                    <p className='text-xs text-gray-500'></p>
-                                </div>
-                                <div className='w-2/5 flex flex-col justify-center items-center'>
-                                    <p className='text-center text-xs text-gray-500'>{train.travelDuration}</p>
-                                    <p className='text-xs relative my-3 justify-center text-gray-400 flex items-center'>
-                                        <GoDotFill />-----------------------------------
-                                        <GoDotFill />
-                                        <PiAirplaneTakeoffLight className='text-center absolute border bg-white rounded-full h-7 border-gray-400 p-1 inline w-7' />
-                                    </p>
-                                    <div className='font-bold text-xs text-blue-600'>View Route</div>
-                                </div>
-                                <div className='w-1/5'>
-                                    <p className='font-bold text-xl'>{train.departureTime}</p>
-                                    <p className='text-gray-500 font-semibold text-xs'>{train.destination}</p>
-                                    <p className='text-xs text-gray-500'>-</p>
-                                    <p className='text-xs text-gray-500'></p>
-                                </div>
-                            </div>
-                            <div className='flex m-2 justify-between'>
-                                <p>Seat Availability</p>
-                                <div className='flex gap-2'>
-                                    <p>Quota</p>
-                                    <select className='p-1 text-sm w-20 rounded-full border'>
-                                        <option className='text-xs'>General</option>
-                                        <option className='text-xs'>Senior Citizen</option>
-                                        <option className='text-xs'>Ladies Quota</option>
-                                        <option className='text-xs'>DP</option>
-                                        <option className='text-xs'>Tatkal</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='flex'>
-                                {train.coaches.map((coach, index) => (
-                                    <div key={index} className='bg-orange-50 flex justify-center items-center flex-col p-2 m-1 w-40 rounded'>
-                                        <p className='text-xs text-gray-500'>{getCoachDescription(coach.coachType)} {`(${coach.coachType})`}</p>
-                                        <p className='text-sm font-bold'>₹{calculateFare(train.fare, coach.coachType)}</p>
-                                        <p className='text-sm text-green-500'>AVL {coach.numberOfSeats}</p>
-                                        <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white bg-orange-600 rounded-full px-2'>Book Now</button>
+                                <div className='flex bg-white border-b pb-5 my-5'>
+                                    <div className='w-1/5 px-3'>
+                                        <div className='font-bold '>{train.trainName}</div>
+                                        <div className='text-sm font-semibold border w-14 rounded bg-blue-50 p-1 '>{train.trainNumber}</div>
                                     </div>
-                                ))}
+                                    <div className='w-1/5'>
+                                        <p className='font-bold text-xl'>{train.arrivalTime}</p>
+                                        <p className='text-gray-500 font-semibold text-xs'>{train.source}</p>
+                                    </div>
+                                    <div className='w-2/5 flex flex-col justify-center items-center'>
+                                        <p className='text-center text-xs text-gray-500'>{train.travelDuration}</p>
+                                        <p className='text-xs relative my-3 justify-center text-gray-400 flex items-center'>
+                                            <GoDotFill />-----------------------------------
+                                            <GoDotFill />
+                                            <PiAirplaneTakeoffLight className='text-center absolute border bg-white rounded-full h-7 border-gray-400 p-1 inline w-7' />
+                                        </p>
+                                        <div className='font-bold text-xs text-blue-600'>View Route</div>
+                                    </div>
+                                    <div className='w-1/5'>
+                                        <p className='font-bold text-xl'>{train.departureTime}</p>
+                                        <p className='text-gray-500 font-semibold text-xs'>{train.destination}</p>
+                                    </div>
+                                </div>
+                                <div className='flex m-2 bg-white justify-between'>
+                                    <p>Seat Availability</p>
+                                    <div className='flex gap-2'>
+                                        <p>Quota</p>
+                                        <select className='p-1 text-sm w-20 rounded-full border'>
+                                            {['General', 'Senior Citizen', 'Ladies Quota', 'DP', 'Tatkal'].map(quota => (
+                                                <option key={quota} className='text-xs'>{quota}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className='flex p-2'>
+                                    {train.coaches.map((coach, index) => (
+                                        <div key={index} className='bg-orange-50 flex justify-center items-center flex-col p-2 m-1 w-40 rounded'>
+                                            <p className='text-xs text-gray-500'>{coachDescriptions[coach.coachType]} ({coach.coachType})</p>
+                                            <p className='text-sm font-bold'>₹{Math.round(train.fare * (coachMultipliers[coach.coachType] || 1))}</p>
+                                            <p className='text-sm text-green-500'>AVL {coach.numberOfSeats}</p>
+                                            <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

@@ -219,8 +219,8 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
             <div className="flex justify-between items-center">
               <div className='text-xs'>
                 <button className="bg-white text-blue-500 font-semibold rounded-full px-4 py-1">One Way</button>
-                <button className="text-gray-200 font-semibold py-1 px-4 ">Round Trip</button>
-                <button className="text-gray-200 font-semibold py-1 px-4">Multicity</button>
+                <button className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed ">Round Trip</button>
+                <button className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Multicity</button>
               </div>
               <p className='text-white font-bold text-xl'>Search Lowest Price</p>
             </div>
@@ -262,7 +262,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                     <p className='text-gray-500 text-xs'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long' }) : currentDay}</p>
                   </div>
 
-                  <div className='w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                  <div className='w-1/3 py-2 hover:bg-sky-100 cursor-not-allowed pl-3'>
                     <p className='text-gray-500 text-xs'>RETURN DATE</p>
                     <div className='flex'>
                       <p className='text-gray-500 w-28 text-xs'>Book a round trip to save more</p>
@@ -305,7 +305,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 </div>
               </div>
               <div className="text-right mt-4">
-                <button className="border  text-white py-1 bg-sky-400 px-2 text-sm rounded-sm"><img className='inline mr-2 w-6' src='https://www.easemytrip.com/images/flight-img/web-checkin-icon-v1.svg' />Web Check-In</button>
+                <button className="border  text-white py-1 bg-sky-400 px-2 text-sm rounded-sm"><img className='inline mr-2 w-6 cursor-not-allowed' src='https://www.easemytrip.com/images/flight-img/web-checkin-icon-v1.svg' />Web Check-In</button>
               </div>
             </div>
 
@@ -388,14 +388,14 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
               <img src={important} className='w-10' />
               <div className=''>
                 <p className='font-semibold '>Important Info:</p>
-                <p className='text-sm'>To cancel/claim refund or reschedule/modify your booking. <span className='text-blue-400 block'>Click here...</span></p>
+                <p className='text-sm'>To cancel/claim refund or reschedule/modify your booking. <span className='text-blue-400 block cursor-not-allowed'>Click here...</span></p>
               </div>
             </div>
             <div className='flex gap-6 shadow-md p-4 w-1/2 rounded-lg'>
               <img src={important} className='w-10' />
               <div className=''>
                 <p className='font-semibold '>Travel Guide</p>
-                <p className='text-sm'>Get latest information on airlines & airports guidelines, state-wise quarantine rules, travel checklists, web-checkin etc.<span className='text-blue-400'>Click here...</span></p>
+                <p className='text-sm'>Get latest information on airlines & airports guidelines, state-wise quarantine rules, travel checklists, web-checkin etc.<span className='text-blue-400 cursor-not-allowed'>Click here...</span></p>
               </div>
             </div>
           </div>
@@ -465,7 +465,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 <p className='px-3 w-36 text-xs rounded-full py-1 bg-blue-500'>Holiday Destinations</p>
                 <p>Embracing Sacred Vibes With Hindu New Year 2024</p>
               </div>
-              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2'>
+              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2  cursor-not-allowed'>
                 <p>Read More</p>
                 <FaArrowRightLong className='text-xl' />
               </div>
@@ -477,7 +477,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 <p className='px-3 w-36 text-xs rounded-full py-1 bg-blue-500'>Holiday Destinations</p>
                 <p>Navigate Any City Like A Local: Insider Tips For Seamless Cab Booking</p>
               </div>
-              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2'>
+              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2 cursor-not-allowed'>
                 <p>Read More</p>
                 <FaArrowRightLong className='text-xl' />
               </div>
@@ -489,7 +489,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 <p className='px-3 w-36 text-xs rounded-full py-1 bg-blue-500'>Holiday Destinations</p>
                 <p>Post-Holi Bliss: Top 7 Destinations for a Serene Long Weekend</p>
               </div>
-              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2'>
+              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2 cursor-not-allowed'>
                 <p>Read More</p>
                 <FaArrowRightLong className='text-xl' />
               </div>
@@ -502,7 +502,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 <p className='px-3 w-36 text-xs rounded-full py-1 bg-blue-500'>Holiday Destinations</p>
                 <p>Discovering The Best Places To Visit In March With Family</p>
               </div>
-              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2'>
+              <div className='absolute backdrop-blur-md rounded-b-2xl bottom-0 flex justify-between items-center w-full text-white px-5 text-sm py-2 cursor-not-allowed'>
                 <p>Read More</p>
                 <FaArrowRightLong className='text-xl' />
               </div>
