@@ -146,12 +146,14 @@ function Booktrain({ train, coach, setPaymentDetails }) {
     };
 
     const handleContinue = (e) => {
+
         if (adults.length === 0) {
             toast.info("Please add at least one adult!");
             return;
         }
         if (!isChecked) {
             toast.info('You must agree to the terms and conditions');
+            return;
           }
         setPaymentDetails({ fare: fare + reservationCharge + superFastCharge })
         if (emailError === '' && mobileError === '' && email !== '' && mobile !== '') {

@@ -33,6 +33,11 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
     };
 
     const handleTrainBooking = (baseFare, coachType, train, coach) => {
+        const token = sessionStorage.getItem('token')
+        if (!token) {
+            navigate('/login')
+            return;
+        }
         setTrain(train);
         setCoach({ ...coach, finalFare: Math.round(baseFare * (coachMultipliers[coachType] || 1)) });
         navigate("/booktrain");
@@ -197,7 +202,7 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                                             <p className='text-xs text-gray-500'>{coachDescriptions[coach.coachType]} ({coach.coachType})</p>
                                             <p className='text-sm font-bold'>₹{Math.round(train.fare * (coachMultipliers[coach.coachType] || 1))}</p>
                                             <p className='text-sm text-green-500'>AVL {coach.numberOfSeats}</p>
-                                            <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button>
+                                            <a href="#"> <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button></a>
                                         </div>
                                     ))}
                                 </div>

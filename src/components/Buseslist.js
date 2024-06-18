@@ -7,15 +7,22 @@ import luxury from "../Assets/luxury-buses-v1.png"
 import budgeted from "../Assets/budgeted-bus-v1.png"
 import rated from "../Assets/top-rated-buses-v1.png"
 import safety from "../Assets/ultra-safety-v1.png"
+import { useNavigate } from 'react-router-dom';
 import SeatSelectionPopup from './SeatSelectionPopup';  // Import the new component
 
 function Buseslist({ busList, setPaymentDetails }) {
-    console.log(busList);
+    // console.log(busList);
+    const navigate = useNavigate()
     const [selectedBus, setSelectedBus] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [sortOption, setSortOption] = useState('');
 
     const openSeatSelection = (bus) => {
+        const token = sessionStorage.getItem('token')
+        if (!token) {
+            navigate('/login')
+            return;
+        }
         setSelectedBus(bus);
         setShowPopup(true);
     };

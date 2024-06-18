@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { toast } from 'react-toastify'
 
 
 function Train({ setTrainData }) {
@@ -110,7 +111,7 @@ function Train({ setTrainData }) {
                                 <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
                                     <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
                                     <Select
-                                        className='my-2'
+                                        className='my-2 font-bold'
                                         options={trainCityOptions}
                                         value={destination}
                                         onChange={setDestination}
@@ -205,7 +206,7 @@ function Train({ setTrainData }) {
                 <h1 class="text-3xl font-bold mb-8"><span className='text-sky-500'>Top</span> Train Ticket Routes</h1>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold">NEW DELHI 🚉 JAMMU TAWI</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">NDLS - JAT</p>
@@ -214,7 +215,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">NEW DELHI 🚉 PATNA JN</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">NDLS - PNBE</p>
@@ -223,7 +224,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">HYDERABAD DECAN 🚉 CHENNAI CENTRAL</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">HYB - MAS</p>
@@ -232,7 +233,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">NEW DELHI 🚉 LUCKNOW</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">NDLS - LJN</p>
@@ -241,7 +242,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">JAIPUR 🚉 AHMEDABAD JN</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">JP - ADI</p>
@@ -250,7 +251,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">MUMBAI CENTRAL 🚉 PUNE JN</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">BCT - PUNE</p>
@@ -259,7 +260,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">VIJAYAWADA JN 🚉 CHENNAI CENTRAL</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">BZA - MAS</p>
@@ -268,7 +269,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">HOWRAH JN 🚉 JAIPUR</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">HWH - JP</p>
@@ -277,7 +278,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">PATNA JN 🚉 GUWAHATI</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">PNBE - GHY</p>
@@ -286,7 +287,7 @@ function Train({ setTrainData }) {
                             </button>
                         </div>
                     </div>
-                    <div class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
+                    <div onClick={()=>toast.info("We will update this feature soon!")} class="p-4 border bg-sky-50 border-sky-200 rounded-lg shadow-sm">
                         <h2 class="text-md font-semibold ">INDORE JN 🚉 MUMBAI CENTRAL</h2>
                         <div className='flex justify-between'>
                             <p class="text-md text-sky-400 font-bold">INDB - BCT</p>
