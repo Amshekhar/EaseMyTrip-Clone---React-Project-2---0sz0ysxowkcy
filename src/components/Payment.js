@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCreditCardFill } from "react-icons/bs";
 import css from '../styles/Payment.css'
+import { toast } from 'react-toastify';
 
 const PaymentComponent = ({paymentDetails}) => {
     // console.log(paymentDetails.fare);
@@ -27,7 +28,7 @@ const PaymentComponent = ({paymentDetails}) => {
             console.log("UPI Payment Done");
             navigate('/ticketconfirm');
         } else {
-            console.error('Enter correct UPI');
+            toast.error('Enter correct UPI');
         }
     };
 
@@ -43,10 +44,10 @@ const PaymentComponent = ({paymentDetails}) => {
         const isValidYear = /^\d{1,2}$/.test(debitdata.Expiryyear) && parseInt(debitdata.Expiryyear, 10) >= new Date().getFullYear() % 100;
     
         if (isValidCardNo && isValidCVV && isValidMonth && isValidYear) {
-            console.log("Card Payment Done");
+            toast.success("Card Payment Done");
             navigate('/ticketconfirm');
         } else {
-            console.error('Enter correct card details');
+            toast.error('Enter correct card details');
         }
     };
 
