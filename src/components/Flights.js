@@ -254,7 +254,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                       <p className='ml-5 text-xs text-gray-500'>{flight.stops}-stops</p>
                     </div>
                   </div>
-                  <div className='w-6/12 flex justify-between items-start'>
+                  <div className='btn w-6/12 flex justify-between items-start'>
                     <div>
                       <p className=' font-bold text-xl'>{flight.arrivalTime}</p>
                       <p className='text-sm text-gray-600'>{destination.city}</p>
@@ -264,7 +264,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                       <p className='text-blue-400 text-xs font-semibold py-1 border border-blue-400 rounded-full px-3 cursor-not-allowed'>+ More Fare</p>
                       <p className='font-semibold text-xs text-green-600'>Get Rs.400 OFF with BOOKNOW</p>
                     </div>
-                    <button onClick={() => handleFlightBooking(flight)} className='btn bg-orange-500 font-bold text-white rounded-full py-1 px-3'>BOOK NOW</button>
+                    <button onClick={() => handleFlightBooking(flight)} className=' bg-orange-500 font-bold text-white rounded-full py-1 px-3'>BOOK NOW</button>
                   </div>
                 </div>
                 <div onClick={() => handleFlightDetailsClick(index)} className='bg-gray-100 py-1 rounded-b-xl px-3 text-sm text-blue-500'>

@@ -11,15 +11,14 @@
         padding: 10px;
     }
     .flight-list{
-        width: 155vw;
+        width: 172vw;
         padding: 0;
-        /* overflow-x: scroll; */
     }
     .meal{
         width: 35vw;
     }
     .pl-6{
-        padding: 10px;
+        padding-left: 35px;
     }
     .duration-div{
         gap: 10px;
