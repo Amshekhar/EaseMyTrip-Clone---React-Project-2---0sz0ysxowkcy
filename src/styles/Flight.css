@@ -1,0 +1,37 @@
+@media (max-width:768px){
+    .hide{
+        display: none;
+    }
+    .main-container{
+        margin-left: 0px;
+        overflow-x: scroll;
+    }
+    .flight-list-container{
+        width: 160vw;
+        padding: 10px;
+    }
+    .flight-list{
+        width: 155vw;
+        padding: 0;
+        /* overflow-x: scroll; */
+    }
+    .meal{
+        width: 35vw;
+    }
+    .pl-6{
+        padding: 10px;
+    }
+    .duration-div{
+        gap: 10px;
+        padding: 10px;
+        justify-content: start;
+    }
+    .price{
+        margin-left: 20px;
+    }
+    .btn{
+        text-wrap: nowrap;
+    }
+    /* .flight-div{
+    } */
+}

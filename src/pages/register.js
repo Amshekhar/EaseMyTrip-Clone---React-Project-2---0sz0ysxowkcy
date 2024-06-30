@@ -7,6 +7,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import img1 from './amzdeal.png';
 import img2 from './emtcash.png';
 import img3 from './freebooking.png';
+import css from '../styles/Register.css'
 
 function Register() {
     const navigate = useNavigate();
@@ -60,7 +61,7 @@ function Register() {
     return (
         <div className="container mt-10 w-full pt-5 bg-transparent flex justify-center mb-20 items-center">
             <div className="register shadow-md pl-8 py-4 justify-center border rounded-3xl w-2/3 flex items-end relative">
-                <div className="w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
+                <div className="image-slider w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
                    
                     <Slider className='flex justify-center items-center' {...settings}>
                         <div>
@@ -81,7 +82,7 @@ function Register() {
                     </Slider>
                 </div>
 
-                <div className='w-1/2 '>
+                <div className='signUp-section w-1/2 '>
                     
 
                     {error && (

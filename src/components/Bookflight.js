@@ -18,6 +18,7 @@ import { MdInfoOutline } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import css from '../styles/BookFlight.css'
 
 
 function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
@@ -32,7 +33,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
         if (!email) {
             toast.error("Please enter your email address")
             return;
-        }else if(passengerDetails.totalGuests==0){
+        } else if (passengerDetails.totalGuests == 0) {
             toast.info("Please add at least one Traveller!")
             navigate('/')
             return;
@@ -71,7 +72,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
 
     return (
         <div className='bg-blue-50 p-2'>
-            <div className='w-[76%] mx-auto'>
+            <div className='flight-booking-main-container w-[76%] mx-auto'>
                 <div className='flex'>
                     <p className='font-bold text-sm text-sky-700 '>1. Review</p>
                     <GrNext className='text-xl text-gray-300 mx-3' />
@@ -80,19 +81,19 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                     <p className=' text-sm  '>3. Payment</p>
 
                 </div>
-                <div className='flex justify-between'>
-                    <div className='w-[70%]'>
+                <div className='flght-booking-section flex justify-between'>
+                    <div className='booking-details w-[70%]'>
                         <div className=' rounded shadow-xl border bg-white'>
                             <div className='bg-sky-200 p-2'>
                                 <p><PiAirplaneTakeoffLight className=' border-2 mr-2 border-black rounded-full h-7 p-1 inline w-7  ' />Flight Detail</p>
                             </div>
-                            <div className='m-4 border rounded shadow-md'>
+                            <div className='flight-details m-4 border rounded shadow-md'>
                                 <span className='bg-gray-700 text-white text-sm font-semibold rounded-br-xl p-1'>DEPART</span>
                                 <div className='m-2 flex items-center'>
                                     <PiAirplaneTakeoffLight className='text-4xl inline' />
                                     <p className='ml-2 text-xl'>{passengerDetails.origin.city} - {passengerDetails.destination.city} |<span className='text-sm text-gray-500'>{passengerDetails.departureDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3)}-{passengerDetails.departureDate.toLocaleDateString('en-US')}</span></p>
                                 </div>
-                                <div className='flex'>
+                                <div className='flight-logo-div flex'>
                                     <div className='w-1/5 p-3'>
                                         <div className='flex gap-5 items-center'>
                                             <img className='w-7' src={getAirlineLogo(flightDetails.flightID)} alt='Airline Logo' />
@@ -101,33 +102,35 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                                 <p className='text-xs mt-1 text-gray-500'>{(flightDetails.flightID).substring(0, 5)}</p>
                                             </div>
                                         </div>
-                                        <div className='bg-gray-200 w-24 text-sm mt-3 font-semibold rounded-full px-2'>Family fare</div>
+                                        <p className='bg-gray-200 w-24 text-sm mt-3 font-semibold rounded-full px-2'>Family fare</p>
                                     </div>
-                                    <div className='w-1/5'>
-                                        <p className='font-bold text-xl'>{flightDetails.departureTime}</p>
-                                        <p className='text-gray-500 font-semibold text-xs'>{passengerDetails.origin.city}({(passengerDetails.origin.city).toUpperCase()})</p>
-                                        <p className='text-xs text-gray-500'>{passengerDetails.departureDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3)}-{passengerDetails.departureDate.toLocaleDateString('en-US')}</p>
-                                        <p className='text-xs text-gray-500'></p>
-                                    </div>
-                                    <div className='w-2/5 flex flex-col justify-center items-center'>
-                                        <p className='text-center text-xs text-gray-500'>0{flightDetails.duration}:00h</p>
-                                        <p className='text-xs relative my-3 justify-center text-gray-400 flex items-center'><GoDotFill />-----------------------------------<GoDotFill /><PiAirplaneTakeoffLight className='text-center absolute border bg-white  rounded-full h-7 border-gray-400 p-1 inline w-7  ' /></p>
-                                        <div className='text-green-500 border rounded-full pt-1 text-[10px] border-green-500 px-4'>REFUNDABLE</div>
+                                    <div className="flex w-full justify-between px-3">
+                                        <div className='w-1/5'>
+                                            <p className='font-bold text-xl'>{flightDetails.departureTime}</p>
+                                            <p className='hide text-gray-500 font-semibold text-xs'>{passengerDetails.origin.city}({(passengerDetails.origin.city).toUpperCase()})</p>
+                                            <p className='text-xs text-gray-500'>{passengerDetails.departureDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3)}-{passengerDetails.departureDate.toLocaleDateString('en-US')}</p>
+                                            <p className='text-xs text-gray-500'></p>
+                                        </div>
+                                        <div className='w-2/5 flex flex-col justify-center items-center'>
+                                            <p className='text-center text-xs text-gray-500'>0{flightDetails.duration}:00h</p>
+                                            <p className='text-xs relative my-3 justify-center text-gray-400 flex items-center'><GoDotFill />-----------------------------------<GoDotFill /><PiAirplaneTakeoffLight className='text-center absolute border bg-white  rounded-full h-7 border-gray-400 p-1 inline w-7  ' /></p>
+                                            <div className='text-green-500 border rounded-full pt-1 text-[10px] border-green-500 px-4'>REFUNDABLE</div>
 
 
-                                    </div>
-                                    <div className='w-1/5'>
-                                        <p className='font-bold text-xl'>{flightDetails.arrivalTime}</p>
-                                        <p className='text-gray-500 font-semibold text-xs'>{passengerDetails.destination.city}({(passengerDetails.destination.city).toUpperCase()})</p>
-                                        <p className='text-xs text-gray-500'>{passengerDetails.departureDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3)}-{passengerDetails.departureDate.toLocaleDateString('en-US')}</p>
-                                        <p className='text-xs text-gray-500'></p>
+                                        </div>
+                                        <div className='w-1/5'>
+                                            <p className='font-bold text-xl'>{flightDetails.arrivalTime}</p>
+                                            <p className='hide text-gray-500 font-semibold text-xs'>{passengerDetails.destination.city}({(passengerDetails.destination.city).toUpperCase()})</p>
+                                            <p className='text-xs text-gray-500'>{passengerDetails.departureDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3)}-{passengerDetails.departureDate.toLocaleDateString('en-US')}</p>
+                                            <p className='text-xs text-gray-500'></p>
+                                        </div>
                                     </div>
                                 </div>
                                 <p className='text-sm my-5 ml-3 text-gray-500'>Fare Rules Baggage</p>
                             </div>
                         </div>
 
-                        <div class="space-y-6 mt-5">
+                        <div class=" space-y-6 mt-5">
                             <div class=" p-4 rounded-lg shadow-xl border bg-white">
                                 <div class="flex items-center space-x-2">
                                     <img src={coverage} alt="shield" />
@@ -184,7 +187,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                         <PiAirplaneTakeoffLight className='text-2xl text-blue-500' />
                                         <p class="text-sm">Sum Insured : INR 10,000</p>
                                     </div>
-                                    <div class="bg-white flex items-center justify-center  p-4 border rounded-lg text-center">
+                                    <div class=" bg-white flex items-center justify-center  p-4 border rounded-lg text-center">
                                         <p class="text-blue-500 text-xl">+4 More</p>
                                     </div>
                                 </div>
@@ -201,7 +204,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="bg-blue-50 w-[70%] py-6 rounded-lg max-w-lg">
+                        <div className="contact bg-blue-50 w-[70%] py-6 rounded-lg max-w-lg">
                             <div className="mb-4 flex items-baseline gap-2">
                                 <h2 className="text-xl font-semibold">Contact Information</h2>
                                 <p className="text-xs text-gray-600">Your ticket will be sent to this email address</p>
@@ -228,7 +231,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                             </button>
                         </div>
                     </div>
-                    <div className='w-[26%] sticky top-4 rounded h-72 mb-10 '>
+                    <div className='fare w-[26%] sticky top-4 rounded h-72 mb-10 '>
                         <div className='bg-white shadow-lg border rounded'>
 
                             <div className='bg-blue-100 text-sm flex font-bold items-end gap-2 p-2'>

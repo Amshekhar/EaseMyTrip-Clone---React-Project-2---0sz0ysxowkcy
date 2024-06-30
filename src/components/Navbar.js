@@ -252,7 +252,7 @@ const NavBar = () => {
                 </Link>
               </div>
             ) : (
-              <div className=' shadow-2xl border rounded-md'>
+              <div onClick={()=>{setShowOptions(false)}} className=' shadow-2xl border rounded-md'>
                 <Link
                   to="/login"
                   className="block px-4 pt-2 hover:bg-sky-100 "

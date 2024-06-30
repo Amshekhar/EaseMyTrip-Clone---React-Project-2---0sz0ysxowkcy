@@ -8,6 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import img1 from './amzdeal.png';
 import img2 from './emtcash.png';
 import img3 from './freebooking.png';
+import css from '../styles/Login.css';
 
 function Login() {
     const { onTokenHandler, onNameHandler } = useUser();
@@ -64,7 +65,7 @@ function Login() {
     return (
         <div className="container pt-3 mt-10 flex justify-center items-center">
             <div className="mainDiv w-2/3 mb-20 items-end flex border rounded-3xl shadow-lg p-8">
-                <div className="w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
+                <div className="image-slider w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
                     
                     <Slider className='flex justify-center items-center' {...settings}>
                         <div>
@@ -84,7 +85,7 @@ function Login() {
                         </div>
                     </Slider>
                 </div>
-                <div className='pt-8 w-1/2 px-8 '>
+                <div className='login-section pt-8 w-1/2 px-8 '>
                     <h2 className="text-2xl mb-4 text-center font-bold">Login</h2>
                     {error && <div className="bg-red-500 px-4 py-2 mb-4 rounded">{error}</div>}
                     <form onSubmit={handleSubmit} className="space-y-4">

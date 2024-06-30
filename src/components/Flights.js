@@ -11,7 +11,7 @@ import { LuAlarmClock } from "react-icons/lu";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import css from '../styles/Flight.css'
 
 function Flights({ setFlightDetails, source, destination, flightData }) {
   const [activeTab, setActiveTab] = useState('Finfo');
@@ -125,9 +125,9 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
 
 
   return (
-    <div className=' bg-sky-100'>
-      <div className='flex pt-5 ml-44 '>
-        <div className='mr-5  w-2/12 h-96'>
+    <div className='w-full bg-sky-100'>
+      <div className='main-container flex pt-5 ml-44 '>
+        <div className='hide mr-5  w-2/12 h-96'>
           <div className='bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-xs'>
             <h2 className='text-sm font-bold mb-4'>FILTER</h2>
             <div className='mb-4'>
@@ -211,7 +211,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
             </div>
           </div>
         </div>
-        <div className=' w-9/12'>
+        <div className='flight-list-container w-9/12'>
 
           <div className='flex gap-1 items-baseline p-1'>
             <img src={cheapest} />
@@ -219,26 +219,26 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
             <p className=' font-semibold text-xl '>Flights starting from </p>
           </div>
           <div className='pl-6 mt-5'>
-            <span className='text-xs font-bold text-gray-400 mr-24'>AIRLINES</span>
+            <span className='hide text-xs font-bold text-gray-400 mr-24'>AIRLINES</span>
             <span className='text-xs font-bold text-gray-400 mr-24'>DEPARTURE</span>
             <span className='text-xs font-bold text-gray-400 mr-24'>DURATION</span>
-            <span className='text-xs font-bold text-gray-400 mr-24'>ARRIVAL</span>
+            <span className='hide text-xs font-bold text-gray-400 mr-24'>ARRIVAL</span>
             <span className='text-xs font-bold text-gray-400'>PRICE</span>
 
           </div>
-          <div className='flex-1'>
+          <div className='flight-list flex-1'>
             {sortedFilteredFlights && sortedFilteredFlights.length==0?(<div className='text-4xl font-bold py-28 mt-2 text-center bg-white border rounded-lg shadow-md '>Oop's! No flight found in this price range!</div>) : (sortedFilteredFlights.map((flight, index) => (
-              <div key={index} className='bg-white mt-2 mb-4 hover:shadow-xl cursor-pointer rounded-xl shadow-md'>
-                <div className='flex text-xs p-1 gap-1 font-semibold items-center bg-gradient-to-r from-yellow-200 w-1/6 to-white'>
+              <div key={index} className='flight-div bg-white mt-2 mb-4 hover:shadow-xl cursor-pointer rounded-xl shadow-md'>
+                <div className='meal flex text-xs p-1 gap-1 font-semibold items-center bg-gradient-to-r from-yellow-200 w-1/6 to-white'>
                   <img className='w-4' src={mealicon} /><p>Enjoy Free Meals</p>
                 </div>
-                <div className='flex pt-2 px-7 gap-14 justify-between'>
+                <div className='duration-div flex pt-2 px-7 gap-14 justify-between'>
                   <div className='flex w-5/12 justify-between items-start'>
                     <div className='flex gap-2 items-center'>
                       <img className='w-10' src={getAirlineLogo(flight.flightID)} alt='Airline Logo' />
                       <div>
-                        <p className='text-xs'>{name}</p>
-                        <p className='text-xs mt-1 text-gray-500'>{(flight.flightID).substring(0, 5)}</p>
+                        <p className='hide text-xs'>{name}</p>
+                        <p className='hide text-xs mt-1 text-gray-500'>{(flight.flightID).substring(0, 5)}</p>
                       </div>
                     </div>
                     <div>
@@ -259,12 +259,12 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                       <p className=' font-bold text-xl'>{flight.arrivalTime}</p>
                       <p className='text-sm text-gray-600'>{destination.city}</p>
                     </div>
-                    <div className='flex flex-col items-start'>
-                      <p className='font-bold text-2xl text-orange-600'>₹ {flight.ticketPrice}</p>
+                    <div className='price flex flex-col items-start'>
+                      <p className=' font-bold text-2xl text-orange-600'>₹ {flight.ticketPrice}</p>
                       <p className='text-blue-400 text-xs font-semibold py-1 border border-blue-400 rounded-full px-3 cursor-not-allowed'>+ More Fare</p>
                       <p className='font-semibold text-xs text-green-600'>Get Rs.400 OFF with BOOKNOW</p>
                     </div>
-                    <button onClick={() => handleFlightBooking(flight)} className=' bg-orange-500 font-bold text-white rounded-full py-1 px-3'>BOOK NOW</button>
+                    <button onClick={() => handleFlightBooking(flight)} className='btn bg-orange-500 font-bold text-white rounded-full py-1 px-3'>BOOK NOW</button>
                   </div>
                 </div>
                 <div onClick={() => handleFlightDetailsClick(index)} className='bg-gray-100 py-1 rounded-b-xl px-3 text-sm text-blue-500'>
