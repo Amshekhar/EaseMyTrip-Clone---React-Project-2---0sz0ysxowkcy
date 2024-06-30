@@ -43,6 +43,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
+import { Homecss } from "../styles/Home.css";
 
 
 function Home({ setPassengerDetails, setSource, setDestination, setFlightData }) {
@@ -60,7 +61,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   const totalGuests = adults + children;
 
   const handleAdultPlus = () => {
-    setAdults(adults+1)
+    setAdults(adults + 1)
   };
 
   const handleChildPlus = () => {
@@ -68,14 +69,14 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   };
 
   const handleAdultMinus = () => {
-    if(adults > 0) {
-    setAdults(adults-1)
+    if (adults > 0) {
+      setAdults(adults - 1)
     }
   };
 
   const handleChildMinus = () => {
-    if(children > 0) {
-    setChildren(children - 1)
+    if (children > 0) {
+      setChildren(children - 1)
     }
   };
 
@@ -156,7 +157,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   }
 
   const handleSearch = async () => {
-    if (totalGuests==0){
+    if (totalGuests == 0) {
       toast.info("Please select the number of Traveller!");
     }
     setPassengerDetails(prevDetails => ({
@@ -217,9 +218,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   return (
     <div className='relative'>
       <div>
-        <div className=" bg-gradient-to-r from-blue-500 to-sky-400 py-12">
-          <div className='w-9/12 mx-auto'>
-            <div className="flex justify-between items-center">
+        <div className="bluedivperent bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+          <div className='bluediv w-9/12 mx-auto'>
+            <div className="hide flex justify-between items-center">
               <div className='text-xs'>
                 <button className="bg-white text-blue-500 font-semibold rounded-full px-4 py-1">One Way</button>
                 <button className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed ">Round Trip</button>
@@ -228,31 +229,31 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
               <p className='text-white font-bold text-xl'>Search Lowest Price</p>
             </div>
             <div className='flex mt-3 shadow-2xl '>
-              <div className='bg-white  rounded-s-md w-full flex '>
-                <div className='w-1/2 flex'>
-                  <div onClick={handleFrom} className='py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
+              <div className='search-container bg-white  rounded-s-md w-full flex '>
+                <div className=' w-1/2 flex'>
+                  <div onClick={handleFrom} className='from py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>FROM</p>
-                    <p className='font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Singapore"}</p>
-                    <p className='text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "SIN"}] {airportFrom.name ? airportFrom.name : "Changi Airport"}</p>
+                    <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Singapore"}</p>
+                    <p className='hide text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "SIN"}] {airportFrom.name ? airportFrom.name : "Changi Airport"}</p>
                   </div>
-                  <div onClick={handleTo} className='py-2 border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
+                  <div onClick={handleTo} className='to py-2 text-nowrap border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>TO</p>
-                    <p className='font-bold text-2xl'>{airportTo.city ? airportTo.city : "New Delhi"}</p>
-                    <p className='text-gray-500 text-xs'>
+                    <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "New Delhi"}</p>
+                    <p className='hide text-gray-500 text-xs'>
                       [{airportTo.iata_code ? airportTo.iata_code : "DEL"}] {airportTo.name ? airportTo.name : "Indira Gandhi International Airport"}</p>
                   </div>
                 </div>
                 <div className=' flex w-1/2'>
-                  <div className='py-2 border-r w-1/3 pl-6 hover:bg-sky-100 cursor-pointer'>
+                  <div className='date py-2 border-r w-1/3 pl-6 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>DEPARTURE DATE</p>
                     <div className='flex items-baseline gap-1'>
-                      <div className='flex items-baseline' onClick={() => setShowCalendar(!showCalendar)}>
+                      <div className='date-p flex items-baseline' onClick={() => setShowCalendar(!showCalendar)}>
                         <p className='font-bold text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>
                         <p className=' ml-1 text-sm'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : currentMonth}</p>
                       </div>
-                      <RxCalendar className='ml-1 text-gray-400 text-xl' />
+                      <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                       {showCalendar && (
-                        <div className=' absolute'>
+                        <div className='calender absolute'>
                           <DatePicker
                             selected={selectedDate}
                             onChange={handleDateSelect}
@@ -265,7 +266,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                     <p className='text-gray-500 text-xs'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long' }) : currentDay}</p>
                   </div>
 
-                  <div className='w-1/3 py-2 hover:bg-sky-100 cursor-not-allowed pl-3'>
+                  <div className='hide w-1/3 py-2 hover:bg-sky-100 cursor-not-allowed pl-3'>
                     <p className='text-gray-500 text-xs'>RETURN DATE</p>
                     <div className='flex'>
                       <p className='text-gray-500 w-28 text-xs'>Book a round trip to save more</p>
@@ -275,20 +276,20 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
 
 
 
-                  <div onClick={()=>setPassanger(true)} className='w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
-                    <p className='text-gray-500 text-xs'>TRAVELLER & CLASS</p>
+                  <div onClick={() => setPassanger(true)} className='guest w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                    <p className=' text-gray-500 text-xs'>TRAVELLER & CLASS</p>
                     <div className='flex font-bold items-center'>
-                      <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='inline ml-2' /></p>
+                      <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='hide inline ml-2' /></p>
                     </div>
-                    <p className='text-gray-500 text-xs'>FIRST</p>
+                    <p className='hide text-gray-500 text-xs'>FIRST</p>
                   </div>
                 </div>
 
               </div>
-              <button onClick={handleSearch} className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold'>SEARCH</button>
+              <button onClick={handleSearch} className='search bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold'>SEARCH</button>
 
             </div>
-            <div className='flex justify-between'>
+            <div className='hide flex justify-between'>
               <div className="flex space-x-4 text-md mt-4">
                 <div className='flex justify-center items-center gap-1'>
                   <input className='w-4 h-4' type="radio" name="discount" />
@@ -316,11 +317,11 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
         </div>
 
 
-        <div className='w-9/12 relative gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
+        <div className='headingperent w-9/12 relative gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
           <img className=' absolute -z-50 bg-cover opacity-5 top-0 w-10/12 h-2/12' src={worldmap} />
-          <p className=' text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Top Flight Routes<img src={indidaflag} className='w-12 inline ml-3' /></p>
+          <p className='heading text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Top Flight Routes<img src={indidaflag} className='w-12 inline ml-3' /></p>
 
-          <div className='w-full flex flex-wrap justify-center gap-10 items-center'>
+          <div className='topflight w-full flex flex-wrap justify-center gap-10 items-center'>
             <div onClick={() => defaultFlightSearch(apList[11], apList[8])} className='flex gap-4 cursor-pointer hover:bg-sky-100 p-1 w-[353px] rounded-lg '>
               <img src={mumbai} className='w-18 rounded-xl' />
               <div className='flex flex-col items-start justify-between'>
@@ -386,7 +387,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
             </div>
           </div>
 
-          <div className='flex w-full gap-6 mt-10 justify-between items-center'>
+          <div className='hide flex w-full gap-6 mt-10 justify-between items-center'>
             <div className='flex gap-6 bg-white shadow-md w-1/2 p-4 rounded-lg'>
               <img src={important} className='w-10' />
               <div className=''>
@@ -404,62 +405,63 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
           </div>
         </div>
 
-        <div className='w-9/12 gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
+        <div className='headingperent w-9/12 gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
 
-          <p className=' text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Famous Tourist Attraction<img src={indidaflag} className='w-12 inline ml-3' /></p>
+          <p className='heading text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Famous Tourist Attraction<img src={indidaflag} className='w-12 inline ml-3' /></p>
+          <div className='famousParent'>
+            <div className='famous flex gap-20'>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={lakshadweep} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Lakshadweep</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={andaman} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Andaman</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={kashmir} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Kashmir</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={jaipur} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Jaipur</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={bangalore} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Bangalore</p>
+              </div>
+            </div>
 
-          <div className='flex gap-20'>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={lakshadweep} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Lakshadweep</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={andaman} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Andaman</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={kashmir} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Kashmir</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={jaipur} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Jaipur</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={bangalore} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Bangalore</p>
-            </div>
-          </div>
-
-          <div className='flex gap-20'>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={paris} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Paris</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={leh} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Leh</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={bali} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Bali</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={dubai} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Dubai</p>
-            </div>
-            <div className='hover:text-sky-400 cursor-pointer'>
-              <img src={kerala} className='w-28' />
-              <p className='font-semibold text-xl text-center hover:text-sky-400'>Kerala</p>
+            <div className='famous flex gap-20'>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={paris} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Paris</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={leh} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Leh</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={bali} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Bali</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={dubai} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Dubai</p>
+              </div>
+              <div className='hover:text-sky-400 cursor-pointer'>
+                <img src={kerala} className='w-28' />
+                <p className='font-semibold text-xl text-center hover:text-sky-400'>Kerala</p>
+              </div>
             </div>
           </div>
 
         </div>
 
-        <div className='w-9/12 gap-5 mx-auto flex flex-col my-16 justify-center items-center'>
-          <p className=' text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Enjoy Fresh Travel Blogs<img src={indidaflag} className='w-12 inline ml-3' /></p>
+        <div className='headingperent w-9/12 gap-5 mx-auto flex flex-col my-16 justify-center items-center'>
+          <p className='heading text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Enjoy Fresh Travel Blogs<img src={indidaflag} className='w-12 inline ml-3' /></p>
 
-          <div className='flex gap-4'>
+          <div className='blog flex gap-4'>
 
             <div className='relative'>
               <div className=''><img className='rounded-2xl' src={hinduNewYear} /></div>
@@ -513,9 +515,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
           </div>
         </div>
 
-        <div className='w-9/12 gap-5  my-16 mx-auto flex flex-col justify-center items-center'>
-          <p className=' text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Why book with us?<img src={indidaflag} className='w-12 inline ml-3' /></p>
-          <div className='flex gap-3 w-full'>
+        <div className='headingperent w-9/12 gap-5  my-16 mx-auto flex flex-col justify-center items-center'>
+          <p className='heading text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Why book with us?<img src={indidaflag} className='w-12 inline ml-3' /></p>
+          <div className='whyBook flex gap-3 w-full'>
             <div className='border px-4 text-center flex flex-col justify-center items-center rounded-2xl border-blue-300 w-1/4'>
               <img src={easybooking} className='w-20 my-4' />
               <h2 className='font-bold text-xl mb-4'>Easy Booking</h2>
@@ -539,7 +541,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
           </div>
         </div>
 
-        <div className='py-5 px-44 w-full  my-16 flex flex-col justify-center items-center bg-neutral-50'>
+        <div className='hide py-5 px-44 w-full  my-16 flex flex-col justify-center items-center bg-neutral-50'>
           <p className='font-bold text-2xl my-5'>Search Flights, Hotels, Bus and Holiday Packages</p>
           <div>
             <p className='text-gray-500 text-sm mb-3'>EaseMyTrip is one of the largest online travel platforms in India, and a trusted name in the Indian travel industry. We offer "end to end" travel solutions including air tickets, hotel booking, cab and bus booking, train tickets and holiday packages. Additionally, we offer ancillary value-added services.</p>
@@ -553,7 +555,8 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       </div>
 
       <img
-        className={`fixed right-10 bottom-5 ${bounce ? 'animate-bounce' : ''}`}
+      onClick={()=>toast.info("Team is working on this feature!")}
+        className={`eva fixed right-10 bottom-5 ${bounce ? 'animate-bounce' : ''}`}
         src={chatBot}
         alt="ChatBot"
       />
@@ -593,39 +596,39 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
 
       </div>
 
-      {passanger && <div className='absolute w-72 bg-white top-44 p-2 right-80 rounded shadow'>
+      {passanger && <div className='passanger absolute w-72 bg-white top-44 p-2 right-80 rounded shadow'>
         <div className='max-h-72'>
-          
-            <div className='mt-2 border-t pt-2'>
-              <div className='flex justify-between'>
-                <div>
-                  <p className='text-sm'>Adult</p>
-                  <p className='text-xs text-gray-500'>(Above 12 Year)</p>
-                </div>
-                <div className='font-bold border flex mb-1 items-center'>
-                  <div onClick={() => handleAdultMinus()} className='px-2 border-r'><FaMinus /></div>
-                  <p className='px-2'>{adults}</p>
-                  <div onClick={() => handleAdultPlus()} className='px-2 border-l'><FaPlus /></div>
-                </div>
+
+          <div className='mt-2 border-t pt-2'>
+            <div className='flex justify-between'>
+              <div>
+                <p className='text-sm'>Adult</p>
+                <p className='text-xs text-gray-500'>(Above 12 Year)</p>
               </div>
-              <div className='flex mt-2 justify-between'>
-                <div>
-                  <p className='text-sm'>Child</p>
-                  <p className='text-xs text-gray-500'>(Below 12 Year)</p>
-                </div>
-                <div className='font-bold border flex mb-1 items-center'>
-                  <div onClick={() => handleChildMinus()} className='px-2 border-r'><FaMinus /></div>
-                  <p className='px-2'>{children}</p>
-                  <div onClick={() => handleChildPlus()} className='px-2 border-l'><FaPlus /></div>
-                </div>
+              <div className='font-bold border flex mb-1 items-center'>
+                <div onClick={() => handleAdultMinus()} className='px-2 border-r'><FaMinus /></div>
+                <p className='px-2'>{adults}</p>
+                <div onClick={() => handleAdultPlus()} className='px-2 border-l'><FaPlus /></div>
               </div>
             </div>
-          
+            <div className='flex mt-2 justify-between'>
+              <div>
+                <p className='text-sm'>Child</p>
+                <p className='text-xs text-gray-500'>(Below 12 Year)</p>
+              </div>
+              <div className='font-bold border flex mb-1 items-center'>
+                <div onClick={() => handleChildMinus()} className='px-2 border-r'><FaMinus /></div>
+                <p className='px-2'>{children}</p>
+                <div onClick={() => handleChildPlus()} className='px-2 border-l'><FaPlus /></div>
+              </div>
+            </div>
+          </div>
+
 
         </div>
 
         <div className='flex text-sm justify-end mt-4'>
-          
+
           <button onClick={() => setPassanger(false)} className='rounded-full text-white py-1 hover:bg-orange-700 bg-orange-600 px-5'>Done</button>
         </div>
       </div>}

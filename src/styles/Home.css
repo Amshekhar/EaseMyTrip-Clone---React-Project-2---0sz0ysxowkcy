@@ -1,0 +1,92 @@
+@media (max-width: 768px) {
+    .bluedivperent{
+        padding: 5px;
+        overflow-x: scroll;
+    }
+    .bluediv{
+        width: 200%;
+        width: auto;
+        margin: 5px;
+    }
+    .from{
+        width: 150px;
+    }
+    .to{
+        width: 150px;
+        padding-left: 5px;
+    }
+    .guest{
+        width: 150px;
+    }
+    .date{
+        padding-left: 5px;
+        width: 200px;
+    }
+    .calender{
+        right: 10px;
+        top: 95px;
+        z-index: 100;
+    }
+    .passanger{
+       right: 10px; 
+       top: 95px;
+    }
+    .search{
+        padding: 10px;
+        margin-right: 5px;
+    }
+    .search-container{
+     width: 500px;
+    }
+    .date>div{
+        padding-left: 2px;
+    }
+    .date-p>p{
+        font-size: 16px;
+    }
+    .from-p, .to-p{
+        font-size: 16px;
+    }
+    .guest span{
+        font-size: 16px;
+    }
+    .headingperent{
+        width: auto;
+    }
+    .heading{
+        font-size: 20px;
+        padding: 0 10px;
+    }
+    .hide{
+        display: none;
+    }
+    
+    .famous{
+        display: block;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    .famousParent{
+        display: flex;
+        gap: 50px;
+    }
+    .whyBook{
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    .whyBook div{
+        width: 45%;
+        margin: auto;
+    }
+    .blog{
+        width: 80%;
+        flex-wrap: wrap;
+    }
+    .blog div{
+        margin: auto;
+    }
+    .eva{
+        right: 8px;
+        bottom: 0px;
+    }
+}

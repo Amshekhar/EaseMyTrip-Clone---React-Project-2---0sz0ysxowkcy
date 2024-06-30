@@ -1,0 +1,13 @@
+@media (max-width:768px){
+    .airport-source{
+        left: 10px;
+        top: 95px;
+        width: auto;
+    }
+    .airport-destination{
+        left: 40px;
+        top: 95px;
+        width: auto;
+    }
+    
+}

@@ -4,10 +4,11 @@ import playStore from '../Assets/playstore.png'
 import iosstore from '../Assets/iosstore.png'
 import qrcode from '../Assets/qrcode.png'
 import companies from '../Assets/companies.png'
+import { footercss } from "../styles/Footer.css";
 
 function Footer() {
     return (
-        <div className=' w-[99vw] bg-zinc-900 py-5 border-t-[13px] border-blue-500'>
+        <div className='hide w-[99vw] bg-zinc-900 py-5 border-t-[13px] border-blue-500'>
             <div className=' mx-12 flex text-white border-b border-gray-600'>
                 <div className='w-1/5 cursor-not-allowed'>
                     <p className=' font-semibold w-60 uppercase bg-blue-500 h border-b rounded-l-md border-gray-600 p-1 pl-3'>OUR OFFERINGS</p>

@@ -31,13 +31,16 @@ import { RiCustomerServiceFill } from "react-icons/ri";
 import { GiCruiser } from "react-icons/gi";
 import { ImGift } from "react-icons/im";
 import { toast } from 'react-toastify';
-
+import { } from "../styles/Nav.css";
+import { HiOutlineMenuAlt2 } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
 
 const NavBar = () => {
   const { getToken, getName, onTokenHandler, onNameHandler } = useUser();
   const [showOptions, setShowOptions] = useState(false);
   const [showOffers, setShowOffers] = useState(false);
   const [activeButton, setActiveButton] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate();
 
   const logoutHandler = () => {
@@ -53,17 +56,21 @@ const NavBar = () => {
 
   const handleButtonClick = (buttonName, navigateTo) => {
     setActiveButton(buttonName);
+    setMenuOpen(false)
     if (navigateTo) navigate(navigateTo);
   };
 
   return (
-    <div className='nav-bar'>
+    <div className='nav-bar relative'>
       <div className='border-b-2 border-gray-200'>
-        <div className='w-9/12 mx-auto flex items-center justify-between h-20'>
+        <div className='topNav w-9/12 mx-auto flex items-center justify-between h-20'>
+          <div className='mob-menu hidden'>
+          {menuOpen?<IoClose onClick={()=>setMenuOpen(false)} className='text-4xl'/>:<HiOutlineMenuAlt2 onClick={()=>setMenuOpen(true)} className='text-4xl' />}
+          </div>
           <Link to="/" className=' cursor-pointer'>
-            <img src={logo} className='w-36' />
+            <img src={logo} className='moblogo w-36' />
           </Link>
-          <div className='flex gap-5'>
+          <div className='hide flex gap-5'>
             <div className='cursor-not-allowed'>
               <p className='font-semibold flex gap-1 items-center text-sm'> <FaUserTie className='' />EMTMate</p>
               <p className='text-[11px] text-gray-600'>Agent travel solution</p>
@@ -111,7 +118,9 @@ const NavBar = () => {
 
       </div>
       <div className=' border shadow-lg'>
-        <div className='w-9/12 mx-auto flex gap-1 my-1 text-sm'>
+
+        <div className='hide w-9/12 mx-auto flex gap-1 my-1 text-sm'>
+
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flights' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
             onClick={() => handleButtonClick('flights', '/')}
@@ -142,7 +151,7 @@ const NavBar = () => {
           </div>
           <div
             className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'bus' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
-            onClick={() => handleButtonClick('bus','bus')}
+            onClick={() => handleButtonClick('bus', 'bus')}
           >
             <img src={bus} className='w-9 h-8' alt='Bus Icon' />
             <p className='mt-1'>Bus</p>
@@ -181,10 +190,11 @@ const NavBar = () => {
           </div>
         </div>
       </div>
+
       {showOptions && (
         <div
           onMouseLeave={() => setShowOptions(false)}
-          className="absolute w-72 right-44 z-10 top-14 rounded-md shadow-md bg-white"
+          className="mob-login-option absolute w-72 right-44 z-10 top-14 rounded-md shadow-md bg-white"
           aria-orientation="vertical"
           aria-labelledby="options-menu"
         >
@@ -299,7 +309,7 @@ const NavBar = () => {
         </div>
       )}
       {showOffers && (
-        <div className='relative rounded-sm'>
+        <div className='mob-offer relative rounded-sm'>
           <div
             onMouseLeave={() => setShowOffers(false)}
             className='bg-white rounded-sm cursor-pointer absolute top-0 right-60 z-10 shadow-2xl text-black'
@@ -307,13 +317,18 @@ const NavBar = () => {
             <div className='block px-4 pt-2 hover:bg-sky-100'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <BiSolidOffer className='text-2xl' />
-                <div onClick={() => navigate("/offers")} className='font-bold text-sm'>
+                <div onClick={() =>{ 
+                  setShowOffers(false)
+                  navigate("/offers")}
+                  } className='font-bold text-sm'>
                   Offers
                   <p className='text-xs font-semibold'>Check best latest offers</p>
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100  cursor-not-allowed'>
+            <div onClick={()=>{setShowOffers(false)
+              toast.info("This feature will update soon!")
+            }} className='block px-4 pt-2 hover:bg-sky-100  cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <img src={Airplane} className='w-8' />
                 <div className='font-bold text-sm'>
@@ -322,7 +337,9 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
+            <div onClick={()=>{setShowOffers(false)
+              toast.info("This feature will update soon!")
+            }} className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <FaCcVisa className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -331,7 +348,9 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
+            <div onClick={()=>{setShowOffers(false)
+              toast.info("This feature will update soon!")
+            }} className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <RiCustomerServiceFill className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -340,7 +359,9 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
+            <div onClick={()=>{setShowOffers(false)
+              toast.info("This feature will update soon!")
+            }} className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <GiCruiser className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -349,7 +370,9 @@ const NavBar = () => {
                 </div>
               </div>
             </div>
-            <div className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
+            <div onClick={()=>{setShowOffers(false)
+              toast.info("This feature will update soon!")
+            }} className='block px-4 pt-2 hover:bg-sky-100 cursor-not-allowed'>
               <div className='border-b-2 pb-3 flex gap-3 justify-start items-center'>
                 <ImGift className='text-2xl' />
                 <div className='font-bold text-sm'>
@@ -361,6 +384,101 @@ const NavBar = () => {
           </div>
         </div>
       )}
+      {menuOpen &&
+        (<div className='absolute  z-50 bg-white w-[98vw] left-1 border shadow-lg'>
+
+          <div className='mobileMenu hidden w-9/12 mx-auto gap-1 my-1 text-sm'>
+            <div onClick={() => handleButtonClick()} className="inline-block w-full text-left">
+              
+                <button
+                  type="button"
+                  className="font-bold flex px-2 py-1 rounded-full items-center"
+                  onMouseEnter={() => {
+                    setShowOptions(!showOptions)
+                    setShowOffers(false)
+                  }}
+                >
+                  {getName || (
+                    <button className="bg-blue-500 rounded-full cursor-pointer text-white font-semibold px-3 py-1">
+                      Login or Signup
+                    </button>
+                  )}
+                  <FaChevronDown className="hide mt-1 ml-2" />
+                </button>
+              
+            </div>
+
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flights' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => handleButtonClick('flights', '/')}
+            >
+              <img src={Airplane} className='w-9' alt='Flights Icon' />
+              <p className='mt-1'>Flights</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'hotels' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => handleButtonClick('hotels', 'hotels')}
+            >
+              <img src={hotel} className='w-8 h-8' alt='Hotels Icon' />
+              <p className='mt-1'>Hotels</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'flightHotels' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => toast.info("This feature will update soon!")}
+            >
+              <img src={flighthotel} className='w-8' alt='Flight + Hotels Icon' />
+              <p className='mt-1'>Flight + Hotels</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'trains' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => handleButtonClick('trains', 'railways')}
+            >
+              <img src={train} className='w-9' alt='Trains Icon' />
+              <p className='mt-1'>Trains</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'bus' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => handleButtonClick('bus', 'bus')}
+            >
+              <img src={bus} className='w-9 h-8' alt='Bus Icon' />
+              <p className='mt-1'>Bus</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'holidays' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => toast.info("This feature will update soon!")}
+            >
+              <img src={holiday} className='w-8 h-8' alt='Holidays Icon' />
+              <p className='mt-1'>Holidays</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'cabs' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => toast.info("This feature will update soon!")}
+            >
+              <img src={cab} className='w-7 h-7' alt='Cabs Icon' />
+              <p className='mt-1'>Cabs</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'activities' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onClick={() => toast.info("This feature will update soon!")}
+            >
+              <FaRegLightbulb className='w-7 h-6 mt-1' />
+              <p className='mt-1'>Activities</p>
+            </div>
+            <div
+              className={`rounded-lg px-4 py-1 flex item-center font-semibold text-gray-600 gap-1 cursor-pointer ${activeButton === 'more' ? 'bg-sky-100' : 'hover:bg-sky-100'}`}
+              onMouseEnter={() => {
+                setShowOffers(true);
+                setShowOptions(false);
+              }}
+              onClick={() => handleButtonClick('more')}
+            >
+              <img src={more} className='w-8' alt='More Icon' />
+              <p className='mt-1'>More</p>
+            </div>
+          </div>
+        </div>
+        )
+      }
 
     </div>
   )

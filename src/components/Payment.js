@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsFillCreditCardFill } from "react-icons/bs";
 
 const PaymentComponent = ({paymentDetails}) => {
-    console.log(paymentDetails.fare);
+    // console.log(paymentDetails.fare);
     const [openUPI, setOpenUPI] = useState(false);
     const [upi, setupi] = useState('');
     const [openDebit, setOpendebit] = useState(true);
@@ -17,6 +17,11 @@ const PaymentComponent = ({paymentDetails}) => {
     const navigate = useNavigate();
 
     const handlePaymentfromUpi = () => {
+        const token = sessionStorage.getItem('token')
+        if(!token){
+            navigate('/login')
+            return
+        }
         if (upi !== '' && upi.includes('@')) {
             console.log("UPI Payment Done");
             navigate('/ticketconfirm');
@@ -26,6 +31,11 @@ const PaymentComponent = ({paymentDetails}) => {
     };
 
     const handlePaymentfromDebit = () => {
+        const token = sessionStorage.getItem('token')
+        if(!token){
+            navigate('/login')
+            return
+        }
         const isValidCardNo = debitdata.cardno.length === 16;
         const isValidCVV = debitdata.CVV.length === 3;
         const isValidMonth = /^\d{1,2}$/.test(debitdata.Expirymonth) && parseInt(debitdata.Expirymonth, 10) <= 12;

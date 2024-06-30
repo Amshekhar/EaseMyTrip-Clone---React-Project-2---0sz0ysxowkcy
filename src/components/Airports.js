@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdCloseCircle } from 'react-icons/io';
 import { IoIosAirplane } from 'react-icons/io';
+import { css } from "../styles/Airport.css";
 
 function Airports({showListFrom,setShowListFrom, setAirportFrom, setAirportTo, showListTo, setShowListTo }) {
     const [apList, setApList] = useState([]);
@@ -40,7 +41,7 @@ function Airports({showListFrom,setShowListFrom, setAirportFrom, setAirportTo, s
     return (
         <>
             {showListFrom && (
-                <div className='w-3/12 h-[50vh] cursor-pointer absolute top-32 left-52 shadow-md overflow-y-scroll bg-white'>
+                <div className='airport-source w-3/12 h-[50vh] cursor-pointer absolute top-32 left-52 shadow-md overflow-y-scroll bg-white'>
                     <div className='relative'>
                         <div className='flex absolute top-1 w-[97%] m-2'>
                             <input placeholder='From' className='p-1 text-xs w-full' />
@@ -72,7 +73,7 @@ function Airports({showListFrom,setShowListFrom, setAirportFrom, setAirportTo, s
                 </div>
             )}
             {showListTo && (
-                <div className='w-3/12 h-[50vh] cursor-pointer absolute top-32 left-[30%] shadow-md overflow-y-scroll bg-white'>
+                <div className='airport-destination w-3/12 h-[50vh] cursor-pointer absolute top-32 left-[30%] shadow-md overflow-y-scroll bg-white'>
                     <div className='relative'>
                         <div className='flex absolute top-1 w-[97%] m-2'>
                             <input placeholder='To' className='p-1 text-xs w-full' />
