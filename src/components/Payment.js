@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BsFillCreditCardFill } from "react-icons/bs";
+import css from '../styles/Payment.css'
 
 const PaymentComponent = ({paymentDetails}) => {
     // console.log(paymentDetails.fare);
@@ -54,12 +55,12 @@ const PaymentComponent = ({paymentDetails}) => {
     };
 
     return (
-        <div className="orderPage px-16 rounded-lg pb-40 shadow-md ">
-            <div className="orderSection px-8 pt-3 border mt-10 rounded-lg shadow-md">
+        <div className="payment-main-container px-16 rounded-lg pb-40 shadow-md ">
+            <div className=" px-8 pt-3 border mt-10 rounded-lg shadow-md">
                 <div className='tab-sec'>
                     <h1 className='font-bold text-black ml-5 mt-8 text-xl'>Payable amount: ₹{paymentDetails.fare}.00</h1>
                     <div className="paymentDetails flex gap-2  mx-auto p-5 rounded-lg">
-                        <div className='border-2 w-5/6 p-5 border-cyan-300 rounded-md'>
+                        <div className=' border-2 w-5/6 p-5 border-cyan-300 rounded-md'>
                             <p className='font-bold text-black text-2xl mb-3'>Payment</p>
                             <div className=' flex'>
                                 <div className='border rounded mr-5 h-54 w-1/3'>
