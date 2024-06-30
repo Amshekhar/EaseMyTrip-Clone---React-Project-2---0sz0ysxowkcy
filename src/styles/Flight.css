@@ -7,11 +7,11 @@
         overflow-x: scroll;
     }
     .flight-list-container{
-        width: 180vw;
+        width: 185vw;
         padding: 10px;
     }
     .flight-list{
-        width: 180vw;
+        width: 185vw;
         padding: 0;
     }
     .meal{
