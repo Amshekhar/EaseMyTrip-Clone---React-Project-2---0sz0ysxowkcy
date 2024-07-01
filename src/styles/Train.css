@@ -1,0 +1,21 @@
+@media(max-width:768px){
+    .train-blue{
+        z-index: 100;
+        padding: 10px;
+        overflow-x: scroll;
+        /* overflow-y: hidden; */
+    }
+    .train-blue>div{
+        width: 200vw;
+        text-wrap: nowrap;
+    }
+    .whyTrain{
+        padding: 10px;
+        z-index: -1;
+    }
+    .selectcity{
+        /* z-index: 100; */
+        position: absolute;
+        right: 0px;
+    }
+}

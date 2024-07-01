@@ -5,6 +5,7 @@ import { MdPeopleAlt } from "react-icons/md";
 import { HiOutlineCurrencyRupee } from "react-icons/hi";
 import { MdInfoOutline } from "react-icons/md";
 import { toast } from 'react-toastify';
+import css from '../styles/Bookhotel.css'
 
 function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
     const navigate = useNavigate();
@@ -39,14 +40,14 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
         <div className='bg-sky-50'>
             <div className='w-11/12 mx-auto py-5'>
                 <p className='text-sm my-2'>1. Review and Travellers <GrNext className='inline' /> 2. Payment</p>
-                <div className='flex justify-between'>
-                    <div className='w-[70%] p-3 bg-white shadow rounded'>
+                <div className='hotelbooking-main flex justify-between'>
+                    <div className=' w-[70%] p-3 bg-white shadow rounded'>
                         <div className='flex justify-between items-center'>
                             <p className='font-bold text-xl'>{hotelBookingData.name}</p>
                             <p onClick={() => navigate('/hoteldetails')} className='text-sm text-blue-600'>[Change Hotel]</p>
                         </div>
                         <p className='text-sm text-gray-500 my-2'>{hotelBookingData.location}</p>
-                        <div className='flex gap-5'>
+                        <div className='hotelbooking flex gap-5'>
                             <div>
                                 <img className='rounded-md w-72 h-72' src={hotelBookingData.images[0]} alt="Hotel" />
                             </div>
@@ -81,11 +82,11 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
                                 </div>
                             </div>
                         </div>
-                        <div className='rounded m-1 shadow-md'>
+                        <div className='primaryparent rounded m-1 shadow-md'>
                             <div className='bg-blue-100 mt-3 text-sm flex items-end gap-2 p-2'>
                                 <MdPeopleAlt className='text-xl' /> Primary Guest Details
                             </div>
-                            <div className='p-2'>
+                            <div className='primary p-2'>
                                 {guestDetails && guestDetails.room && guestDetails.room.map((room, index) => {
                                     return <div key={index} className='border-l mb-5 pb-3 relative text-gray-600 pl-14 p-3 flex  justify-between items-center flex-wrap ml-14 border-gray-400'>
                                         <div className='w-[10%] font-bold'>Adult 1</div>

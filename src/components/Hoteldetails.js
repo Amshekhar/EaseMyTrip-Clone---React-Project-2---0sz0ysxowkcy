@@ -11,6 +11,7 @@ import { GrFormPreviousLink } from "react-icons/gr";
 import { TiTick } from "react-icons/ti";
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import css from '../styles/Hoteldetails.css'
 
 
 function Hoteldetails({ hotelList, setHotelBookingData }) {
@@ -117,9 +118,9 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
 
             </div>
             {htlList && (
-                <div>
-                    <div className='w-11/12 mx-auto p-5 flex gap-3'>
-                        <div className='w-3/12 h-96 border bg-white rounded-lg shadow-md'>
+                <div className=''>
+                    <div className='hotel-list w-11/12 mx-auto p-5 flex gap-3'>
+                        <div className='hide w-3/12 h-96 border bg-white rounded-lg shadow-md'>
                             <div className='font-bold  relative mx-4 mt-4 mb-2 p-2'>Sort by: 
                                 <select className='border-2 border-sky-400 absolute p-1 right-1 rounded-md' onChange={(e) => setSortCriteria(e.target.value)}>
                                 <option value="Low To High">Low To High</option>
@@ -154,12 +155,12 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 </div>
                             </div>
                         </div>
-                        <div className='w-9/12'>
+                        <div className=' w-9/12'>
                             {filteredHotels.length === 0 ? (
                                 <div className='font-bold text-4xl text-center py-20 bg-white'>No Hotel found in this price range</div>
                             ) : (
                                 filteredHotels.map((hotel, index) => (
-                                    <div key={index} className='flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
+                                    <div key={index} className='h-list flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
                                         <div className='w-1/3'>
                                             <LazyLoad className='relative' height={200} offset={100}>
                                                 <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl object-cover' src={hotel.images[0]} />
@@ -173,7 +174,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                                 ))}
                                             </LazyLoad>
                                         </div>
-                                        <div className='flex border-r w-5/12 justify-between flex-col'>
+                                        <div className='htldetails flex border-r w-5/12 justify-between flex-col'>
                                             <div>
                                                 <p className='font-bold pl-2 border-l-4 border-blue-700 rounded'>{hotel.name}</p>
                                                 <p className='text-sm my-1 flex items-center text-gray-500'><IoLocationOutline className='inline text-lg' />{hotel.location}</p>
@@ -187,7 +188,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                             </div>
                                             <div className='px-2 w-52 mb-1 ml-2 py-1 flex items-center rounded-full bg-fuchsia-200 text-xs font-bold'><BiSolidOffer className='text-lg mr-1' /> EMTSTAY Discount Applied</div>
                                         </div>
-                                        <div className='flex w-1/4 pr-3 items-end flex-col'>
+                                        <div className='view flex w-1/4 pr-3 items-end flex-col'>
                                             <div className='flex items-end gap-2'>
                                                 <p className='font-bold text-xs'>
                                                     {hotel.rating > 4
@@ -205,7 +206,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                             <div className='font-bold text-2xl my-2'>₹ {Math.round(hotel.avgCostPerNight)}</div>
                                             <p className='text-xs font-semibold text-gray-400'>+ {hotel.rating * 100} Taxes & fees</p>
                                             <p className='text-xs font-semibold text-gray-400'>Per Night</p>
-                                            <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 cursor-pointer mb-2 hover:scale-[1.05] rounded-full'>View Room</button>
+                                            <button onClick={() => fetchHotelInfo(hotel._id)} className='bg-orange-500 text-white font-bold px-16 py-2 text-sm mt-3 text-nowrap cursor-pointer mb-2 hover:scale-[1.05] rounded-full'>View Room</button>
                                             <p className='text-sky-500 w-48 font-bold text-sm text-center'>Hurry Up! & Save More</p>
                                         </div>
                                     </div>
@@ -217,15 +218,15 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                 </div>
             )}
 
-            {hotelInfo && (<div className='w-full relative'>
+            {hotelInfo && (<div className='viewMore w-full relative'>
                 <button onClick={backButton} className='border text-blue-400 border-blue-400 hover:bg-blue-400 hover:text-white  rounded-full px-2 py-1 text-sm m-2 absolute right-28 font-semibold -top-14 flex items-center gap-1'><GrFormPreviousLink className='text-lg' /> Back to Hotel List</button>
-                <div className='w-10/12 mt-16 mx-auto border bg-white p-2 shadow-md rounded-md h-96'>
+                <div className='img-div w-10/12 mt-16 mx-auto border bg-white p-2 shadow-md rounded-md h-96'>
                     <h1 className='text-xl font-bold'>{hotelData.name}</h1>
                     <div>
                         <p className='text-gray-400 font-bold text-sm'>{hotelData.location}</p>
                     </div>
                     <div className='flex'>
-                        {hotelData && hotelData?.images && hotelData?.images?.length > 0 && (<div className='flex gap-2 w-2/3'>
+                        {hotelData && hotelData?.images && hotelData?.images?.length > 0 && (<div className='htlimg flex gap-2 w-2/3'>
                             <img src={hotelData.images[0]} className='object-cover h-[305px] w-3/4' alt='Hotel' />
 
                             <div className='flex flex-col justify-between'>
@@ -234,12 +235,12 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 <img src={hotelData.images[3]} className='object-cover h-24 w-40' alt='Hotel' />
                             </div>
                         </div>)}
-                        1
-                        <div className='flex flex-col justify-between w-1/3'>
+                        
+                        <div className='htlinfo flex flex-col justify-between w-1/3'>
                             <div className='flex justify-between'>
                                 <div>
-                                    <div className='border-l-4 pl-2 border-yellow-200 rounded text-blue-400 font-semibold'>Executive Room</div>
-                                    <p className='text-sm text-gray-500 font-bold'>2 x Guest | 1 x Room</p>
+                                    <div className='border-l-4 pl-2 border-yellow-200 rounded text-blue-400 text-nowrap font-semibold'>Executive Room</div>
+                                    <p className='text-sm text-nowrap text-gray-500 font-bold'>2 x Guest | 1 x Room</p>
                                 </div>
                                 <div className='text-end'>
                                     <p className='text-red-500 font-semibold line-through'>₹{Math.round((hotelData.avgCostPerNight * 1.2))}</p>
@@ -255,22 +256,22 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 <p onClick={()=>toast.info('For more information check below!')} className='text-sm text-blue-500 cursor-pointer w-[125px] hover:bg-blue-200 p-1 mt-2'>+ More Amenities</p>
                             </div>
                             <div className='flex justify-between'>
-                                <button onClick={()=>toast.info('For more information check below!')} className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-md '>SELECT ROOMS</button>
-                                <button onClick={()=>toast.info("Select room from below!")} className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
+                                <button onClick={()=>toast.info('For more information check below!')} className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-nowrap text-md '>SELECT ROOMS</button>
+                                <button onClick={()=>toast.info("Select room from below!")} className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold  text-nowrap text-md '>BOOK NOW</button>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div className='bg-white px-2 pt-3 my-5 w-10/12 mx-auto pb-1 rounded-md shadow-md'>
+                <div className='amanities bg-white px-2 pt-3 my-5 w-10/12 mx-auto pb-1 rounded-md shadow-md'>
                     <button className='px-8 mr-3 py-3 border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Rooms</button>
                     <button className='px-8 cursor-not-allowed mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Overview</button>
                     <button className='px-8 cursor-not-allowed  mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Amanities</button>
                     <button className='px-8 cursor-not-allowed  mr-3 py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Location</button>
-                    <button className='px-8 mr-3 cursor-not-allowed  py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Booking Policy</button>
+                    <button className='px-8 mr-3 cursor-not-allowed hide py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Booking Policy</button>
                     <button className='px-8 mr-3 cursor-not-allowed py-3 hover:border-b-4 border-blue-500 hover:text-blue-500 font-bold text-sm'>Guest Raiting</button>
                 </div>
-                <div className='w-10/12 mx-auto border border-orange-200 bg-white rounded'>
+                <div className='htlData w-10/12 mx-auto border border-orange-200 bg-white rounded'>
                     <div className='bg-orange-100  p-3 rounded-t flex '>
                         <div className='text-sm font-semibold w-1/4'>Room Type</div>
                         <div className='text-sm font-semibold w-1/2'>Benefits</div>
@@ -278,7 +279,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                     </div>
                     {hotelData && hotelData?.rooms && hotelData?.rooms?.length > 0 && hotelData?.rooms.map((room, index) => {
                         return <div key={index} className=' border-orange-200 border-b justify-between flex items-start'>
-                            <div className='w-1/5 p-3 border-orange-200 border-r'>
+                            <div className='roomtype w-1/5 p-3 border-orange-200 border-r'>
                                 <div className='w-1/4'>
                                     <p className='font-bold'>{room.roomType}</p>
                                 </div>
@@ -312,9 +313,9 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                     <p className='text-gray-500 text-[12px]'>Booking is Non Refundable</p>
                                 </div>
                             </div>
-                            <div className='w-1/4 py-3 pr-8 flex flex-col items-end'>
+                            <div className='booknow w-1/4 py-3 pr-8 flex flex-col items-end'>
                                <a href='#'> <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button></a>
-                                <p className='py-1 px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
+                                <p className='py-1 hide px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
                             </div>
                         </div>
                     })

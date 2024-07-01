@@ -47,6 +47,7 @@ import { FaUser } from "react-icons/fa";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { FaTrash } from "react-icons/fa6";
+import css from '../styles/Hotel.css'
 
 function Hotels({ setHotelList, setGuestDetails }) {
 
@@ -188,27 +189,27 @@ function Hotels({ setHotelList, setGuestDetails }) {
     };
 
     return (
-        <div>
-            <div className=" bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+        <div className='hotel-bluedivperent'>
+            <div className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
-                    <div className="flex justify-between items-center"></div>
+                    {/* <div className="flex justify-between items-center"></div> */}
                     <div className='flex mt-3 shadow-2xl '>
-                        <div className='bg-white  rounded-s-md w-full flex '>
-                            <div className='w-2/3 flex'>
-                                <div onClick={() => setshowCityList(true)} className='py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
-                                    <p className='text-gray-500 text-xs'>Enter City name, Location or Specific hotel</p>
-                                    <p className='font-bold text-2xl'>{city ? city.split(",")[0] : "Banglore"}</p>
+                        <div className='before-search bg-white  rounded-s-md w-full flex '>
+                            <div className='hotel-perent w-2/3 flex'>
+                                <div onClick={() => setshowCityList(true)} className='hotel py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
+                                    <p className='text-gray-500 text-xs'>Enter City name<span className='hide'>, Location or Specific hotel</span></p>
+                                    <p className='cityname font-bold text-2xl'>{city ? city.split(",")[0] : "Banglore"}</p>
                                     <p className='text-gray-500 text-xs'>{city ? city.split(",")[1] : "India"} </p>
                                 </div>
-                                <div className='flex w-1/2'>
-                                    <div className='py-2 border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
+                                <div className='checkindetails flex w-1/2'>
+                                    <div className='checkin py-2 border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
                                         <p className='text-gray-500 text-xs'>Check-in</p>
-                                        <div className='flex items-baseline gap-1'>
+                                        <div className=' flex items-baseline gap-1'>
                                             <div className='flex items-baseline' onClick={() => setShowCalendarIn(!showCalendarIn)}>
-                                                <p className='font-bold text-2xl'>{selectedCheckInDate.toLocaleDateString('en-US', { day: "numeric" })}</p>
-                                                <p className=' ml-1 text-sm'>{selectedCheckInDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
+                                                <p className='px18 font-bold text-2xl'>{selectedCheckInDate.toLocaleDateString('en-US', { day: "numeric" })}</p>
+                                                <p className=' ml-1 text-nowrap text-sm'>{selectedCheckInDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
                                             </div>
-                                            <RxCalendar className='ml-1 text-gray-400 text-xl' />
+                                            <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                                             {showCalendarIn && (
                                                 <div className='absolute'>
                                                     <DatePicker
@@ -223,14 +224,14 @@ function Hotels({ setHotelList, setGuestDetails }) {
                                         <p className='text-gray-500 text-xs'>{selectedCheckInDate.toLocaleDateString('en-US', { weekday: 'long' })}</p>
                                     </div>
 
-                                    <div className='w-1/2` py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                                    <div className='checkout w-1/2` py-2 hover:bg-sky-100 cursor-pointer pl-3'>
                                         <p className='text-gray-500 text-xs'>Check-out</p>
                                         <div className='flex items-baseline gap-1'>
                                             <div className='flex items-baseline' onClick={() => setShowCalendarOut(!showCalendarOut)}>
-                                                <p className='font-bold text-2xl'>{selectedCheckOutDate.toLocaleDateString('en-US', { day: "numeric" })}</p>
-                                                <p className=' ml-1 text-sm'>{selectedCheckOutDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
+                                                <p className='px18 font-bold text-2xl'>{selectedCheckOutDate.toLocaleDateString('en-US', { day: "numeric" })}</p>
+                                                <p className=' ml-1 text-nowrap text-sm'>{selectedCheckOutDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
                                             </div>
-                                            <RxCalendar className='ml-1 text-gray-400 text-xl' />
+                                            <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                                             {showCalendarOut && (
                                                 <div className='absolute'>
                                                     <DatePicker
@@ -246,7 +247,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex'>
+                            <div className='guestdetails flex'>
                                 <div onClick={()=>setGuestAndRoom(true)} className='py-2 cursor-pointer'>
                                     <p className='text-gray-500 text-sm'>Rooms & Guests</p>
                                     <div className='text-xs'><span className='font-bold text-2xl'>{roomCount}</span>Rooms,<span className='font-bold text-2xl'>{totalGuests}</span>Guests</div>
@@ -270,10 +271,10 @@ function Hotels({ setHotelList, setGuestDetails }) {
             </div>
 
             <div className='flex justify-center items-center'>
-                <img className='rounded-lg my-8 h-24' src={doubleRefund} />
+                <img className='hide rounded-lg my-8 h-24' src={doubleRefund} />
             </div>
 
-            <div className='flex flex-col justify-center my-6 w-9/12 mx-auto items-center'>
+            <div className='populer-destionation vw97 flex flex-col justify-center my-6 w-9/12 mx-auto items-center'>
                 <p className='font-bold text-3xl'>Book Hotels at Popular Destinations</p>
                 <div className='w-full justify-between flex flex-wrap'>
                     <div className='flex mb-2 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
@@ -376,11 +377,11 @@ function Hotels({ setHotelList, setGuestDetails }) {
                 <div className='bg-blue-500 rounded-full text-white px-5 py-1 font-bold'>View More</div>
             </div>
 
-            <div className='shadow-xl border p-6 w-9/12 mx-auto flex flex-col justify-center items-center rounded-md'>
+            <div className='shadow-xl vw97 border p-6 w-9/12 mx-auto flex flex-col justify-center items-center rounded-md'>
                 <p className='font-bold my-4 text-3xl'>Our Top Hotel Chains</p>
                 <p className='text-gray-500'>EaseMyTrip has a wide range of luxury and budget-friendly hotel chain properties. We have picked the finest hotels in India with world-class amenities. We bring you not only a stay option, but an experience in your budget to enjoy the luxury. We make sure that all the hotels are safe, hygienic, comfortable, and easily approachable when it comes to location. Book your hotel with EaseMyTrip and don't forget to grab an amazing hotel deal to save huge on your stay.</p>
 
-                <div className='flex my-6 flex-wrap gap-3'>
+                <div className='vw97 justify-center flex my-6 flex-wrap gap-3'>
                     <div className='p-2 border w-[110px] rounded'>
                         <img src={ramee} className='rounded ' />
                     </div>
@@ -428,7 +429,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
 
             </div>
 
-            <div className='bg-gray-100 my-10 flex items-center p-3'>
+            <div className='app-info bg-gray-100 my-10 flex items-center p-3'>
                 <div className='flex w-1/2 ml-28 items-center'>
                     <div className='relative flex justify-center h-96 items-center w-1/2'>
                         <div className='w-80 h-80 rounded-full bg-blue-300'></div>
@@ -467,12 +468,12 @@ function Hotels({ setHotelList, setGuestDetails }) {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <p className='font-bold text-xl mb-3'>Trusted By</p>
+                <div className='trust flex flex-col justify-center items-center'>
+                    <p className='font-bold text-nowrap text-xl mb-3'>Trusted By</p>
                     <img src={customers} />
                 </div>
-                <div className='ml-10'>
-                    <p className='font-bold text-xl mb-3'>Download EaseMyTrip App</p>
+                <div className='download ml-10'>
+                    <p className='font-bold text-xl mb-3 text-nowrap'>Download EaseMyTrip App</p>
                     <div className='border bg-green-100 w-2/3 p-2 rounded-md text-xs'>
                         <p>Save Up to Rs.5000 OFF on your first hotel booking Use Code: EMTGREET</p>
                     </div>
@@ -493,9 +494,9 @@ function Hotels({ setHotelList, setGuestDetails }) {
                 </div>
             </div>
 
-            <div className='flex w-9/12 mb-16 mx-auto flex-col justify-center items-center'>
+            <div className='vw97 flex w-9/12 mb-16 mx-auto flex-col justify-center items-center'>
                 <p className='font-bold mb-16 text-3xl'>Why Book Hotels with EaseMyTrip.com?</p>
-                <div className='w-full flex justify-between'>
+                <div className='whyEaseMyTrip w-full flex justify-between'>
                     <div className='relative border-2  pt-10 shadow-md w-[250px] rounded-2xl p-4 flex flex-col text-center justify-center items-center border-sky-100'>
                         <p className=' font-bold mb-3 text-lg'>Extensive Hotel Options</p>
                         <p className='text-gray-600 text-sm'>Best hotels available for different destinations to offer you the stay of a lifetime.</p>

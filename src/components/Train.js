@@ -22,7 +22,7 @@ import Select from 'react-select';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { toast } from 'react-toastify'
-
+import css from '../styles/Train.css'
 
 function Train({ setTrainData }) {
     const [source, setSource] = useState(null);
@@ -93,7 +93,7 @@ function Train({ setTrainData }) {
 
     return (
         <div>
-            <div className="bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+            <div className="train-blue bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='bg-white rounded-s-md w-full flex '>
@@ -145,7 +145,7 @@ function Train({ setTrainData }) {
                     </div>
                 </div>
             </div>
-            <div class="bg-white w-10/12 mx-auto p-8">
+            <div class="vw97 whyTrain bg-white w-10/12 mx-auto p-8">
                 <h2 class="text-3xl font-bold mb-10"><span className='text-sky-500'>Why</span> Book Train Tickets From EaseMyTrip</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
@@ -302,7 +302,7 @@ function Train({ setTrainData }) {
                 </div>
             </div>
 
-            <div class=" mx-auto bg-sky-50 px-36 py-6">
+            <div class="hide mx-auto bg-sky-50 px-36 py-6">
                 <h1 class="text-3xl font-bold mt-10 mb-4">Grab The Best Deals on Train Ticket Bookings</h1>
                 <p class="text-sm text-gray-700 mb-4">
                     Indeed, railways are considered as the most affordable transportation modes across India. Owing to its significant contributions to the tourism industry, EaseMyTrip, one of the leading travel organisations is truly delighted to announce a partnership with IRCTC as an authorised partner. With this beneficial affiliation, travellers can now make online train ticket bookings conveniently via the website and mobile app for a happy journey that everyone desires.
@@ -369,7 +369,7 @@ function Train({ setTrainData }) {
                 </div>
             </div>
 
-            <div className='bg-gray-100 my-10 flex items-center p-3'>
+            <div className='app-info bg-gray-100 my-10 flex items-center p-3'>
                 <div className='flex w-1/2 ml-28 items-center'>
                     <div className='relative flex justify-center h-96 items-center w-1/2'>
                         <div className='w-80 h-80 rounded-full bg-blue-300'></div>
@@ -408,12 +408,12 @@ function Train({ setTrainData }) {
                         </div>
                     </div>
                 </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <p className='font-bold text-xl mb-3'>Trusted By</p>
+                <div className='trust flex flex-col justify-center items-center'>
+                    <p className='font-bold text-nowrap text-xl mb-3'>Trusted By</p>
                     <img src={customers} />
                 </div>
-                <div className='ml-10'>
-                    <p className='font-bold text-xl mb-3'>Download EaseMyTrip App</p>
+                <div className='download ml-10'>
+                    <p className='font-bold text-xl mb-3 text-nowrap'>Download EaseMyTrip App</p>
                     <div className='border bg-green-100 w-2/3 p-2 rounded-md text-xs'>
                         <p>Save Up to Rs.5000 OFF on your first hotel booking Use Code: EMTGREET</p>
                     </div>
