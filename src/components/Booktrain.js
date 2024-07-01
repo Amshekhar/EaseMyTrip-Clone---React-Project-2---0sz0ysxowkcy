@@ -10,6 +10,7 @@ import { TfiEmail } from "react-icons/tfi";
 import { FiPhone } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import css from '../styles/Booktrain.css'
 
 function Booktrain({ train, coach, setPaymentDetails }) {
 
@@ -177,7 +178,7 @@ function Booktrain({ train, coach, setPaymentDetails }) {
 
     return (
         <div className="bg-sky-50">
-            <div className=" w-9/12 mx-auto flex justify-between p-4">
+            <div className="train-booking-main w-9/12 mx-auto flex justify-between p-4">
                 <div className='w-[73%]'>
                     <nav className="text-sm text-blue-600 mb-4">
                         <a href="#" className="hover:underline">1. Review & Travellers</a> &gt;
@@ -189,7 +190,7 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                             <img src="https://placehold.co/40x40" alt="IRCTC Logo" className="mr-2" />
                             <h2 className="text-xl">IRCTC User Verification</h2>
                         </div>
-                        <div className='flex justify-between items-center mr-5'>
+                        <div className='irctc-id flex justify-between items-center mr-5'>
                             <div className="p-4 items-center mb-4">
                                 <p className='text-sm font-bold '>IRCTC User Id</p>
                                 <div className='flex w-72'>
@@ -217,7 +218,7 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                         </div>
                     </div>
 
-                    <div className="bg-white rounded-lg shadow-md">
+                    <div className=" bg-white rounded-lg shadow-md">
                         <div className='flex justify-between bg-blue-200 items-center p-2'>
                             <div className="flex items-center">
                                 <FaTrainSubway alt="Train Logo" className="mr-2 text-xl border-2 p-1 w-8 h-8 border-black rounded-full" />
@@ -228,23 +229,23 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                                 <a href="#" className="text-blue-600 hover:underline">Refresh Availability</a>
                             </div>
                         </div>
-                        <div className="p-4 mb-4">
+                        <div className="train-details p-4 mb-4">
                             <h3 className="text-lg">{train.source} - {train.destination} | {train.daysOfOperation.join(", ")}</h3>
                             <div className='flex justify-between items-center mt-3'>
                                 <div className='flex-col flex gap-1'>
                                     <a href="#" className="text-blue-600 text-sm my-1 hover:underline">{train.trainName}</a>
-                                    <p className="font-semibold mb-1 text-sm">Train No: <span>{train.trainNumber}</span></p>
+                                    <p className="font-semibold text-nowrap mb-1 text-sm">Train No: <span>{train.trainNumber}</span></p>
                                     <p className="font-semibold mb-1 text-sm">Class: <span>{coach.coachType}</span></p>
                                     <p className='text-sm'>Quota: <span className="text-green-600">General</span></p>
                                 </div>
-                                <div className="relative justify-between items-center">
+                                <div className="train-time relative justify-between items-center">
                                     <div className="flex justify-between pt-3 px-5">
                                         <p className="text-2xl font-bold">{train.arrivalTime}</p>
                                         <p className="text-2xl font-bold">{train.departureTime}</p>
                                     </div>
                                     <p className="text-sm justify-center text-gray-400 flex items-center">
-                                        <GoDotFill />
-                                        ------------------------------------------------------------------------------------------------------------------------------
+                                        <GoDotFill /><p className=" hide">
+                                        --------------------------------------------------------------------</p><span className="text-nowrap">----------------------------------------------------------</span>
                                         <GoDotFill />
                                         <FaTrainSubway className="text-center absolute border bg-white rounded-full h-7 border-gray-400 p-1 inline w-7" />
                                     </p>

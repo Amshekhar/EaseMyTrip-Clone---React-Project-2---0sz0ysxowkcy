@@ -1,0 +1,12 @@
+@media(max-width:768px){
+    
+    .select-seat-main-container>div{ 
+        /* flex-direction: column;  */
+        width: 100vw;
+        position: static; 
+        overflow-x: scroll;
+    } 
+    .seat{
+        width: 120vw;
+    }
+}

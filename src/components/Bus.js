@@ -7,8 +7,9 @@ import discount2 from '../Assets/bus-discount2.png'
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
+import css from '../styles/Bus.css'
 
-function Bus({setBusList}) {
+function Bus({ setBusList }) {
     const [source, setSource] = useState('');
     const [destination, setDestination] = useState('');
     const [day, setDay] = useState(null);
@@ -16,7 +17,7 @@ function Bus({setBusList}) {
     const [cityList, setCityList] = useState(BusToCity);
     const [error, setError] = useState('');
     const [buses, setBuses] = useState([]);
-    
+
     const navigate = useNavigate()
     const BusToCity = [
         "Indore, Madhya Pradesh",
@@ -89,7 +90,7 @@ function Bus({setBusList}) {
         // console.log(day.toString().slice(0,3), source, destination);
         try {
             const response = await axios.get(
-                `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${source}","destination":"${destination}"}&day=${day.toString().slice(0,3)}`,
+                `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${source}","destination":"${destination}"}&day=${day.toString().slice(0, 3)}`,
                 {
                     headers: {
                         projectID: '0sz0ysxowkcy'
@@ -102,7 +103,7 @@ function Bus({setBusList}) {
             // console.log(buses);
             setError('');
             navigate('/buseslist')
-            
+
         } catch (error) {
             setError('No buses available for the selected route and day.');
             setBuses([]);
@@ -110,52 +111,52 @@ function Bus({setBusList}) {
     }
     return (
         <div>
-            <div className="bg-gradient-to-r from-blue-500 to-sky-400 py-12">
-            <div className='w-9/12 mx-auto relative'>
-                <div className='flex mt-3 shadow-2xl '>
-                    <div className='bg-white rounded-s-md w-full flex '>
-                        <div className='w-full flex'>
-                            <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
-                                <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
-                                <input
-                                    className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
-                                    placeholder='Choose Source Station'
-                                    value={source}
-                                    onClick={() => setList({ ...list, source: true })}
-                                    onChange={(e) => setSource(e.target.value)}
-                                />
-                                {list.source && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'source')} onClose={() => setList({ ...list, source: false })} />}
-                            </div>
-                            <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
-                                <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
-                                <input
-                                    className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
-                                    placeholder='Choose Destination Station'
-                                    value={destination}
-                                    onClick={() => setList({ ...list, destination: true })}
-                                    onChange={(e) => setDestination(e.target.value)}
-                                />
-                                {list.destination && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'destination')} onClose={() => setList({ ...list, destination: false })} />}
-                            </div>
-                            <div className='flex w-1/3'>
-                                <div className='py-2 pl-3 w-full rounded-s-md cursor-pointer'>
-                                    <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
-                                    <DatePicker
-                                        selected={day}
-                                        onChange={(date) => setDay(date)}
-                                        placeholderText='Depart Date'
-                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2 w-full'
+            <div className="bus-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+                <div className='w-9/12 mx-auto relative'>
+                    <div className='flex mt-3 shadow-2xl '>
+                        <div className='bg-white rounded-s-md w-full flex '>
+                            <div className='w-full flex'>
+                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
+                                    <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
+                                    <input
+                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
+                                        placeholder='Choose Source Station'
+                                        value={source}
+                                        onClick={() => setList({ ...list, source: true })}
+                                        onChange={(e) => setSource(e.target.value)}
                                     />
+                                    {list.source && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'source')} onClose={() => setList({ ...list, source: false })} />}
+                                </div>
+                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
+                                    <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
+                                    <input
+                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
+                                        placeholder='Choose Destination Station'
+                                        value={destination}
+                                        onClick={() => setList({ ...list, destination: true })}
+                                        onChange={(e) => setDestination(e.target.value)}
+                                    />
+                                    {list.destination && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'destination')} onClose={() => setList({ ...list, destination: false })} />}
+                                </div>
+                                <div className='flex w-1/3'>
+                                    <div className='py-2 pl-3 w-full rounded-s-md cursor-pointer'>
+                                        <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
+                                        <DatePicker
+                                            selected={day}
+                                            onChange={(date) => setDay(date)}
+                                            placeholderText='Depart Date'
+                                            className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2 w-full'
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <button className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold' onClick={searchBuses}>
+                            SEARCH
+                        </button>
                     </div>
-                    <button className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold' onClick={searchBuses}>
-                        SEARCH
-                    </button>
-                </div>
-                {error && <p className='text-red-500 mt-4'>{error}</p>}
-                {/* <div className='mt-6'>
+                    {error && <p className='text-red-500 mt-4'>{error}</p>}
+                    {/* <div className='mt-6'>
                     {buses.length > 0 ? (
                         <div>
                             <h2 className='text-2xl font-bold mb-4'>Available Buses</h2>
@@ -174,8 +175,8 @@ function Bus({setBusList}) {
                         <p>No buses available for the selected route and day.</p>
                     )}
                 </div> */}
+                </div>
             </div>
-        </div>
             <div class="max-w-6xl mx-auto p-4 space-y-8 text-sm">
                 <section class="text-center">
                     <h2 class="text-2xl font-bold">Book Your Bus Ticket with Us</h2>
@@ -193,7 +194,7 @@ function Bus({setBusList}) {
                     </div>
                 </section>
             </div>
-            <div class="p-4 max-w-6xl mx-auto">
+            <div class="hide p-4 max-w-6xl mx-auto">
                 <div class="flex space-x-1 overflow-x-auto">
                     <button class="bg-blue-500 text-white text-xs px-3 py-2 hover:bg-blue-500 hover:text-white rounded">A</button>
                     <button class="bg-gray-200 text-sm px-3 py-2 hover:bg-blue-500 hover:text-white rounded">B</button>

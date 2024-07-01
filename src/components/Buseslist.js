@@ -9,6 +9,7 @@ import rated from "../Assets/top-rated-buses-v1.png"
 import safety from "../Assets/ultra-safety-v1.png"
 import { useNavigate } from 'react-router-dom';
 import SeatSelectionPopup from './SeatSelectionPopup';  // Import the new component
+import css from '../styles/Buseslist.css'
 
 function Buseslist({ busList, setPaymentDetails }) {
     // console.log(busList);
@@ -72,8 +73,8 @@ function Buseslist({ busList, setPaymentDetails }) {
     return (
         <div className='bg-sky-50'>
             <div className='bg-blue-400 h-20 w-full'></div>
-            <div className='flex w-9/12 gap-5 pt-5 mx-auto'>
-                <div className='w-[22%] bg-white h-64 rounded-lg border shadow-lg'>
+            <div className='bus-list-container flex w-9/12 gap-5 pt-5 mx-auto'>
+                <div className='hide w-[22%] bg-white h-64 rounded-lg border shadow-lg'>
                     <div className="flex flex-col text-sm gap-3 m-2 mb-4">
                         <label className='font-bold'>Sort By:</label>
                         <button
@@ -102,26 +103,26 @@ function Buseslist({ busList, setPaymentDetails }) {
                         </button>
                     </div>
                 </div>
-                <div className='w-[78%]'>
-                    <div className='flex gap-3 mb-5'>
+                <div className='bus-list-main w-[78%]'>
+                    <div className='hide flex gap-3 mb-5'>
                         <img src={budgeted} className='w-44 h-24 ' />
                         <img src={luxury} className='w-44 h-24 ' />
                         <img src={rated} className='w-44 h-24 ' />
                         <img src={safety} className='w-44 h-24 ' />
                     </div>
                     <div>
-                       {busList && busList.length > 0 && <p className='font-bold text-xl mb-3'>{busList[0].source} <IoArrowForward className='inline'/> {busList[0].destination}</p>}
+                       {busList && busList.length > 0 && <p className='font-bold text-nowrap text-xl mb-3'>{busList[0].source} <IoArrowForward className='inline'/> {busList[0].destination}</p>}
                     </div>
                     <div className='pl-8 pb-1'>
-                        <span className='text-xs font-bold text-gray-400 mr-28'>BUS OPERATOR</span>
+                        <span className='text-xs font-bold text-nowrap text-gray-400 mr-28'>BUS OPERATOR</span>
                         <span className='text-xs font-bold text-gray-400 mr-10'>DEPARTURE</span>
                         <span className='text-xs font-bold text-gray-400 mr-10'>DURATION</span>
                         <span className='text-xs font-bold text-gray-400 mr-28'>ARRIVAL</span>
-                        <span className='text-xs font-bold text-gray-400 mr-24'>PRICE</span>
-                        <span className='text-xs font-bold text-gray-400'>{busList.length} RESULTS</span>
+                        <span className='text-xs hide font-bold text-gray-400 mr-24'>PRICE</span>
+                        <span className='text-xs hide font-bold text-gray-400'>{busList.length} RESULTS</span>
                         
                     </div>
-                    <div className='p-4 bg-white shadow-lg  dark:bg-gray-800 rounded-lg'>
+                    <div className='bus-list p-4 bg-white shadow-lg  dark:bg-gray-800 rounded-lg'>
                         {busList && busList.length == 0 ? (
                             <div className='font-bold p-20 text-4xl'>Oop's! Service Unavailable on this route!</div>
                         ) : (
@@ -160,7 +161,7 @@ function Buseslist({ busList, setPaymentDetails }) {
                                                 <p className="text-[10px] text-green-700">BOOKNOW Applied</p>
                                             </div>
                                             <div className="ml-4">
-                                                <button className="bg-orange-500 text-white px-4 py-2 rounded-full" onClick={() => openSeatSelection(bus)}>Select Seats</button>
+                                                <button className="bg-orange-500 text-nowrap text-white px-4 py-2 rounded-full" onClick={() => openSeatSelection(bus)}>Select Seats</button>
                                                 <p className="text-xs text-center text-gray-600 dark:text-gray-400 mt-1">{bus.seats} Seat(s) left</p>
                                             </div>
                                         </div>

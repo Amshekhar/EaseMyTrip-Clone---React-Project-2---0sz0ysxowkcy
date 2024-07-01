@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MdEventSeat } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
+import css from '../styles/Selectseat.css'
 
 const SeatSelectionModal = ({ bus, onClose, setPaymentDetails }) => {
     console.log(bus.fare);
@@ -52,9 +53,9 @@ const SeatSelectionModal = ({ bus, onClose, setPaymentDetails }) => {
     const lowerButtons = ['1E', '1G', '1A', '2E', '2G', '3E', '3G', '4E', '4G', '5E', '5G', '6E', '6G', '1D', '1F', '2D', '2F', '3D', '3F', '4D', '4F', '5D', '5F', '6D', '6F', '2LA', '3LA', '4LA', '5LA', '6LA'];
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="p-4 flex bg-white h-5/6 rounded-md gap-4">
-                <div className='bg-gray-50 rounded-md overflow-y-scroll shadow-xl p-4 w-[80%]'>
+        <div className="container fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="select-seat-main-container p-4 flex bg-white h-5/6 rounded-md gap-4">
+                <div className='seat bg-gray-50 rounded-md overflow-y-scroll shadow-xl p-4 w-[80%]'>
                     <div className="flex justify-between items-center mb-4">
                         <div>
                             <h1 className="text-lg font-bold">Bangalore → Hyderabad</h1>

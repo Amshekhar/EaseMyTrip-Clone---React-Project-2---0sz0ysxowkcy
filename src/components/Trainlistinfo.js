@@ -2,6 +2,7 @@ import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
+import css from '../styles/Traininfo.css'
 
 function Trainlistinfo({ trainData, setTrain, setCoach }) {
     const navigate = useNavigate();
@@ -106,9 +107,9 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
     return (
         <div>
             <div className='h-20 bg-blue-400'></div>
-            <div className="bg-sky-50">
+            <div className="traininfo-main bg-sky-50">
                 <div className='flex w-[84%] pt-10 mx-auto justify-between'>
-                    <div className='w-[20%] bg-white rounded-md shadow-md h-60 border pt-4'>
+                    <div className='w-[20%] hide bg-white rounded-md shadow-md h-60 border pt-4'>
                         <div className="flex justify-between  mx-4 items-center">
                             <p className="font-bold">Sort by:</p>
                             <select value={sortOption} onChange={handleSortChange} className='p-1 text-sm w-2/3 rounded-full border-2 border-blue-400'>
@@ -155,9 +156,9 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                         </div> */}
                         </div>
                     </div>
-                    <div className='w-[78%]'>
+                    <div className=' w-[78%]'>
                         {sortedAndFilteredData.map((train, index) => (
-                            <div key={index} className='rounded-lg shadow-lg bg-white mb-5 border'>
+                            <div key={index} className='train-list rounded-lg shadow-lg bg-white mb-5 border'>
                                 <div className='bg-blue-100 flex py-1 px-4 justify-between'>
                                     <div className='text-sm'>NDLS -- PUNE</div>
                                     <div className='text-xs'>Runs on: {train.daysOfOperation.join(', ')}</div>
@@ -196,13 +197,13 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                                         </select>
                                     </div>
                                 </div>
-                                <div className='flex p-2'>
+                                <div className='coach flex p-2'>
                                     {train.coaches.map((coach, index) => (
                                         <div key={index} className='bg-orange-50 flex justify-center items-center flex-col p-2 m-1 w-40 rounded'>
-                                            <p className='text-xs text-gray-500'>{coachDescriptions[coach.coachType]} ({coach.coachType})</p>
+                                            <p className='text-xs text-nowrap text-gray-500'>{coachDescriptions[coach.coachType]} ({coach.coachType})</p>
                                             <p className='text-sm font-bold'>₹{Math.round(train.fare * (coachMultipliers[coach.coachType] || 1))}</p>
                                             <p className='text-sm text-green-500'>AVL {coach.numberOfSeats}</p>
-                                            <a href="#"> <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button></a>
+                                            <a href="#"> <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white text-nowrap bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button></a>
                                         </div>
                                     ))}
                                 </div>
