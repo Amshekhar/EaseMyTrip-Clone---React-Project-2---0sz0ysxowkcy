@@ -98,10 +98,10 @@ function Train({ setTrainData }) {
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='bg-white rounded-s-md w-full flex '>
                             <div className='w-full flex'>
-                                <div className='py-2 pl-3 w-1/3 cursor-pointer'>
+                                <div className='abc py-2 pl-3 w-1/3 cursor-pointer'>
                                     <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
                                     <Select
-                                        className='my-2 font-bold'
+                                        className=' my-2 font-bold'
                                         options={trainCityOptions}
                                         value={source}
                                         onChange={setSource}
