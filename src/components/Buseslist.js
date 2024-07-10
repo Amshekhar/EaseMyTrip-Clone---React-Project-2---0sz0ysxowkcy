@@ -122,7 +122,7 @@ function Buseslist({ busList, setPaymentDetails }) {
                         <span className='text-xs hide font-bold text-gray-400'>{busList.length} RESULTS</span>
                         
                     </div>
-                    <div className='bus-list p-4 bg-white shadow-lg  dark:bg-gray-800 rounded-lg'>
+                    <div className='bus-list p-4 bg-white shadow-lg rounded-lg'>
                         {busList && busList.length == 0 ? (
                             <div className='font-bold p-20 text-4xl'>Oop's! Service Unavailable on this route!</div>
                         ) : (
