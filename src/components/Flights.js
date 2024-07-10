@@ -128,7 +128,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
     <div className='w-full bg-sky-100'>
       <div className='main-container flex pt-5 ml-44 '>
         <div className='hide sort-section mr-5  w-2/12 h-96'>
-          <div className='bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-xs'>
+          <div className='bg-white p-4 rounded-lg shadow-md text-xs'>
             <h2 className='text-sm font-bold mb-4'>FILTER</h2>
             <div className='mb-4'>
               <h3 className='text-sm font-bold mb-2'>Popular Filters</h3>
