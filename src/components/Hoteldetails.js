@@ -128,13 +128,13 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 <option value="Top Rating Hotel">Top Rating Hotel</option>
                             </select>   
                             </div>
-                            <div className="bg-white border dark:bg-gray-800 p-4 rounded-lg max-w-sm mx-auto">
+                            <div className="bg-white border  p-4 rounded-lg max-w-sm mx-auto">
                                 <div className="flex justify-between items-center mb-4">
-                                    <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Select Filters</h2>
+                                    <h2 className="text-lg font-semibold text-gray-800">Select Filters</h2>
                                     <a href="#" onClick={() => setSelectedFilters([])} className="text-blue-500 text-sm">Clear All</a>
                                 </div>
                                 <div>
-                                    <h3 className="text-md font-semibold text-gray-800 dark:text-gray-200 mb-2">PRICE (PER NIGHT)</h3>
+                                    <h3 className="text-md font-semibold text-gray-800  mb-2">PRICE (PER NIGHT)</h3>
                                     <div className="space-y-2">
                                         {priceRanges.map((range, index) => (
                                             <label key={index} className="flex items-center">
@@ -144,7 +144,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                                     checked={selectedFilters.includes(JSON.stringify(range))}
                                                     onChange={() => handleFilterChange(range)}
                                                 />
-                                                <span className="ml-2 text-gray-700 dark:text-gray-300">
+                                                <span className="ml-2 text-gray-700">
                                                     {range[1] === Infinity
                                                         ? `Above ₹${range[0]}`
                                                         : `₹${range[0]} - ₹${range[1]}`}

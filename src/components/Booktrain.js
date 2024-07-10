@@ -418,31 +418,31 @@ function Booktrain({ train, coach, setPaymentDetails }) {
                         </div>
                     </div>
                 </div>
-                <div className="bg-white dark:bg-gray-800 rounded w-[26%] mt-9 h-60 shadow-md overflow-hidden">
-                    <div className="bg-blue-200 dark:bg-blue-900 p-3 flex items-center">
+                <div className="bg-white  rounded w-[26%] mt-9 h-60 shadow-md overflow-hidden">
+                    <div className="bg-blue-200  p-3 flex items-center">
                         <img src="https://placehold.co/20x20" alt="currency symbol" className="mr-2" />
-                        <h2 className="text-lg text-gray-700 dark:text-gray-300">Price Summary</h2>
+                        <h2 className="text-lg text-gray-700 ">Price Summary</h2>
                     </div>
                     <div className="p-4">
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <div className="flex justify-between text-sm text-gray-600  mb-2">
                             <span>Single Passenger Fare</span>
                             <span>₹ {fare}</span>
                         </div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <div className="flex justify-between text-sm text-gray-600  mb-2">
                             <span>Tax</span>
                             <span>₹ {tax}</span>
                         </div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <div className="flex justify-between text-sm text-gray-600  mb-2">
                             <span>Reservation Charge</span>
                             <span>₹ {reservationCharge}</span>
                         </div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        <div className="flex justify-between text-sm text-gray-600  mb-2">
                             <span>SuperFast Charge</span>
                             <span>₹ {superFastCharge}</span>
                         </div>
                         <div className="flex justify-between font-semibold mt-4 border-t pt-2">
-                            <span className="text-red-600 dark:text-red-400">Grand Total</span>
-                            <span className="text-red-600 dark:text-red-400">₹{fare + reservationCharge + superFastCharge}</span>
+                            <span className="text-red-600 ">Grand Total</span>
+                            <span className="text-red-600 ">₹{fare + reservationCharge + superFastCharge}</span>
                         </div>
                     </div>
                 </div>

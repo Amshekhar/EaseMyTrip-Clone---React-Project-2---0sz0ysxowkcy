@@ -119,7 +119,7 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                                 <option value='departureTimeHighToLow'>Departure Time (High to Low)</option>
                             </select>
                         </div>
-                        <div className=" dark:bg-gray-800 p-4 rounded-lg w-64 text-sm">
+                        <div className=" p-4 rounded-lg w-64 text-sm">
                             <div className="flex justify-between items-center mb-4">
                                 <h2 className="font-semibold">Filter By</h2>
                                 <button onClick={() => setFilters({ timeOfDay: [], fareClasses: [], trainTypes: [] })} className="text-blue-500 text-xs">Reset All</button>

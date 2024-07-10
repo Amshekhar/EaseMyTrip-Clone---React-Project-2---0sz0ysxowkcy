@@ -133,7 +133,7 @@ function Buseslist({ busList, setPaymentDetails }) {
                                         <div className="flex justify-between items-center mb-2 p-3">
                                             <div>
                                                 <h2 className="font-bold">{bus.name}</h2>
-                                                <p className="text-xs mt-3 text-gray-600 dark:text-gray-400">{bus.type}</p>
+                                                <p className="text-xs mt-3 text-gray-600">{bus.type}</p>
                                                 <div className="flex items-center mt-1">
                                                     <div className="flex items-center text-green-500">
                                                         <span className='border-green-500 flex items-end rounded border pr-1 text-[11px]'><FaStar alt="star" className="bg-green-500 text-white h-5 mr-1" />{bus.ratings}</span>
@@ -144,11 +144,11 @@ function Buseslist({ busList, setPaymentDetails }) {
                                             <div className="flex items-center pt-7">
                                                 <div className="text-center mr-4">
                                                     <p className="font-bold text-lg">{bus.departureTime}</p>
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">{bus.source}</p>
+                                                    <p className="text-xs text-gray-600">{bus.source}</p>
                                                 </div>
                                                 <div className="text-center mx-4">
                                                     <FaArrowRight alt="arrow" className="w-4 h-4 mx-auto" />
-                                                    <p className="text-xs text-gray-600 dark:text-gray-400">{bus.arrivalTime}</p>
+                                                    <p className="text-xs text-gray-600 ">{bus.arrivalTime}</p>
                                                 </div>
                                                 <div className="text-center ml-4">
                                                     <p className="font-bold text-lg">{arrivalTime}:00</p>
@@ -156,16 +156,16 @@ function Buseslist({ busList, setPaymentDetails }) {
                                                 </div>
                                             </div>
                                             <div className="text-right pt-3">
-                                                <p className="line-through text-xs text-gray-500 dark:text-gray-400">₹ {bus.fare}</p>
+                                                <p className="line-through text-xs text-gray-500">₹ {bus.fare}</p>
                                                 <p className="text-red-500 font-bold text-lg">₹ {bus.fare}</p>
                                                 <p className="text-[10px] text-green-700">BOOKNOW Applied</p>
                                             </div>
                                             <div className="ml-4">
                                                 <button className="bg-orange-500 text-nowrap text-white px-4 py-2 rounded-full" onClick={() => openSeatSelection(bus)}>Select Seats</button>
-                                                <p className="text-xs text-center text-gray-600 dark:text-gray-400 mt-1">{bus.seats} Seat(s) left</p>
+                                                <p className="text-xs text-center text-gray-600 mt-1">{bus.seats} Seat(s) left</p>
                                             </div>
                                         </div>
-                                        <div className="flex p-3 justify-between items-center bg-gray-50 border-t pt-2 mt-5 text-xs text-gray-600 dark:text-gray-400">
+                                        <div className="flex p-3 justify-between items-center bg-gray-50 border-t pt-2 mt-5 text-xs text-gray-600 ">
                                             <div className="flex items-center space-x-2">
                                                 {bus.amenities.map((amenity, index) => (
                                                     <img key={index} src={`https://placehold.co/16x16?text=${amenity}`} alt={amenity} className="w-4 h-4" />
