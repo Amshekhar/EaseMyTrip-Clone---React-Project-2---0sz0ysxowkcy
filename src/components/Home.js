@@ -243,13 +243,13 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                       [{airportTo.iata_code ? airportTo.iata_code : "DEL"}] {airportTo.name ? airportTo.name : "Indira Gandhi International Airport"}</p>
                   </div>
                 </div>
-                <div className=' flex w-1/2'>
+                <div className=' flex departure w-1/2'>
                   <div className='date py-2 border-r w-1/3 pl-6 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>DEPARTURE DATE</p>
                     <div className='flex items-baseline gap-1'>
                       <div className='date-p flex items-baseline' onClick={() => setShowCalendar(!showCalendar)}>
-                        <p className='font-bold text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>
-                        <p className=' ml-1 text-sm'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : currentMonth}</p>
+                        <p className='font-bold  text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>
+                        <p className='noWrap ml-1 text-sm'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : currentMonth}</p>
                       </div>
                       <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                       {showCalendar && (
@@ -266,7 +266,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                     <p className='text-gray-500 text-xs'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { weekday: 'long' }) : currentDay}</p>
                   </div>
 
-                  <div className='hide w-1/3 py-2 hover:bg-sky-100 cursor-not-allowed pl-3'>
+                  <div className='hide tabHide w-1/3 py-2 hover:bg-sky-100 cursor-not-allowed pl-3'>
                     <p className='text-gray-500 text-xs'>RETURN DATE</p>
                     <div className='flex'>
                       <p className='text-gray-500 w-28 text-xs'>Book a round trip to save more</p>
@@ -279,9 +279,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                   <div onClick={() => setPassanger(true)} className='guest w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
                     <p className=' text-gray-500 text-xs'>TRAVELLER & CLASS</p>
                     <div className='flex font-bold items-center'>
-                      <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='hide inline ml-2' /></p>
+                      <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='hide tabHide inline ml-2' /></p>
                     </div>
-                    <p className='hide text-gray-500 text-xs'>FIRST</p>
+                    <p className='hide tabHide text-gray-500 text-xs'>FIRST</p>
                   </div>
                 </div>
 

@@ -38,7 +38,9 @@ function App() {
   return (
     <Router>
       <Navbar />
-      <Suspense fallback={<div className='h-screen w-screen font-bold text-4xl flex justify-center items-center'>Loading...</div>}>
+      <Suspense fallback={<div className="h-screen w-screen flex justify-center items-center">
+    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-gray-900"></div>
+  </div>}>
         <Routes>
           <Route path="/" element={<Home
             setPassengerDetails={setPassengerDetails}

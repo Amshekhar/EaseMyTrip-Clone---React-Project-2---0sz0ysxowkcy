@@ -90,3 +90,21 @@
         bottom: 0px;
     }
 }
+
+@media (max-width: 1024px) {
+    .bluediv{
+        width: 95vw;
+    }
+    .search-container{
+        width: 80vw;
+    }
+    .departure{
+        width: 60%;
+    }
+    .noWrap{
+        text-wrap: nowrap;
+    }
+    .tabHide{
+        display: none;
+    }
+}

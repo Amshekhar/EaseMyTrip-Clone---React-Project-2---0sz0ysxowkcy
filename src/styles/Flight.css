@@ -34,3 +34,15 @@
     /* .flight-div{
     } */
 }
+
+@media (max-width:1024px){
+    .main-container{
+        margin: 10px;
+    }
+    .flno{
+        width: 80px;
+    }
+    .sort-section{
+        width: 15vw;
+    }
+}

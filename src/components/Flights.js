@@ -127,7 +127,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
   return (
     <div className='w-full bg-sky-100'>
       <div className='main-container flex pt-5 ml-44 '>
-        <div className='hide mr-5  w-2/12 h-96'>
+        <div className='hide sort-section mr-5  w-2/12 h-96'>
           <div className='bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md text-xs'>
             <h2 className='text-sm font-bold mb-4'>FILTER</h2>
             <div className='mb-4'>
@@ -236,9 +236,9 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                   <div className='flex w-5/12 justify-between items-start'>
                     <div className='flex gap-2 items-center'>
                       <img className='w-10' src={getAirlineLogo(flight.flightID)} alt='Airline Logo' />
-                      <div>
-                        <p className='hide text-xs'>{name}</p>
-                        <p className='hide text-xs mt-1 text-gray-500'>{(flight.flightID).substring(0, 5)}</p>
+                      <div className=''>
+                        <p className='hide flno text-xs'>{name}</p>
+                        <p className='hide flno text-xs mt-1 text-gray-500'>{(flight.flightID).substring(0, 5)}</p>
                       </div>
                     </div>
                     <div>

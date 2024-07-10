@@ -11,3 +11,16 @@
     }
     
 }
+@media (max-width:1024px){
+    .airport-source{
+        left: 50px;
+        top: 150px;
+        width: auto;
+    }
+    .airport-destination{
+        left: 300px;
+        top: 150px;
+        width: auto;
+    }
+    
+}
