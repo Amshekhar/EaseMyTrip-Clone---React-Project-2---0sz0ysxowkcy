@@ -9,9 +9,12 @@ import img1 from './amzdeal.png';
 import img2 from './emtcash.png';
 import img3 from './freebooking.png';
 import css from '../styles/Login.css';
+import { FaRegEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Login() {
     const { onTokenHandler, onNameHandler } = useUser();
+    const [passwordShow, setPasswordShow] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -23,6 +26,10 @@ function Login() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const togglePasswordVisibility = () => {
+        setPasswordShow(prevState => !prevState);
     };
 
     const handleSubmit = async (e) => {
@@ -48,6 +55,7 @@ function Login() {
             setError('Invalid credentials. Please try again.');
         }
     };
+
     const settings = {
         dots: true,
         infinite: true,
@@ -100,16 +108,23 @@ function Login() {
                                 placeholder="Enter your email"
                             />
                         </div>
-                        <div className="form-group">
+                        <div className="form-group relative">
                             <label htmlFor="password" className="block ">Enter your Password</label>
                             <input
-                                type="password"
+                                type={passwordShow ? "text" : "password"}
                                 className="form-input bg-transparent border p-1 mt-1 block w-full rounded border-gray-300"
                                 value={formData.password}
                                 onChange={handleChange}
                                 name="password"
                                 placeholder="Enter your password"
                             />
+                            <span className='absolute right-2 text-gray-600 top-[60%]'>
+                                {passwordShow ? (
+                                    <FaEyeSlash onClick={togglePasswordVisibility} />
+                                ) : (
+                                    <FaRegEye onClick={togglePasswordVisibility} />
+                                )}
+                            </span>
                         </div>
                         
                         <button
@@ -120,8 +135,8 @@ function Login() {
                         </button>
                     </form>
                     <p onClick={registerHandler} className="text-lg mt-3 text-blue-500 underline cursor-pointer">
-                    Create an account.
-                </p>
+                        Create an account.
+                    </p>
                 </div>
                 
             </div>

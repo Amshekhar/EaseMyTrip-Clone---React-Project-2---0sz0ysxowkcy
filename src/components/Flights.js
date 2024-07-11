@@ -18,6 +18,8 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
   const [filters, setFilters] = useState({
     nonstop: false,
+    onestop:false,
+    twostop:false,
     morningDeparture: false,
     indigo: false,
     priceRange: [0, 10000],
@@ -94,17 +96,19 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
       filteredFlights = filteredFlights.filter((flight) => flight.stops === 0);
       // console.log(filteredFlights)
     }
+    if (filters.onestop) {
+      filteredFlights = filteredFlights.filter((flight) => flight.stops === 1);
+      // console.log(filteredFlights)
+    }
+    if (filters.twostop) {
+      filteredFlights = filteredFlights.filter((flight) => flight.stops === 2);
+      // console.log(filteredFlights)
+    }
     if (filters.morningDeparture) {
       filteredFlights = filteredFlights.filter((flight) =>
         parseInt(flight.departureTime.split(':')[0], 10) < 12
       );
       console.log(filteredFlights)
-    }
-    if (filters.indigo) {
-      filteredFlights = filteredFlights.filter((flight) => flight.flightID.startsWith('6E'));
-    }
-    if (filters.vistara) {
-      filteredFlights = filteredFlights.filter((flight) => flight.flightID.startsWith('UK'));
     }
     filteredFlights = filteredFlights.filter(
       (flight) => flight.ticketPrice >= filters.priceRange[0] && flight.ticketPrice <= filters.priceRange[1]
@@ -144,7 +148,32 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                   Nonstop
                 </label>
               </div>
-              <div className='flex items-center mb-2'>
+              
+              <div className='flex items-center'>
+              <input
+                  type='checkbox'
+                  id='onestop'
+                  className='form-checkbox h-4 w-4 text-blue-600'
+                  checked={filters.onestop}
+                  onChange={() => handleFilterChange('onestop')}
+                />
+                <label htmlFor='onestop' className='ml-2'>
+                  Onestop
+                </label>
+              </div>
+              <div className='flex mt-2 items-center'>
+              <input
+                  type='checkbox'
+                  id='twostop'
+                  className='form-checkbox h-4 w-4 text-blue-600'
+                  checked={filters.twostop}
+                  onChange={() => handleFilterChange('twostop')}
+                />
+                <label htmlFor='twostop' className='ml-2'>
+                Twostop
+                </label>
+              </div>
+              <div className='flex mt-2 items-center'>
                 <input
                   type='checkbox'
                   id='morning-departure'
@@ -154,30 +183,6 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                 />
                 <label htmlFor='morning-departure' className='ml-2'>
                   Morning Departure
-                </label>
-              </div>
-              <div className='flex items-center'>
-                <input
-                  type='checkbox'
-                  id='indigo'
-                  className='form-checkbox h-4 w-4 text-blue-600'
-                  checked={filters.indigo}
-                  onChange={() => handleFilterChange('indigo')}
-                />
-                <label htmlFor='indigo' className='ml-2'>
-                  Indigo
-                </label>
-              </div>
-              <div className='flex mt-2 items-center'>
-                <input
-                  type='checkbox'
-                  id='indigo'
-                  className='form-checkbox h-4 w-4 text-blue-600'
-                  checked={filters.vistara}
-                  onChange={() => handleFilterChange('vistara')}
-                />
-                <label htmlFor='indigo' className='ml-2'>
-                  Vistara
                 </label>
               </div>
             </div>

@@ -7,10 +7,15 @@ import 'slick-carousel/slick/slick-theme.css';
 import img1 from './amzdeal.png';
 import img2 from './emtcash.png';
 import img3 from './freebooking.png';
+import { useUser } from '../providers/userProvider';
 import css from '../styles/Register.css'
+import { FaRegEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
 
 function Register() {
     const navigate = useNavigate();
+    const { onTokenHandler, onNameHandler } = useUser();
+    const [passwordShow, setPasswordShow] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -23,6 +28,11 @@ function Register() {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    
+    const togglePasswordVisibility = () => {
+        setPasswordShow(prevState => !prevState);
     };
 
     const handleSubmit = async (e) => {
@@ -38,6 +48,10 @@ function Register() {
                     }
                 }
             );
+            const { token, data } = response.data;
+            onTokenHandler(token);
+            console.log("okay report");
+            onNameHandler(data.user.name);
             navigate('/')
         } catch (error) {
             setError('This email ID is already registered.');
@@ -116,16 +130,23 @@ function Register() {
                                 placeholder="Enter your email address"
                             />
                         </div>
-                        <div className="mb-4">
+                        <div className="mb-4 relative">
                             <label htmlFor="password" className="block text-sm mb-2">Password</label>
                             <input
-                                type="password"
+                                type={passwordShow ? "text" : "password"}
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
                                 className="shadow appearance-none bg-inherit border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Enter your password"
                             />
+                            <span className='absolute right-2 text-gray-600 top-[60%]'>
+                                {passwordShow ? (
+                                    <FaEyeSlash onClick={togglePasswordVisibility} />
+                                ) : (
+                                    <FaRegEye onClick={togglePasswordVisibility} />
+                                )}
+                            </span>
                         </div>
                         <div className="flex items-center justify-between">
                             <button type="submit" className="bg-blue-500 hover:bg-blue-700 w-full text-white py-2 px-4 rounded-full focus:outline-none focus:shadow-outline">

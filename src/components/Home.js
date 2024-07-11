@@ -207,8 +207,6 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
     }
   };
 
-
-
   useEffect(() => {
     const interval = setInterval(() => {
       setBounce(true);

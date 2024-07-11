@@ -129,25 +129,28 @@ function Booktrain({ train, coach, setPaymentDetails }) {
     const handleEmailChange = (e) => {
         const value = e.target.value;
         setEmail(value);
-        if (!validateEmail(value)) {
-            toast.error('Please enter a valid email address');
-        } else {
-            setEmailError('');
-        }
+        
     };
 
     const handleMobileChange = (e) => {
         const value = e.target.value;
         setMobile(value);
-        if (!validateMobile(value)) {
-            toast.error('Please enter a valid 10-digit mobile number');
-        } else {
-            setMobileError('');
-        }
+        
     };
 
     const handleContinue = (e) => {
-
+        if (!validateEmail(email)) {
+            toast.error('Please enter a valid email address');
+            return
+        } else {
+            setEmailError('');
+        }
+        if (!validateMobile(mobile)) {
+            toast.error('Please enter a valid 10-digit mobile number');
+            return
+        } else {
+            setMobileError('');
+        }
         if (adults.length === 0) {
             toast.info("Please add at least one adult!");
             return;

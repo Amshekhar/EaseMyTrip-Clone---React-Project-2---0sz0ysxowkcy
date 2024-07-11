@@ -192,7 +192,6 @@ function Hotels({ setHotelList, setGuestDetails }) {
         <div className='hotel-bluedivperent'>
             <div className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
-                    {/* <div className="flex justify-between items-center"></div> */}
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='before-search bg-white  rounded-s-md w-full flex '>
                             <div className='hotel-perent w-2/3 flex'>
@@ -252,15 +251,6 @@ function Hotels({ setHotelList, setGuestDetails }) {
                                     <p className='text-gray-500 text-sm'>Rooms & Guests</p>
                                     <div className='text-xs'><span className='font-bold text-2xl'>{roomCount}</span>Rooms,<span className='font-bold text-2xl'>{totalGuests}</span>Guests</div>
                                 </div>
-
-
-                                {/* <div className=' py-2 hover:bg-sky-100 cursor-pointer pl-3'>
-                                    <p className='text-gray-500 text-xs'>Price per Night</p>
-                                    <div className='flex font-bold items-center'>
-                                        <span className='text-2xl'>1</span><p className='text-sm'>Traveller(s)<FaChevronDown className='inline ml-2' /></p>
-                                    </div>
-                                    <p className='text-gray-500 text-xs'>FIRST</p>
-                                </div> */}
                             </div>
 
                         </div>
