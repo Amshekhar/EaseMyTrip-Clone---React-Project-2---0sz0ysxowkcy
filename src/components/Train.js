@@ -77,7 +77,16 @@ function Train({ setTrainData }) {
     ];
 
     const handleSearch = async () => {
-        console.log(day);   
+        if(!source){
+            toast.info("Please select source!")
+            return
+        }else if(!destination){
+            toast.info("Please select destination!")
+            return
+        }else if (!day){
+            toast.info("Please select date!")
+            return
+        }   
         if(source.value == destination.value){
             toast.info("Source and destination cann't be the same!")
             return
@@ -97,7 +106,7 @@ function Train({ setTrainData }) {
     };
 
     return (
-        <div>
+        <>
             <div className="train-blue bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
                     <div className='flex mt-3 shadow-2xl '>
@@ -121,7 +130,6 @@ function Train({ setTrainData }) {
                                         value={destination}
                                         onChange={setDestination}
                                         placeholder='Choose Destination Station'
-                                        isDisabled={!source}
                                     />
                                 </div>
                                 <div className='flex w-1/3'>
@@ -135,7 +143,6 @@ function Train({ setTrainData }) {
                                             placeholderText='Select Date'
                                             dateFormat='yyyy-MM-dd'
                                             isClearable
-                                            disabled={!destination}
                                         />
                                     </div>
                                 </div>
@@ -144,7 +151,6 @@ function Train({ setTrainData }) {
                         <button
                             className='bg-orange-500 rounded-e-md px-8 text-xl text-white font-bold'
                             onClick={handleSearch}
-                            disabled={!day}
                         >
                             SEARCH
                         </button>
@@ -441,8 +447,7 @@ function Train({ setTrainData }) {
             </div>
 
 
-        </div>
+        </>
     )
 }
-
 export default Train

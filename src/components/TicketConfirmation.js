@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useSpring, animated, useTrail } from 'react-spring';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -56,6 +57,12 @@ const TicketConfirmation = () => {
     delay: 700,
   });
 
+  const navigate = useNavigate()
+  useEffect(() => {
+    setTimeout(() => {
+      navigate("/")
+    }, 3000);
+  }, [])
   return (
     <Container>
       <ConfirmationCard style={cardProps}>

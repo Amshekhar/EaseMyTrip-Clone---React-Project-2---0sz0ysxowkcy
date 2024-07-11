@@ -89,6 +89,16 @@ function Bus({ setBusList }) {
 
     const searchBuses = async () => {
         // console.log(day.toString().slice(0,3), source, destination);
+        if(!source){
+            toast.info("Please select source!")
+            return
+        }else if(!destination){
+            toast.info("Please select destination!")
+            return
+        }else if (!day){
+            toast.info("Please select date!")
+            return
+        }
         if(source == destination){
             toast.info("Source and destination cann't be the same!")
             return
@@ -162,25 +172,7 @@ function Bus({ setBusList }) {
                         </button>
                     </div>
                     {error && <p className='text-red-500 mt-4'>{error}</p>}
-                    {/* <div className='mt-6'>
-                    {buses.length > 0 ? (
-                        <div>
-                            <h2 className='text-2xl font-bold mb-4'>Available Buses</h2>
-                            <ul>
-                                {buses.map((bus, index) => (
-                                    <li key={index} className='mb-2 p-4 border rounded'>
-                                        <p><strong>Bus Name:</strong> {bus.name}</p>
-                                        <p><strong>Source:</strong> {bus.source}</p>
-                                        <p><strong>Destination:</strong> {bus.destination}</p>
-                                        <p><strong>Departure Time:</strong> {bus.departure_time}</p>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : (
-                        <p>No buses available for the selected route and day.</p>
-                    )}
-                </div> */}
+                    
                 </div>
             </div>
             <div class="max-w-6xl mx-auto p-4 space-y-8 text-sm">
