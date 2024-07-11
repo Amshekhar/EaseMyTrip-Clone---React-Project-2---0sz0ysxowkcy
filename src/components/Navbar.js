@@ -71,23 +71,23 @@ const NavBar = () => {
             <img src={logo} className='moblogo w-36' />
           </Link>
           <div className='hide flex gap-5'>
-            <div className='cursor-not-allowed'>
+            <div onClick={()=>toast.info("This feature is under process")} className='cursor-not-allowed'>
               <p className='font-semibold flex gap-1 items-center text-sm'> <FaUserTie className='' />EMTMate</p>
               <p className='text-[11px] text-gray-600'>Agent travel solution</p>
             </div>
-            <div className='cursor-not-allowed'>
+            <div onClick={()=>toast.info("This feature is under process")} className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><PiBagBold />EMTDesk</p>
               <p className='text-[11px] text-gray-600'>Corporate travel program</p>
             </div>
-            <div className='cursor-not-allowed'>
+            <div onClick={()=>toast.info("This feature is under process")} className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><IoDiamondOutline />EMTRoyale</p>
               <p className='text-[11px] text-gray-600'>For Prime Members</p>
             </div>
-            <div className='cursor-not-allowed'>
+            <div onClick={()=>toast.info("This feature is under process")} className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><img className='w-4' src={indiaMap} />Explore Bharat</p>
               <p className='text-[11px] text-gray-600'>A Tour to India</p>
             </div>
-            <div className='cursor-not-allowed'>
+            <div onClick={()=>toast.info("This feature is under process")} className='cursor-not-allowed'>
               <p className='font-semibold text-sm flex gap-1 items-center'><LiaCrownSolid />Join EMTPro</p>
               <p className='text-[11px] text-gray-600'>Enjoy More Benefits</p>
             </div>
@@ -202,7 +202,7 @@ const NavBar = () => {
             {getToken ? (
               <div className=' shadow-2xl border rounded-md'>
                 <Link
-                  to="/login"
+                  onClick={()=>toast.info("This feature is under process")}
                   className="block px-4 pt-2 hover:bg-sky-100 "
                   role="menuitem"
                 >
@@ -214,7 +214,7 @@ const NavBar = () => {
                   </div>
                 </Link>
                 <Link
-                  to="/register"
+                  onClick={()=>toast.info("This feature is under process")}
                   className="block px-4 pt-2  cursor-not-allowed  hover:bg-sky-100 "
                   role="menuitem"
                 >
@@ -227,7 +227,7 @@ const NavBar = () => {
                 </Link>
 
                 <Link
-                  to="/register"
+                  onClick={()=>toast.info("This feature is under process")}
                   className="block px-4 pt-2 cursor-not-allowed  hover:bg-sky-100 "
                   role="menuitem"
                 >
@@ -239,7 +239,7 @@ const NavBar = () => {
                   </div>
                 </Link>
                 <Link
-                  to="/register"
+                  to="/login"
                   onClick={logoutHandler}
                   className="block px-4 pt-2 hover:bg-sky-100 "
                   role="menuitem"

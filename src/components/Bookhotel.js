@@ -8,6 +8,31 @@ import { toast } from 'react-toastify';
 import css from '../styles/Bookhotel.css'
 
 function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
+    const [email, setEmail] = useState('');
+    const [mobile, setMobile] = useState('');
+    const [countryCode, setCountryCode] = useState('+91');
+    const [isEmailValid, setIsEmailValid] = useState(true);
+    const [isMobileValid, setIsMobileValid] = useState(true);
+    const [isChecked, setIsChecked] = useState(false);
+
+    // Regular expression for validating email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    // Function to validate email
+    const validateEmail = (email) => {
+        return emailRegex.test(email);
+    };
+
+    // Function to validate mobile number (you can customize the length as needed)
+    const validateMobile = (mobile) => {
+        return /^\d{10}$/.test(mobile);
+    };
+
+    useEffect(() => {
+        setIsEmailValid(validateEmail(email));
+        setIsMobileValid(validateMobile(mobile));
+    }, [email, mobile]);
+
     const navigate = useNavigate();
     const token = sessionStorage.getItem('token')
 
@@ -20,13 +45,23 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
     const totalNights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
     // console.log((totalNights));
 
-    const handleHotelBooking = ()=>{
-        if(!token){
+    const handleHotelBooking = () => {
+        if (!isEmailValid){  
+            toast.error('Please enter correct email!');
+            return
+        } else if (!isMobileValid){
+            toast.error('Please enter correct mobile number!');
+            return
+        } else if(!isChecked) {
+            toast.error('Please accept terms & conditions!');
+            return
+        } 
+        else if (!token) {
             toast.info("Please login first!")
             navigate('/login');
             return
         }
-        setPaymentDetails({fare:(hotelBookingData.roomDetails.costDetails.taxesAndFees * totalNights * guestDetails.roomCount) + (hotelBookingData.roomDetails.costPerNight * totalNights * guestDetails.roomCount - (hotelBookingData.roomDetails.costDetails.discount))})
+        setPaymentDetails({ fare: (hotelBookingData.roomDetails.costDetails.taxesAndFees * totalNights * guestDetails.roomCount) + (hotelBookingData.roomDetails.costPerNight * totalNights * guestDetails.roomCount - (hotelBookingData.roomDetails.costDetails.discount)) })
 
         navigate('/payment', { state: { hotelBookingData, guestDetails } });
     }
@@ -171,31 +206,59 @@ function Bookhotel({ hotelBookingData, guestDetails, setPaymentDetails }) {
                                     </div>
                                 })
                                 }
-                                <div className='ml-10 w-[70%] border-b pb-4'>
-                                    <p className='font-bold text-sm'>Contact Details</p>
-                                    <div className='flex justify-between'>
-                                        <div className='w-[49%]'>
-                                            <p className='text-sm mt-2 mb-1'>Email ID</p>
-                                            <input className='border w-full p-1 rounded placeholder:Enter your email address'></input>
-                                        </div>
-                                        <div className='w-[49%] '>
-                                            <p className='text-sm mt-2 mb-1'>Mobile No</p>
-                                            <div className='border rounded flex'>
-                                                <select className='w-14 py-1 border-r'>
-                                                    <option className='p-1'>+91</option>
-                                                    <option className='p-1'>+44</option>
-                                                    <option className='p-1'>+66</option>
-                                                    <option className='p-1'>+1</option>
-                                                    <option className='p-1'>+971</option>
-                                                </select>
-                                                <input className=' w-full p-1 rounded placeholder:Enter Mobile No'></input>
+                                <div>
+                                    <div className='ml-10 w-[70%] border-b pb-4'>
+                                        <p className='font-bold text-sm'>Contact Details</p>
+                                        <div className='flex justify-between'>
+                                            <div className='w-[49%]'>
+                                                <p className='text-sm mt-2 mb-1'>Email ID</p>
+                                                <input
+                                                    type='email'
+                                                    value={email}
+                                                    onChange={(e) => setEmail(e.target.value)}
+                                                    className={`border w-full p-1 rounded ${!isEmailValid ? 'border-red-500' : ''}`}
+                                                    placeholder='Enter your email address'
+                                                />
+                                                {!isEmailValid && <p className='text-red-500 text-xs'>Invalid email address</p>}
+                                            </div>
+                                            <div className='w-[49%]'>
+                                                <p className='text-sm mt-2 mb-1'>Mobile No</p>
+                                                <div className='border rounded flex'>
+                                                    <select
+                                                        value={countryCode}
+                                                        onChange={(e) => setCountryCode(e.target.value)}
+                                                        className='w-14 py-1 border-r'
+                                                    >
+                                                        <option value='+91'>+91</option>
+                                                        <option value='+44'>+44</option>
+                                                        <option value='+66'>+66</option>
+                                                        <option value='+1'>+1</option>
+                                                        <option value='+971'>+971</option>
+                                                    </select>
+                                                    <input
+                                                        type='text'
+                                                        value={mobile}
+                                                        onChange={(e) => setMobile(e.target.value)}
+                                                        className={`w-full p-1 rounded ${!isMobileValid ? 'border-red-500' : ''}`}
+                                                        placeholder='Enter Mobile No'
+                                                    />
+                                                </div>
+                                                {!isMobileValid && <p className='text-red-500 text-xs'>Invalid mobile number</p>}
                                             </div>
                                         </div>
+                                        <p className='text-xs text-400 my-1'>
+                                            Your booking details will be sent to this email address and mobile number.
+                                        </p>
                                     </div>
-                                    <p className='text-xs text-400 my-1'>Your booking details will be sent to this email address and mobile number.</p>
-                                </div>
-                                <div className=' ml-10 mt-2 flex'>
-                                    <input type='checkbox' /><p className='text-sm ml-2 text-gray-500'>I understand and agree to the rules of this fare, the <span className='text-blue-400'>Terms & Conditions</span>and <span className='text-blue-400'>Privacy Policy of EaseMyTrip.</span></p>
+                                    <div className='ml-10 mt-2 flex'>
+                                        <input type='checkbox' checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+                                        <p className='text-sm ml-2 text-gray-500'>
+                                            I understand and agree to the rules of this fare, the{' '}
+                                            <span className='text-blue-400'>Terms & Conditions</span> and{' '}
+                                            <span className='text-blue-400'>Privacy Policy of EaseMyTrip.</span>
+                                        </p>
+                                    </div>
+
                                 </div>
                                 <div onClick={handleHotelBooking} className='w-full my-6 flex justify-center'>
                                     <button className='bg-orange-500 font-bold text-white px-28 py-3 rounded-full text-sm'>Continue to Payment</button>

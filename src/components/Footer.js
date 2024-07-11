@@ -5,23 +5,24 @@ import iosstore from '../Assets/iosstore.png'
 import qrcode from '../Assets/qrcode.png'
 import companies from '../Assets/companies.png'
 import { footercss } from "../styles/Footer.css";
+import { toast } from 'react-toastify'
 
 function Footer() {
     return (
-        <div className='hide w-[99vw] bg-zinc-900 py-5 border-t-[13px] border-blue-500'>
+        <div className='hide bg-zinc-900 py-5 border-t-[13px] border-blue-500'>
             <div className='footer mx-12 flex text-white border-b border-gray-600'>
                 <div className='w-1/5 cursor-not-allowed'>
-                    <p className=' font-semibold w-60 uppercase bg-blue-500 h border-b rounded-l-md border-gray-600 p-1 pl-3'>OUR OFFERINGS</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>QUICK LINKS</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>POPULAR DESTINATION</p>
-                    <p className=' font-semibold text-nowrap w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>INTERNATIONAL DESTINATION</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>POPULAR AIRLINE</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>CONNECT WITH US</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>OFFERS</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>EMT INSIGHTS</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>MEDIA</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>Investors Relation</p>
-                    <p className=' font-semibold w-60 uppercase hover:bg-zinc-800  p-1 pl-3'>CURRENT OPENINGS</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase bg-blue-500 h border-b rounded-l-md border-gray-600 p-1 pl-3'>OUR OFFERINGS</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>QUICK LINKS</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>POPULAR DESTINATION</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold text-nowrap w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>INTERNATIONAL DESTINATION</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>POPULAR AIRLINE</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>CONNECT WITH US</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>OFFERS</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>EMT INSIGHTS</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>MEDIA</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800 border-b border-gray-500 p-1 pl-3'>Investors Relation</p>
+                    <p onClick={()=>toast.info("This feature is under process!")} className=' font-semibold w-60 uppercase hover:bg-zinc-800  p-1 pl-3'>CURRENT OPENINGS</p>
                 </div>
                 <div className='w-4/5 px-7 pb-7 text-white '>
 
@@ -29,31 +30,31 @@ function Footer() {
 
                     <div className='flex gap-10 text-sm font-semibold'>
                         <ul className='w-1/4 flex cursor-not-allowed flex-col gap-2'>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Flights</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Bus</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Flight Status</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Check PNR Status</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Corporate Travel</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Flights</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Bus</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Flight Status</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Check PNR Status</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Corporate Travel</li>
                         </ul>
                         <ul className='w-1/4 cursor-not-allowed flex flex-col gap-2'>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Hotel</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Cab</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Airline</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>EMT PRO</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Blog</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Hotel</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Cab</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Airline</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>EMT PRO</li>
+                            <li onClick={()=>toast.info("This feature is under process!")}i className='hover:text-gray-400 cursor-not-allowed'>Blog</li>
                         </ul>
                         <ul className='w-1/4 cursor-not-allowed flex flex-col gap-2'>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Trains</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Cruise</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Airports</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Activities</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Flight Check-in</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Trains</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Cruise</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Airports</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Activities</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Flight Check-in</li>
                         </ul>
                         <ul className='w-1/4 cursor-not-allowed flex flex-col gap-2'>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Holidays</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Charters</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Travel Guides</li>
-                            <li className='hover:text-gray-400 cursor-not-allowed'>Travel Updates</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Holidays</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Charters</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Travel Guides</li>
+                            <li onClick={()=>toast.info("This feature is under process!")} className='hover:text-gray-400 cursor-not-allowed'>Travel Updates</li>
                         </ul>
 
                     </div>

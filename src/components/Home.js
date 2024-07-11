@@ -178,6 +178,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       } else if (!airportTo.iata_code) {
         toast.info("Please select destination.");
         return;
+      }else if(airportFrom.iata_code == airportTo.iata_code){
+        toast.info("Source and destination cann't be the same!");
+        return
       }
 
       const formattedDate = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3);
@@ -223,8 +226,8 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
             <div className="hide flex justify-between items-center">
               <div className='text-xs'>
                 <button className="bg-white text-blue-500 font-semibold rounded-full px-4 py-1">One Way</button>
-                <button className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed ">Round Trip</button>
-                <button className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Multicity</button>
+                <button onClick={()=>toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed ">Round Trip</button>
+                <button onClick={()=>toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Multicity</button>
               </div>
               <p className='text-white font-bold text-xl'>Search Lowest Price</p>
             </div>
@@ -233,14 +236,14 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                 <div className=' w-1/2 flex'>
                   <div onClick={handleFrom} className='from py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>FROM</p>
-                    <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Singapore"}</p>
-                    <p className='hide text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "SIN"}] {airportFrom.name ? airportFrom.name : "Changi Airport"}</p>
+                    <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Choose Source"}</p>
+                    <p className='hide text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "Airport code"}] {airportFrom.name ? airportFrom.name : "Airport name"}</p>
                   </div>
-                  <div onClick={handleTo} className='to py-2 text-nowrap border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
+                  <div onClick={handleTo} className='to py-2 text-nowrap border-r w-1/2 pl-3 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>TO</p>
-                    <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "New Delhi"}</p>
+                    <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "Choose Destination"}</p>
                     <p className='hide text-gray-500 text-xs'>
-                      [{airportTo.iata_code ? airportTo.iata_code : "DEL"}] {airportTo.name ? airportTo.name : "Indira Gandhi International Airport"}</p>
+                      [{airportTo.iata_code ? airportTo.iata_code : "Airport code"}] {airportTo.name ? airportTo.name : "Airport name"}</p>
                   </div>
                 </div>
                 <div className=' flex departure w-1/2'>
@@ -308,7 +311,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                   <label className="text-white"> Doctors Nurses</label>
                 </div>
               </div>
-              <div className="text-right mt-4">
+              <div onClick={()=>toast.info("This feature is under process!")} className="text-right mt-4">
                 <button className="border  text-white py-1 bg-sky-400 px-2 text-sm rounded-sm"><img className='inline mr-2 w-6 cursor-not-allowed' src='https://www.easemytrip.com/images/flight-img/web-checkin-icon-v1.svg' />Web Check-In</button>
               </div>
             </div>

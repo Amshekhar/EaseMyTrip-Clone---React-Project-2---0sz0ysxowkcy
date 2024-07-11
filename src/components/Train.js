@@ -77,6 +77,11 @@ function Train({ setTrainData }) {
     ];
 
     const handleSearch = async () => {
+        console.log(day);   
+        if(source.value == destination.value){
+            toast.info("Source and destination cann't be the same!")
+            return
+        }
         const dayAbbreviation = day ? day.toLocaleDateString('en-US', { weekday: 'short' }) : '';
         try {
             const response = await axios.get(`https://academics.newtonschool.co/api/v1/bookingportals/train?&day=${dayAbbreviation}&search={"source":"${source.value}","destination":"${destination.value}"}`, {
@@ -125,6 +130,7 @@ function Train({ setTrainData }) {
                                         <DatePicker
                                             className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2 w-full'
                                             selected={day}
+                                            minDate={new Date()}
                                             onChange={date => setDay(date)}
                                             placeholderText='Select Date'
                                             dateFormat='yyyy-MM-dd'

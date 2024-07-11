@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
 import css from '../styles/Bus.css'
+import { toast } from 'react-toastify';
 
 function Bus({ setBusList }) {
     const [source, setSource] = useState('');
@@ -88,6 +89,10 @@ function Bus({ setBusList }) {
 
     const searchBuses = async () => {
         // console.log(day.toString().slice(0,3), source, destination);
+        if(source == destination){
+            toast.info("Source and destination cann't be the same!")
+            return
+        }
         try {
             const response = await axios.get(
                 `https://academics.newtonschool.co/api/v1/bookingportals/bus?search={"source":"${source}","destination":"${destination}"}&day=${day.toString().slice(0, 3)}`,
@@ -143,6 +148,7 @@ function Bus({ setBusList }) {
                                         <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
                                         <DatePicker
                                             selected={day}
+                                            minDate={new Date()}
                                             onChange={(date) => setDay(date)}
                                             placeholderText='Depart Date'
                                             className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2 w-full'
