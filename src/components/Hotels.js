@@ -75,6 +75,13 @@ function Hotels({ setHotelList, setGuestDetails }) {
         setRooms(newRooms);
     };
 
+    const handleHideallDropdown = ()=>{
+        setshowCityList(false)
+        setShowCalendarIn(false)
+        setShowCalendarOut(false)
+        setGuestAndRoom(false)
+    }
+
     const handleChildPlus = (index) => {
         const newRooms = rooms.map((room, i) => {
             if (i === index) {
@@ -190,7 +197,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
 
     return (
         <div className='hotel-bluedivperent'>
-            <div className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+            <div onClickCapture={handleHideallDropdown}  className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='before-search bg-white  rounded-s-md w-full flex '>
@@ -260,11 +267,11 @@ function Hotels({ setHotelList, setGuestDetails }) {
                 </div>
             </div>
 
-            <div className='flex justify-center items-center'>
+            <div onClick={handleHideallDropdown} className='flex justify-center items-center'>
                 <img className='hide rounded-lg my-8 h-24' src={doubleRefund} />
             </div>
 
-            <div className='populer-destionation vw97 flex flex-col justify-center my-6 w-9/12 mx-auto items-center'>
+            <div  onClick={handleHideallDropdown}  className='populer-destionation vw97 flex flex-col justify-center my-6 w-9/12 mx-auto items-center'>
                 <p className='font-bold text-3xl'>Book Hotels at Popular Destinations</p>
                 <div className='w-full justify-between flex flex-wrap'>
                     <div className='flex mb-2 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>

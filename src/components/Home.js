@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import chatBot from '../Assets/ChatBot.svg';
 import lakshadweep from '../Assets/lakshadweep.svg';
 import andaman from '../Assets/andaman-new.png';
@@ -55,40 +55,48 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   const [apList, setApList] = useState([]);
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
-  const [passenger, setPassenger] = useState(false);
+  const [passanger, setPassanger] = useState(false);
+
+  const handleHideallDropdown = ()=>{
+    setShowCalendar(false)
+    setShowListFrom(false)
+    setShowListTo(false)
+    setPassanger(false)
+  }
 
   const totalGuests = adults + children;
 
   const handleAdultPlus = () => {
-    setAdults(adults + 1);
+    setAdults(adults + 1)
   };
 
   const handleChildPlus = () => {
-    setChildren(children + 1);
+    setChildren(children + 1)
   };
 
   const handleAdultMinus = () => {
     if (adults > 0) {
-      setAdults(adults - 1);
+      setAdults(adults - 1)
     }
   };
 
   const handleChildMinus = () => {
     if (children > 0) {
-      setChildren(children - 1);
+      setChildren(children - 1)
     }
   };
 
   useEffect(() => {
     const today = new Date();
-    setSelectedDate(today);
+    setSelectedDate(today)
     const fetchAirports = async () => {
       try {
         const response = await fetch('https://academics.newtonschool.co/api/v1/bookingportals/airport', {
           headers: {
             projectID: '0sz0ysxowkcy'
           }
-        });
+        })
+          ;
         const data = await response.json();
         setApList(data.data.airports);
         console.log(apList);
@@ -98,12 +106,13 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
     };
 
     fetchAirports();
-  }, []);
+
+  }, [])
+
 
   const handleFrom = () => {
     setShowListFrom(true);
   };
-
   const handleTo = () => {
     setShowListTo(true);
   };
@@ -136,22 +145,22 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${src.iata_code}","destination":"${dest.iata_code}"}&day=${formattedDate}`,
       {
         headers: {
-          projectID: '0sz0ysxowkcy',
+          projectID: '{{0sz0ysxowkcy}}',
         },
       }
     );
 
     console.log('Flight search response:', response.data.data);
     setFlightData(response.data.data.flights);
-    setSource(src);
-    setDestination(dest);
+    setSource(src)
+    setDestination(dest)
     if (response.data.data.flights.length > 0) {
       navigate("/flights");
     }
-  };
+  }
 
   const handleSearch = async () => {
-    if (totalGuests === 0) {
+    if (totalGuests == 0) {
       toast.info("Please select the number of Traveller!");
     }
     setPassengerDetails(prevDetails => ({
@@ -160,7 +169,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       "origin": airportFrom,
       "departureDate": selectedDate,
       "totalGuests": totalGuests
-    }));
+    }))
 
     try {
       if (!selectedDate) {
@@ -172,9 +181,9 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       } else if (!airportTo.iata_code) {
         toast.info("Please select destination.");
         return;
-      } else if (airportFrom.iata_code === airportTo.iata_code) {
-        toast.info("Source and destination can't be the same!");
-        return;
+      }else if(airportFrom.iata_code == airportTo.iata_code){
+        toast.info("Source and destination cann't be the same!");
+        return
       }
 
       const formattedDate = selectedDate.toLocaleDateString('en-US', { weekday: 'long' }).slice(0, 3);
@@ -182,15 +191,15 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
         `https://academics.newtonschool.co/api/v1/bookingportals/flight?search={"source":"${airportFrom.iata_code}","destination":"${airportTo.iata_code}"}&day=${formattedDate}`,
         {
           headers: {
-            projectID: '0sz0ysxowkcy',
+            projectID: '{{0sz0ysxowkcy}}',
           },
         }
       );
 
       console.log('Flight search response:', response.data.data);
       setFlightData(response.data.data.flights);
-      setSource(airportFrom);
-      setDestination(airportTo);
+      setSource(airportFrom)
+      setDestination(airportTo)
       if (response.data.data.flights.length > 0) {
         navigate("/flights");
       }
@@ -208,42 +217,23 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
     return () => clearInterval(interval);
   }, []);
 
-  const ref = useRef();
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
-        setShowListFrom(false);
-        setShowListTo(false);
-        setShowCalendar(false);
-        setPassenger(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
-
-
   return (
     <div className='relative'>
       <div>
-        <div className="bluedivperent bg-gradient-to-r from-blue-500 to-sky-400 py-12" ref={ref}>
+        <div onClickCapture={handleHideallDropdown} className="bluedivperent bg-gradient-to-r from-blue-500 to-sky-400 py-12">
           <div className='bluediv w-9/12 mx-auto'>
             <div className="hide flex justify-between items-center">
               <div className='text-xs'>
                 <button className="bg-white text-blue-500 font-semibold rounded-full px-4 py-1">One Way</button>
-                <button onClick={() => toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Round Trip</button>
-                <button onClick={() => toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Multicity</button>
+                <button onClick={()=>toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed ">Round Trip</button>
+                <button onClick={()=>toast.info("This feature is under process!")} className="text-gray-200 font-semibold py-1 px-4 cursor-not-allowed">Multicity</button>
               </div>
               <p className='text-white font-bold text-xl'>Search Lowest Price</p>
             </div>
             <div className='flex mt-3 shadow-2xl '>
-              <div className='search-container bg-white rounded-s-md w-full flex '>
-                <div className='w-1/2 flex'>
-                  <div onClick={handleFrom} className='from py-2 pl-3 w-1/2 rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
+              <div className='search-container bg-white  rounded-s-md w-full flex '>
+                <div className=' w-1/2 flex'>
+                  <div onClick={handleFrom} className='from py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>FROM</p>
                     <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Choose Source"}</p>
                     <p className='hide text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "Airport code"}] {airportFrom.name ? airportFrom.name : "Airport name"}</p>
@@ -251,15 +241,16 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                   <div onClick={handleTo} className='to py-2 text-nowrap border-r w-1/2 pl-3 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>TO</p>
                     <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "Choose Destination"}</p>
-                    <p className='hide text-gray-500 text-xs'>[{airportTo.iata_code ? airportTo.iata_code : "Airport code"}] {airportTo.name ? airportTo.name : "Airport name"}</p>
+                    <p className='hide text-gray-500 text-xs'>
+                      [{airportTo.iata_code ? airportTo.iata_code : "Airport code"}] {airportTo.name ? airportTo.name : "Airport name"}</p>
                   </div>
                 </div>
-                <div className='flex departure w-1/2'>
+                <div className=' flex departure w-1/2'>
                   <div className='date py-2 border-r w-1/3 pl-6 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>DEPARTURE DATE</p>
                     <div className='flex items-baseline gap-1'>
                       <div className='date-p flex items-baseline' onClick={() => setShowCalendar(!showCalendar)}>
-                        <p className='font-bold text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>
+                        <p className='font-bold  text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>
                         <p className='noWrap ml-1 text-sm'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' }) : currentMonth}</p>
                       </div>
                       <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
@@ -285,8 +276,10 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                     </div>
                   </div>
 
-                  <div onClick={() => setPassenger(true)} className='guest w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
-                    <p className='text-gray-500 text-xs'>TRAVELLER & CLASS</p>
+
+
+                  <div onClick={() => setPassanger(true)} className='guest w-1/3 py-2 hover:bg-sky-100 cursor-pointer pl-3'>
+                    <p className=' text-gray-500 text-xs'>TRAVELLER & CLASS</p>
                     <div className='flex font-bold items-center'>
                       <span className='text-2xl'>{totalGuests}</span><p className='text-sm'>Traveller(s)<FaChevronDown className='hide tabHide inline ml-2' /></p>
                     </div>
@@ -315,15 +308,15 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
                   <label className="text-white"> Doctors Nurses</label>
                 </div>
               </div>
-              <div onClick={() => toast.info("This feature is under process!")} className="text-right mt-4">
-                <button className="border text-white py-1 bg-sky-400 px-2 text-sm rounded-sm"><img className='inline mr-2 w-6 cursor-not-allowed' src='https://www.easemytrip.com/images/flight-img/web-checkin-icon-v1.svg' />Web Check-In</button>
+              <div onClick={()=>toast.info("This feature is under process!")} className="text-right mt-4">
+                <button className="border  text-white py-1 bg-sky-400 px-2 text-sm rounded-sm"><img className='inline mr-2 w-6 cursor-not-allowed' src='https://www.easemytrip.com/images/flight-img/web-checkin-icon-v1.svg' />Web Check-In</button>
               </div>
             </div>
           </div>
         </div>
 
 
-        <div className='headingperent w-9/12 relative gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
+        <div onClick={handleHideallDropdown} className='headingperent w-9/12 relative gap-5 mx-auto flex  my-16 flex-col justify-center items-center'>
           <img className=' absolute -z-50 bg-cover opacity-5 top-0 w-10/12 h-2/12' src={worldmap} />
           <p className='heading text-4xl text-center my-5 font-bold'><img src={indidaflag} className='w-12 mr-3 inline' />Top Flight Routes<img src={indidaflag} className='w-12 inline ml-3' /></p>
 
@@ -561,7 +554,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       </div>
 
       <img
-        onClick={() => toast.info("Team is working on this feature!")}
+      onClick={()=>toast.info("Team is working on this feature!")}
         className={`eva fixed right-10 bottom-5 ${bounce ? 'animate-bounce' : ''}`}
         src={chatBot}
         alt="ChatBot"
@@ -598,9 +591,11 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
       <Airports showListFrom={showListFrom}
         setShowListFrom={setShowListFrom}
         setAirportFrom={setAirportFrom} setAirportTo={setAirportTo} showListTo={showListTo} setShowListTo={setShowListTo} />
-      <div></div>
+      <div>
 
-      {passenger && <div className='passenger absolute w-72 bg-white top-44 p-2 right-80 rounded shadow'>
+      </div>
+
+      {passanger && <div className='passanger absolute w-72 bg-white top-44 p-2 right-80 rounded shadow'>
         <div className='max-h-72'>
           <div className='mt-2 border-t pt-2'>
             <div className='flex justify-between'>
@@ -629,7 +624,8 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
         </div>
 
         <div className='flex text-sm justify-end mt-4'>
-          <button onClick={() => setPassenger(false)} className='rounded-full text-white py-1 hover:bg-orange-700 bg-orange-600 px-5'>Done</button>
+
+          <button onClick={() => setPassanger(false)} className='rounded-full text-white py-1 hover:bg-orange-700 bg-orange-600 px-5'>Done</button>
         </div>
       </div>}
     </div>
