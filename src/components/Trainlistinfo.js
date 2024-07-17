@@ -1,11 +1,12 @@
 import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import React, { useState } from 'react';
 import css from '../styles/Traininfo.css'
 
 function Trainlistinfo({ trainData, setTrain, setCoach }) {
     const navigate = useNavigate();
+    const location = useLocation();
     const [sortOption, setSortOption] = useState('priceLowToHigh');
     const [filters, setFilters] = useState({
         timeOfDay: [],
@@ -36,7 +37,7 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
     const handleTrainBooking = (baseFare, coachType, train, coach) => {
         const token = sessionStorage.getItem('token')
         if (!token) {
-            navigate('/login')
+            navigate('/login', { state: { from: location } });
             return;
         }
         setTrain(train);

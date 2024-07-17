@@ -197,7 +197,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
 
     return (
         <div className='hotel-bluedivperent'>
-            <div onClickCapture={handleHideallDropdown}  className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+            <div  className="hotel-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
                 <div className='w-9/12 mx-auto'>
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='before-search bg-white  rounded-s-md w-full flex '>

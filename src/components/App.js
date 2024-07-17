@@ -42,17 +42,9 @@ function App() {
     <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-gray-900"></div>
   </div>}>
         <Routes>
-          <Route path="/" element={<Home
-            setPassengerDetails={setPassengerDetails}
-            setSource={setSource}
-            setDestination={setDestination}
-            setFlightData={setFlightData}
+          <Route path="/" element={<Home setPassengerDetails={setPassengerDetails} setSource={setSource} setDestination={setDestination} setFlightData={setFlightData}
           />} />
-          <Route path="/flights" element={<Flights
-            setFlightDetails={setFlightDetails}
-            source={source}
-            flightData={flightData}
-            destination={destination}
+          <Route path="/flights" element={<Flights setFlightDetails={setFlightDetails} source={source} flightData={flightData} destination={destination}
           />} />
           <Route path="/bookflight" element={<Bookflight flightDetails={flightDetails} passengerDetails={passengerDetails} setPaymentDetails={setPaymentDetails} />} />
           <Route path="/login" element={<Login />} />

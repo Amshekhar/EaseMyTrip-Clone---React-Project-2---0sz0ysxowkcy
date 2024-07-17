@@ -25,6 +25,7 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
     // console.log(flightDetails);
     // console.log(passengerDetails);
     const [email, setEmail] = useState('');
+    const [isValid, setIsValid] = useState(true);
     const navigate = useNavigate()
 
     let name = "";
@@ -67,6 +68,8 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
     };
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setIsValid(emailRegex.test(e.target.value));
     };
 
 
@@ -140,11 +143,11 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                 <div class="mt-4 space-y-2">
                                     <label class="flex items-center space-x-2">
                                         <input type="radio" name="medical-refund" class="text-blue-500" />
-                                        <span class="text-xs">Yes, I want to add Medical Refund Policy (FREE) to this flight</span>
+                                        <span class="text-xs">Yes, I want to add Medical Refund Policy (FREE) to this flight (OPTIONAL)</span>
                                     </label>
                                     <label class="flex items-center space-x-2">
                                         <input type="radio" name="medical-refund" class="text-blue-500" />
-                                        <span class="text-xs">No, I don't wish to add Medical Refund Policy (FREE) to this flight</span>
+                                        <span class="text-xs">No, I don't wish to add Medical Refund Policy (FREE) to this flight  (OPTIONAL)</span>
                                     </label>
                                 </div>
                             </div>
@@ -194,12 +197,12 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                 <div class="mt-4 mx-4 space-y-2 pb-3">
                                     <label class="flex items-center space-x-2">
                                         <input type="radio" name="travel-insurance" class="text-purple-500" />
-                                        <span class="text-xs">Yes, I want to secure my trip with insurance.</span>
+                                        <span class="text-xs">Yes, I want to secure my trip with insurance. (OPTIONAL)</span>
                                     </label>
                                     <p class="text-sm bg-green-100 text-green-700 px-2 py-1 rounded-lg">More than 36% of our customer choose to secure their trip.</p>
                                     <label class="flex items-center space-x-2">
                                         <input type="radio" name="travel-insurance" class="text-purple-500" />
-                                        <span class="text-xs">No, I do not want to insure my trip</span>
+                                        <span class="text-xs">No, I do not want to insure my trip. (OPTIONAL)</span>
                                     </label>
                                 </div>
                             </div>
@@ -216,10 +219,12 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
                                         placeholder="Enter Email Address"
                                         value={email}
                                         onChange={handleEmailChange}
-                                        className="w-full p-4 pl-12 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className={`w-full p-4 pl-12 border rounded-lg shadow-sm focus:outline-none focus:ring-2 ${isValid ? 'focus:ring-blue-500' : 'focus:ring-red-500'}`}
                                     />
                                     <GoMail aria-hidden="true" alt="email icon" className="absolute left-4 top-1/2 transform text-2xl text-gray-300 -translate-y-1/2" />
+                                    {!isValid && <span className="text-red-500 mt-2 block">Please enter a valid email address.</span>}
                                 </div>
+
                                 {!email && <p className="text-red-500 text-sm mt-1">Please enter your email address *</p>}
                             </div>
 
@@ -269,4 +274,3 @@ function Bookflight({ flightDetails, passengerDetails, setPaymentDetails }) {
 }
 
 export default Bookflight
-    

@@ -9,7 +9,7 @@ import I5 from '../Assets/I5.png';
 import { IoSend } from "react-icons/io5";
 import { LuAlarmClock } from "react-icons/lu";
 import { IoMdCloseCircle } from "react-icons/io";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import css from '../styles/Flight.css'
 
@@ -26,6 +26,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
   });
   const [sortOption, setSortOption] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
   const token = sessionStorage.getItem('token')
   // console.log(token);
 
@@ -39,7 +40,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
       navigate('/bookFlight');
     }else{
       toast.info("Please Login First!")
-      navigate('/login');
+      navigate('/login', { state: { from: location } });
     } 
     
   };

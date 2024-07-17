@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../providers/userProvider';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -9,8 +9,7 @@ import img1 from './amzdeal.png';
 import img2 from './emtcash.png';
 import img3 from './freebooking.png';
 import css from '../styles/Login.css';
-import { FaRegEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaRegEye, FaEyeSlash } from "react-icons/fa";
 
 function Login() {
     const { onTokenHandler, onNameHandler } = useUser();
@@ -22,6 +21,7 @@ function Login() {
     });
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -49,8 +49,10 @@ function Login() {
             const { token, data } = response.data;
             onTokenHandler(token);
             onNameHandler(data.user.name);
-            // Redirect to Home or Dashboard page after successful login
-            navigate('/');
+            // Redirect to the page the user came from or the home page
+            const redirectPath = location.state?.from?.pathname ;
+            console.log(redirectPath);
+            navigate(redirectPath);
         } catch (error) {
             setError('Invalid credentials. Please try again.');
         }
@@ -74,7 +76,6 @@ function Login() {
         <div className="container pt-3 mt-10 flex justify-center items-center">
             <div className="mainDiv w-2/3 mb-20 items-end flex border rounded-3xl shadow-lg p-8">
                 <div className="image-slider w-1/2 mb-5 rounded-3xl bg-gradient-to-b from-blue-200 to-white">
-                    
                     <Slider className='flex justify-center items-center' {...settings}>
                         <div>
                             <img src={img1} className='mx-auto mt-5' alt="Slide 1" />
@@ -104,6 +105,7 @@ function Login() {
                                 className="form-input bg-transparent border p-1 mt-1 block w-full rounded-md border-gray-300"
                                 value={formData.email}
                                 onChange={handleChange}
+                                autoComplete='username'
                                 name="email"
                                 placeholder="Enter your email"
                             />
@@ -114,6 +116,7 @@ function Login() {
                                 type={passwordShow ? "text" : "password"}
                                 className="form-input bg-transparent border p-1 mt-1 block w-full rounded border-gray-300"
                                 value={formData.password}
+                                autoComplete='current-password'
                                 onChange={handleChange}
                                 name="password"
                                 placeholder="Enter your password"

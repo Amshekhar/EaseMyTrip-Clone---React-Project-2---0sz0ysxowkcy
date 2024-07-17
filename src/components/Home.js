@@ -220,7 +220,7 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
   return (
     <div className='relative'>
       <div>
-        <div onClickCapture={handleHideallDropdown} className="bluedivperent bg-gradient-to-r from-blue-500 to-sky-400 py-12">
+        <div  className="bluedivperent bg-gradient-to-r from-blue-500 to-sky-400 py-12">
           <div className='bluediv w-9/12 mx-auto'>
             <div className="hide flex justify-between items-center">
               <div className='text-xs'>
@@ -233,21 +233,21 @@ function Home({ setPassengerDetails, setSource, setDestination, setFlightData })
             <div className='flex mt-3 shadow-2xl '>
               <div className='search-container bg-white  rounded-s-md w-full flex '>
                 <div className=' w-1/2 flex'>
-                  <div onClick={handleFrom} className='from py-2 pl-3 w-1/2  rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
+                  <div onClick={handleFrom} className='from py-2 pl-3 w-1/2 overflow-hidden rounded-s-md border-r hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>FROM</p>
-                    <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Choose Source"}</p>
+                    <p className='from-p font-bold text-2xl'>{airportFrom.city ? airportFrom.city : "Source"}</p>
                     <p className='hide text-gray-500 text-xs'>[{airportFrom.iata_code ? airportFrom.iata_code : "Airport code"}] {airportFrom.name ? airportFrom.name : "Airport name"}</p>
                   </div>
-                  <div onClick={handleTo} className='to py-2 text-nowrap border-r w-1/2 pl-3 hover:bg-sky-100 cursor-pointer'>
+                  <div onClick={handleTo} className='to py-2 overflow-hidden text-nowrap border-r w-1/2 pl-3 hover:bg-sky-100 cursor-pointer'>
                     <p className='text-gray-500 text-xs'>TO</p>
-                    <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "Choose Destination"}</p>
+                    <p className='to-p font-bold text-2xl'>{airportTo.city ? airportTo.city : "Destination"}</p>
                     <p className='hide text-gray-500 text-xs'>
                       [{airportTo.iata_code ? airportTo.iata_code : "Airport code"}] {airportTo.name ? airportTo.name : "Airport name"}</p>
                   </div>
                 </div>
                 <div className=' flex departure w-1/2'>
                   <div className='date py-2 border-r w-1/3 pl-6 hover:bg-sky-100 cursor-pointer'>
-                    <p className='text-gray-500 text-xs'>DEPARTURE DATE</p>
+                    <p className='text-gray-500 text-nowrap text-xs'>DEPARTURE DATE</p>
                     <div className='flex items-baseline gap-1'>
                       <div className='date-p flex items-baseline' onClick={() => setShowCalendar(!showCalendar)}>
                         <p className='font-bold  text-2xl'>{selectedDate ? selectedDate.toLocaleDateString('en-US', { day: "numeric" }) : currentDate}</p>

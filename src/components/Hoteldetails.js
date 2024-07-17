@@ -9,7 +9,7 @@ import LazyLoad from 'react-lazyload';
 import { FaRegCheckCircle } from "react-icons/fa";
 import { GrFormPreviousLink } from "react-icons/gr";
 import { TiTick } from "react-icons/ti";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import css from '../styles/Hoteldetails.css'
 
@@ -23,7 +23,8 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
     const [sortCriteria, setSortCriteria] = useState('');
     const [filteredHotels, setFilteredHotels] = useState(hotelList);
     const [selectedFilters, setSelectedFilters] = useState([]);
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         let sortedHotels = [...hotelList];
@@ -93,17 +94,20 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
 
     const handleBookHotel = (hotelData, room) => {
         // console.log(room);
-        if(!token){
+        if(token){
+            setHotelBookingData(hotelData);
+            setHotelBookingData(prevDetails => ({
+                ...prevDetails,
+                roomDetails: room
+            }));
+            navigate('/bookhotel');
+        }else{
             toast.info("Please login first!")
-            navigate('/login');
+            console.log(location);
+            navigate('/login', { state: { from: location } });
             return
         }
-        setHotelBookingData(hotelData);
-        setHotelBookingData(prevDetails => ({
-            ...prevDetails,
-            roomDetails: room
-        }));
-        navigate('/bookhotel');
+        
     };
     // console.log(hotelData);
     const priceRanges = [

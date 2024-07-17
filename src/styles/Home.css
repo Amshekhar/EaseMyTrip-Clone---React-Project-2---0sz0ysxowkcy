@@ -9,18 +9,19 @@
         margin: 5px;
     }
     .from{
-        width: 150px;
+        width: 140px;
+        
     }
     .to{
-        width: 150px;
+        width: 140px;
         padding-left: 5px;
     }
     .guest{
-        width: 150px;
+        width: 140px;
     }
     .date{
         padding-left: 5px;
-        width: 200px;
+        width: 140px;
     }
     .calender{
         right: 10px;
@@ -36,7 +37,7 @@
         margin-right: 5px;
     }
     .search-container{
-     width: 500px;
+     width: 150vw !important;
     }
     .date>div{
         padding-left: 2px;
@@ -46,6 +47,7 @@
     }
     .from-p, .to-p{
         font-size: 16px;
+        text-wrap: nowrap;
     }
     .guest span{
         font-size: 16px;
