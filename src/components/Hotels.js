@@ -529,7 +529,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                 </div>
             </div>
 
-            {showCityList && (<div className='absolute border shadow-md top-64 left-48 w-96 bg-white rounded-lg p-3'>
+            {showCityList && (<div className='absolute citylist border shadow-md top-64 left-48 w-96 bg-white rounded-lg p-3'>
                 <div>
                     <p className='text-gray-500'>Popular Search In Domestic</p>
                     <div className='my-2 flex flex-wrap gap-1'>

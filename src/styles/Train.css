@@ -18,5 +18,8 @@
         position: absolute;
         right: 0px;
     }
+    .app-info{
+        overflow-y: scroll;
+    }
     
 }
