@@ -144,7 +144,7 @@ const SeatSelectionModal = ({ bus, onClose, setPaymentDetails }) => {
                     </div>
                 </div>
 
-                <div className="bg-white p-4 w-[25%] rounded shadow-md">
+                <div className="bg-white fare p-4 w-[25%] rounded shadow-md">
                     <div className="mb-4">
                         <label className="block text-xs font-bold mb-2">Selected Boarding Point</label>
                         <p className='text-xs'>{bus.source} - <span className='font-bold'>{bus.departureTime}</span></p>

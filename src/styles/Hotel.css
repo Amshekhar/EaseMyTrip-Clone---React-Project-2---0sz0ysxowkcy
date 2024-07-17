@@ -61,7 +61,15 @@
         margin: 5px 20px;
     }
     .citylist{
+        left: 0px;
+        top: 150px;
+    }
+    .checkindate{
         left: 10px;
+        top: 150px;
+    }
+    .checkoutdate{
+        left: 80px;
         top: 150px;
     }
 }

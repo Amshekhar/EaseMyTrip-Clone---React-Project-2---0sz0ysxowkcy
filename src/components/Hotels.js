@@ -210,14 +210,14 @@ function Hotels({ setHotelList, setGuestDetails }) {
                                 <div className='checkindetails flex w-1/2'>
                                     <div className='checkin py-2 border-r w-1/2 pl-6 hover:bg-sky-100 cursor-pointer'>
                                         <p className='text-gray-500 text-xs'>Check-in</p>
-                                        <div className=' flex items-baseline gap-1'>
+                                        <div className=' flex  items-baseline gap-1'>
                                             <div className='flex items-baseline' onClick={() => setShowCalendarIn(!showCalendarIn)}>
                                                 <p className='px18 font-bold text-2xl'>{selectedCheckInDate.toLocaleDateString('en-US', { day: "numeric" })}</p>
                                                 <p className=' ml-1 text-nowrap text-sm'>{selectedCheckInDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}</p>
                                             </div>
                                             <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                                             {showCalendarIn && (
-                                                <div className='absolute'>
+                                                <div className='absolute checkindate'>
                                                     <DatePicker
                                                         selected={selectedCheckInDate}
                                                         onChange={handleCheckInDateSelect}
@@ -239,7 +239,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                                             </div>
                                             <RxCalendar className='hide ml-1 text-gray-400 text-xl' />
                                             {showCalendarOut && (
-                                                <div className='absolute'>
+                                                <div className='checkoutdate absolute'>
                                                     <DatePicker
                                                         selected={selectedCheckOutDate}
                                                         onChange={handleCheckOutDateSelect}
@@ -301,7 +301,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={shimla} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Shimla</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -309,7 +309,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={manali} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Manali</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -317,7 +317,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={hyd} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Hyderabad</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -325,7 +325,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={chennai} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Chennai</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -333,7 +333,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={kolkata} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Kolkata</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -341,7 +341,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={jaipur} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Jaipur</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -349,7 +349,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={pune} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Pune</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -357,7 +357,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={gurgrm} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Gurugram</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>
@@ -365,7 +365,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                     <div className='flex mb-3 w-[365px] border-blue-400 my-5 rounded-lg p-1 pr-12 bg-sky-50 border'>
                         <img className='w-16 rounded-lg mr-3' src={ahmd} />
                         <div>
-                            <p className='font-bold text-lg'>Mumbai</p>
+                            <p className='font-bold text-lg'>Ahmedabad</p>
                             <p className=' text-sm text-gray-600'>Hotels, Budget Hotels, 3 Star Hotels,
                                 4 Star Hotels, 5 Star Hotels</p>
                         </div>

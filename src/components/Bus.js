@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import operator from '../Assets/bus-operator.png'
-import payment from '../Assets/bus-payment-option.png'
-import exclusive from '../Assets/bus-exclusive-options.png'
-import discount2 from '../Assets/bus-discount2.png'
+import operator from '../Assets/bus-operator.png';
+import payment from '../Assets/bus-payment-option.png';
+import exclusive from '../Assets/bus-exclusive-options.png';
+import discount2 from '../Assets/bus-discount2.png';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useNavigate } from 'react-router-dom';
-import css from '../styles/Bus.css'
+import Select from 'react-select';
 import { toast } from 'react-toastify';
+import css from '../styles/Bus.css';
 
 function Bus({ setBusList }) {
     const [source, setSource] = useState('');
     const [destination, setDestination] = useState('');
     const [day, setDay] = useState(null);
-    const [list, setList] = useState({ source: false, destination: false });
-    const [cityList, setCityList] = useState(BusToCity);
     const [error, setError] = useState('');
     const [buses, setBuses] = useState([]);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const BusToCity = [
         "Indore, Madhya Pradesh",
         "Vadodara, Gujarat",
@@ -59,49 +58,22 @@ function Bus({ setBusList }) {
         "Amritsar, Punjab",
     ];
 
-    const CityDropdown = ({ cities, onSelect, onClose }) => (
-        <div className='absolute rounded bg-white p-2 h-72 overflow-y-scroll border shadow-md'>
-            <h1 className='font-bold mb-2'>City List</h1>
-            <ul className='text-sm'>
-                {cities.map((city, index) => (
-                    <li className='border-b py-1' key={index} onClick={() => { onSelect(city); onClose(); }}>
-                        {city}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-
-    useEffect(() => {
-        setCityList(BusToCity);
-    }, []);
-
-    const handleCityClick = (city, type) => {
-        const cityName = city.split(',')[0];
-        if (type === 'source') {
-            setSource(cityName);
-        } else {
-            setDestination(cityName);
-        }
-        setList({ ...list, [type]: false });
-    };
-
+    const cityOptions = BusToCity.map(city => ({ value: city.split(',')[0], label: city }));
 
     const searchBuses = async () => {
-        // console.log(day.toString().slice(0,3), source, destination);
-        if(!source){
-            toast.info("Please select source!")
-            return
-        }else if(!destination){
-            toast.info("Please select destination!")
-            return
-        }else if (!day){
-            toast.info("Please select date!")
-            return
+        if (!source) {
+            toast.info("Please select source!");
+            return;
+        } else if (!destination) {
+            toast.info("Please select destination!");
+            return;
+        } else if (!day) {
+            toast.info("Please select date!");
+            return;
         }
-        if(source == destination){
-            toast.info("Source and destination cann't be the same!")
-            return
+        if (source === destination) {
+            toast.info("Source and destination can't be the same!");
+            return;
         }
         try {
             const response = await axios.get(
@@ -113,17 +85,15 @@ function Bus({ setBusList }) {
                 }
             );
 
-            // console.log(response);
             setBusList(response.data.data.buses);
-            // console.log(buses);
             setError('');
-            navigate('/buseslist')
-
+            navigate('/buseslist');
         } catch (error) {
             setError('No buses available for the selected route and day.');
             setBuses([]);
         }
-    }
+    };
+
     return (
         <div>
             <div className="bus-bluediv bg-gradient-to-r from-blue-500 to-sky-400 py-12">
@@ -131,29 +101,35 @@ function Bus({ setBusList }) {
                     <div className='flex mt-3 shadow-2xl '>
                         <div className='bg-white rounded-s-md w-full flex '>
                             <div className='w-full flex'>
-                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
+                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer'>
                                     <p className='text-gray-500 mb-1 text-sm font-bold'>From</p>
-                                    <input
-                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
+                                    <Select
+                                        menuPortalTarget={document.body}
+                                        menuPosition='fixed'
+                                        menuPortal={provided => ({ ...provided, zIndex: 9999 })}
+                                        menu={provided => ({ ...provided, zIndex: 9999 })}
+                                        options={cityOptions}
+                                        value={cityOptions.find(option => option.value === source)}
+                                        onChange={option => setSource(option.value)}
                                         placeholder='Choose Source Station'
-                                        value={source}
-                                        onClick={() => setList({ ...list, source: true })}
-                                        onChange={(e) => setSource(e.target.value)}
+                                        className='font-bold text-nowrap cursor-pointer my-2 focus:outline-none text-lg px-2'
                                     />
-                                    {list.source && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'source')} onClose={() => setList({ ...list, source: false })} />}
                                 </div>
-                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer relative'>
+                                <div className='py-2 pl-3 w-1/3 rounded-s-md border-r cursor-pointer '>
                                     <p className='text-gray-500 text-sm mb-1 font-bold'>To</p>
-                                    <input
-                                        className='font-bold cursor-pointer my-2 focus:outline-none text-lg px-2'
+                                    <Select
+                                        menuPortalTarget={document.body}
+                                        menuPosition='fixed'
+                                        menuPortal={provided => ({ ...provided, zIndex: 9999 })}
+                                        menu={provided => ({ ...provided, zIndex: 9999 })}
+                                        options={cityOptions}
+                                        value={cityOptions.find(option => option.value === destination)}
+                                        onChange={option => setDestination(option.value)}
                                         placeholder='Choose Destination Station'
-                                        value={destination}
-                                        onClick={() => setList({ ...list, destination: true })}
-                                        onChange={(e) => setDestination(e.target.value)}
+                                        className='font-bold text-nowrap cursor-pointer my-2 focus:outline-none text-lg px-2'
                                     />
-                                    {list.destination && <CityDropdown cities={cityList} onSelect={(city) => handleCityClick(city, 'destination')} onClose={() => setList({ ...list, destination: false })} />}
                                 </div>
-                                <div className='flex w-1/3'>
+                                <div className='flex w-1/3 '>
                                     <div className='py-2 pl-3 w-full rounded-s-md cursor-pointer'>
                                         <p className='text-gray-500 mb-1 text-sm font-bold'>Departure Date</p>
                                         <DatePicker
@@ -172,7 +148,6 @@ function Bus({ setBusList }) {
                         </button>
                     </div>
                     {error && <p className='text-red-500 mt-4'>{error}</p>}
-                    
                 </div>
             </div>
             <div class="max-w-6xl mx-auto p-4 space-y-8 text-sm">
