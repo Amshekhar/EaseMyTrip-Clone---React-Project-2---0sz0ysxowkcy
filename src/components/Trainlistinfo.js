@@ -1,10 +1,20 @@
 import { PiAirplaneTakeoffLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 import { useNavigate, useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import css from '../styles/Traininfo.css'
+import ReactPaginate from 'react-paginate';
+import paginationcss from '../styles/Pagination.css'
+
+
+const itemsPerPage = 6; // Number of items per page
+
 
 function Trainlistinfo({ trainData, setTrain, setCoach }) {
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+
     const navigate = useNavigate();
     const location = useLocation();
     const [sortOption, setSortOption] = useState('priceLowToHigh');
@@ -105,6 +115,17 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
 
     const sortedAndFilteredData = sortTrainData(applyFilters(trainData));
 
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(sortedAndFilteredData.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(trainData.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, trainData, sortOption]);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % trainData.length;
+        setItemOffset(newOffset);
+    };
+
     return (
         <div>
             <div className='h-20 bg-blue-400'></div>
@@ -158,7 +179,7 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                         </div>
                     </div>
                     <div className=' w-[78%]'>
-                        {sortedAndFilteredData.map((train, index) => (
+                        {currentItems.map((train, index) => (
                             <div key={index} className='train-list rounded-lg shadow-lg bg-white mb-5 border'>
                                 <div className='bg-blue-100 flex py-1 px-4 justify-between'>
                                     <div className='text-sm'>NDLS -- PUNE</div>
@@ -204,7 +225,7 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                                             <p className='text-xs text-nowrap text-gray-500'>{coachDescriptions[coach.coachType]} ({coach.coachType})</p>
                                             <p className='text-sm font-bold'>₹{Math.round(train.fare * (coachMultipliers[coach.coachType] || 1))}</p>
                                             <p className='text-sm text-green-500'>AVL {coach.numberOfSeats}</p>
-                                            <a href="#"> <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white text-nowrap bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button></a>
+                                             <button onClick={() => handleTrainBooking(train.fare, coach.coachType, train, coach)} className='text-xs text-white text-nowrap bg-orange-600 rounded-full py-[2px] px-2'>Book Now</button>
                                         </div>
                                     ))}
                                 </div>
@@ -212,6 +233,21 @@ function Trainlistinfo({ trainData, setTrain, setCoach }) {
                         ))}
                     </div>
                 </div>
+                <ReactPaginate
+                        breakLabel="..."
+                        nextLabel="Next"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel=" Previous"
+                        renderOnZeroPageCount={null}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                        previousClassName={'previous'}
+                        nextClassName={'next'}
+                        breakClassName={'break'}
+                        disabledClassName={'disabled'}
+                    />
             </div>
         </div>
     );

@@ -186,7 +186,7 @@ function Hotels({ setHotelList, setGuestDetails }) {
                 }
             );
 
-            console.log('Hotels search response:', response.data.data.hotels.slice(0, 1));
+            console.log('Hotels search response:', response.data.data.hotels);
             setHotelList(response.data.data.hotels)
             navigate('/hoteldetails')
 

@@ -22,6 +22,8 @@ function Login() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
+    console.log(location)
+  
 
     const handleChange = (e) => {
         const { name, value } = e.target;

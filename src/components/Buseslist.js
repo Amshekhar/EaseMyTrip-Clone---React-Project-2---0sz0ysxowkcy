@@ -1,26 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdGpsFixed } from "react-icons/md";
 import { FaArrowRight, FaStar } from "react-icons/fa";
 import { IoRibbonOutline } from "react-icons/io5";
 import { IoArrowForward } from "react-icons/io5";
-import luxury from "../Assets/luxury-buses-v1.png"
-import budgeted from "../Assets/budgeted-bus-v1.png"
-import rated from "../Assets/top-rated-buses-v1.png"
-import safety from "../Assets/ultra-safety-v1.png"
+import luxury from "../Assets/luxury-buses-v1.png";
+import budgeted from "../Assets/budgeted-bus-v1.png";
+import rated from "../Assets/top-rated-buses-v1.png";
+import safety from "../Assets/ultra-safety-v1.png";
 import { useNavigate, useLocation } from 'react-router-dom';
 import SeatSelectionPopup from './SeatSelectionPopup';  // Import the new component
-import css from '../styles/Buseslist.css'
+import css from '../styles/Buseslist.css';
+import ReactPaginate from 'react-paginate';
+import paginationcss from '../styles/Pagination.css'
+
+
+const itemsPerPage = 6; // Number of items per page
 
 function Buseslist({ busList, setPaymentDetails }) {
-    // console.log(busList);
-    const navigate = useNavigate()
-    const location = useLocation()
+    const navigate = useNavigate();
+    const location = useLocation();
     const [selectedBus, setSelectedBus] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
     const [sortOption, setSortOption] = useState('');
 
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+
     const openSeatSelection = (bus) => {
-        const token = sessionStorage.getItem('token')
+        const token = sessionStorage.getItem('token');
         if (!token) {
             navigate('/login', { state: { from: location } });
             return;
@@ -69,7 +77,16 @@ function Buseslist({ busList, setPaymentDetails }) {
         }
     };
 
-    const sortedBuses = sortBuses(busList);
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(sortBuses(busList).slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(busList.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, busList, sortOption]);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % busList.length;
+        setItemOffset(newOffset);
+    };
 
     return (
         <div className='bg-sky-50'>
@@ -112,7 +129,7 @@ function Buseslist({ busList, setPaymentDetails }) {
                         <img src={safety} className='w-44 h-24 ' />
                     </div>
                     <div>
-                       {busList && busList.length > 0 && <p className='font-bold text-nowrap text-xl mb-3'>{busList[0].source} <IoArrowForward className='inline'/> {busList[0].destination}</p>}
+                        {busList && busList.length > 0 && <p className='font-bold text-nowrap text-xl mb-3'>{busList[0].source} <IoArrowForward className='inline' /> {busList[0].destination}</p>}
                     </div>
                     <div className='pl-8 pb-1'>
                         <span className='text-xs font-bold text-nowrap text-gray-400 mr-28'>BUS OPERATOR</span>
@@ -121,13 +138,12 @@ function Buseslist({ busList, setPaymentDetails }) {
                         <span className='text-xs font-bold text-gray-400 mr-28'>ARRIVAL</span>
                         <span className='text-xs hide font-bold text-gray-400 mr-24'>PRICE</span>
                         <span className='text-xs hide font-bold text-gray-400'>{busList.length} RESULTS</span>
-                        
                     </div>
                     <div className='bus-list p-4 bg-white shadow-lg rounded-lg'>
-                        {busList && busList.length == 0 ? (
+                        {busList && busList.length === 0 ? (
                             <div className='font-bold p-20 text-4xl'>Oop's! Service Unavailable on this route!</div>
                         ) : (
-                            sortedBuses.map((bus, index) => {
+                            currentItems.map((bus, index) => {
                                 const arrivalTime = calculateArrivalTime(bus.departureTime, bus.arrivalTime);
                                 return (
                                     <div key={index} className="border rounded-md shadow-lg mb-5">
@@ -187,8 +203,24 @@ function Buseslist({ busList, setPaymentDetails }) {
                                 );
                             })
                         )}</div>
+                    <ReactPaginate
+                        breakLabel="..."
+                        nextLabel="Next"
+                        onPageChange={handlePageClick}
+                        pageRangeDisplayed={5}
+                        pageCount={pageCount}
+                        previousLabel=" Previous"
+                        renderOnZeroPageCount={null}
+                        containerClassName={'pagination'}
+                        activeClassName={'active'}
+                        previousClassName={'previous'}
+                        nextClassName={'next'}
+                        breakClassName={'break'}
+                        disabledClassName={'disabled'}
+                    />
                 </div>
             </div>
+
             {showPopup && <SeatSelectionPopup bus={selectedBus} onClose={closeSeatSelection} setPaymentDetails={setPaymentDetails} />}
         </div>
     );

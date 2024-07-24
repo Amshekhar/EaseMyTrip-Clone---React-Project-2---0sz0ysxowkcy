@@ -12,14 +12,21 @@ import { IoMdCloseCircle } from "react-icons/io";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import css from '../styles/Flight.css'
+import paginationcss from '../styles/Pagination.css'
+import ReactPaginate from 'react-paginate';
+const itemsPerPage = 8; // Number of items per page
+
 
 function Flights({ setFlightDetails, source, destination, flightData }) {
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
   const [activeTab, setActiveTab] = useState('Finfo');
   const [selectedFlightIndex, setSelectedFlightIndex] = useState(null);
   const [filters, setFilters] = useState({
     nonstop: false,
-    onestop:false,
-    twostop:false,
+    onestop: false,
+    twostop: false,
     morningDeparture: false,
     indigo: false,
     priceRange: [0, 10000],
@@ -38,11 +45,11 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
     if (token) {
       setFlightDetails(flight);
       navigate('/bookFlight');
-    }else{
+    } else {
       toast.info("Please Login First!")
       navigate('/login', { state: { from: location } });
-    } 
-    
+    }
+
   };
 
   let name = '';
@@ -128,6 +135,17 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
   const sortedFilteredFlights = applyFiltersAndSort(flightData);
   // console.log(flightData);
 
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(applyFiltersAndSort(flightData).slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(flightData.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, flightData, sortOption]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % flightData.length;
+    setItemOffset(newOffset);
+  };
+
 
   return (
     <div className='w-full bg-sky-100'>
@@ -149,9 +167,9 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                   Nonstop
                 </label>
               </div>
-              
+
               <div className='flex items-center'>
-              <input
+                <input
                   type='checkbox'
                   id='onestop'
                   className='form-checkbox h-4 w-4 text-blue-600'
@@ -163,7 +181,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                 </label>
               </div>
               <div className='flex mt-2 items-center'>
-              <input
+                <input
                   type='checkbox'
                   id='twostop'
                   className='form-checkbox h-4 w-4 text-blue-600'
@@ -171,7 +189,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                   onChange={() => handleFilterChange('twostop')}
                 />
                 <label htmlFor='twostop' className='ml-2'>
-                Twostop
+                  Twostop
                 </label>
               </div>
               <div className='flex mt-2 items-center'>
@@ -233,7 +251,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
 
           </div>
           <div className='flight-list flex-1'>
-            {sortedFilteredFlights && sortedFilteredFlights.length==0?(<div className='text-4xl font-bold py-28 mt-2 text-center bg-white border rounded-lg shadow-md '>Oop's! No flight found in this price range!</div>) : (sortedFilteredFlights.map((flight, index) => (
+            {sortedFilteredFlights && sortedFilteredFlights.length == 0 ? (<div className='text-4xl font-bold py-28 mt-2 text-center bg-white border rounded-lg shadow-md '>Oop's! No flight found in this price range!</div>) : (currentItems.map((flight, index) => (
               <div key={index} className='flight-div bg-white mt-2 mb-4 hover:shadow-xl cursor-pointer rounded-xl shadow-md'>
                 <div className='meal flex text-xs p-1 gap-1 font-semibold items-center bg-gradient-to-r from-yellow-200 w-1/6 to-white'>
                   <img className='w-4' src={mealicon} /><p>Enjoy Free Meals</p>
@@ -353,7 +371,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                           </tr>
                           <tr class="border-b font-semibold">
                             <td class="py-2">Total (Base Fare)</td>
-                            <td class="py-2 text-right">₹ {flight.ticketPrice*2}</td>
+                            <td class="py-2 text-right">₹ {flight.ticketPrice * 2}</td>
                           </tr>
                           <tr class="border-b">
                             <td class="py-2">Total Tax</td>
@@ -361,7 +379,7 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
                           </tr>
                           <tr>
                             <td class="py-2 font-semibold">Total (Fee & Surcharge)</td>
-                            <td class="py-2 text-right font-bold">₹ {flight.ticketPrice*2}</td>
+                            <td class="py-2 text-right font-bold">₹ {flight.ticketPrice * 2}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -571,6 +589,21 @@ function Flights({ setFlightDetails, source, destination, flightData }) {
               </div>
             )))}
           </div>
+          <ReactPaginate
+            breakLabel="..."
+            nextLabel="Next"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel=" Previous"
+            renderOnZeroPageCount={null}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+            previousClassName={'previous'}
+            nextClassName={'next'}
+            breakClassName={'break'}
+            disabledClassName={'disabled'}
+          />
         </div>
 
       </div>

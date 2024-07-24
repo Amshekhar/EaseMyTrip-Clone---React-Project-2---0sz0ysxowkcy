@@ -12,7 +12,11 @@ import { TiTick } from "react-icons/ti";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import css from '../styles/Hoteldetails.css'
+import ReactPaginate from 'react-paginate';
+import paginationcss from '../styles/Pagination.css'
 
+
+const itemsPerPage = 6; // Number of items per page
 
 function Hoteldetails({ hotelList, setHotelBookingData }) {
     // console.log(hotelList);
@@ -25,6 +29,11 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
     const [selectedFilters, setSelectedFilters] = useState([]);
     const navigate = useNavigate()
     const location = useLocation()
+
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [itemOffset, setItemOffset] = useState(0);
+
 
     useEffect(() => {
         let sortedHotels = [...hotelList];
@@ -94,20 +103,20 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
 
     const handleBookHotel = (hotelData, room) => {
         // console.log(room);
-        if(token){
+        if (token) {
             setHotelBookingData(hotelData);
             setHotelBookingData(prevDetails => ({
                 ...prevDetails,
                 roomDetails: room
             }));
             navigate('/bookhotel');
-        }else{
+        } else {
             toast.info("Please login first!")
             console.log(location);
             navigate('/login', { state: { from: location } });
             return
         }
-        
+
     };
     // console.log(hotelData);
     const priceRanges = [
@@ -115,6 +124,17 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
         [5500, 8500], [8500, 15500], [15500, 30000],
         [30000, Infinity]
     ];
+
+    useEffect(() => {
+        const endOffset = itemOffset + itemsPerPage;
+        setCurrentItems(filteredHotels.slice(itemOffset, endOffset));
+        setPageCount(Math.ceil(hotelList.length / itemsPerPage));
+    }, [itemOffset, itemsPerPage, hotelList, sortCriteria, selectedFilters]);
+
+    const handlePageClick = (event) => {
+        const newOffset = (event.selected * itemsPerPage) % hotelList.length;
+        setItemOffset(newOffset);
+    };
 
     return (
         <div className='bg-sky-100'>
@@ -125,12 +145,12 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                 <div className=''>
                     <div className='hotel-list w-11/12 mx-auto p-5 flex gap-3'>
                         <div className='hide w-3/12 h-96 border bg-white rounded-lg shadow-md'>
-                            <div className='font-bold  relative mx-4 mt-4 mb-2 p-2'>Sort by: 
+                            <div className='font-bold  relative mx-4 mt-4 mb-2 p-2'>Sort by:
                                 <select className='border-2 border-sky-400 absolute p-1 right-1 rounded-md' onChange={(e) => setSortCriteria(e.target.value)}>
-                                <option value="Low To High">Low To High</option>
-                                <option value="High To Low">High To Low</option>
-                                <option value="Top Rating Hotel">Top Rating Hotel</option>
-                            </select>   
+                                    <option value="Low To High">Low To High</option>
+                                    <option value="High To Low">High To Low</option>
+                                    <option value="Top Rating Hotel">Top Rating Hotel</option>
+                                </select>
                             </div>
                             <div className="bg-white border  p-4 rounded-lg max-w-sm mx-auto">
                                 <div className="flex justify-between items-center mb-4">
@@ -163,20 +183,20 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                             {filteredHotels.length === 0 ? (
                                 <div className='font-bold text-4xl text-center py-20 bg-white'>No Hotel found in this price range</div>
                             ) : (
-                                filteredHotels.map((hotel, index) => (
+                                currentItems.map((hotel, index) => (
                                     <div key={index} className='h-list flex border mb-4 bg-white p-2 rounded-lg shadow-md'>
                                         <div className='w-1/3'>
-                                            <LazyLoad className='relative' height={200} offset={100}>
+                                            <div className='relative' height={200} offset={100}>
                                                 <img alt={`Hotel ${index}`} className='h-36 w-80 mb-1 rounded-xl object-cover' src={hotel.images[0]} />
                                                 <div className='top-1 right-3 absolute font-semibold text-[10px] bg-blue-700 rounded-full py-1 px-3 text-white'>
                                                     DEAL OF THE DAY
                                                 </div>
-                                            </LazyLoad>
-                                            <LazyLoad className='flex gap-[1px]'>
+                                            </div>
+                                            <div className='flex gap-[1px]'>
                                                 {hotel.images.slice(1, 4).map((img, idx) => (
                                                     <img key={idx} alt={`Image ${idx}`} className='w-28 h-14 rounded-lg mr-1' src={img} />
                                                 ))}
-                                            </LazyLoad>
+                                            </div>
                                         </div>
                                         <div className='htldetails flex border-r w-5/12 justify-between flex-col'>
                                             <div>
@@ -239,7 +259,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 <img src={hotelData.images[3]} className='object-cover h-24 w-40' alt='Hotel' />
                             </div>
                         </div>)}
-                        
+
                         <div className='htlinfo flex flex-col justify-between w-1/3'>
                             <div className='flex justify-between'>
                                 <div>
@@ -257,11 +277,11 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 {hotelData && hotelData?.amenities && hotelData.amenities.length > 0 && (<p className='text-xs ml-1 w-44 flex flex-wrap gap-1  text-gray-400 font-bold'>{hotelData.amenities.map((facility, index) => {
                                     return <span key={index} className='p-1 bg-sky-50 hover:bg-sky-100'>{facility} <FaRegCheckCircle className='inline text-white bg-green-500 rounded-full ' /> </span>
                                 })}</p>)}
-                                <p onClick={()=>toast.info('For more information check below!')} className='text-sm text-blue-500 cursor-pointer w-[125px] hover:bg-blue-200 p-1 mt-2'>+ More Amenities</p>
+                                <p onClick={() => toast.info('For more information check below!')} className='text-sm text-blue-500 cursor-pointer w-[125px] hover:bg-blue-200 p-1 mt-2'>+ More Amenities</p>
                             </div>
                             <div className='flex justify-between'>
-                                <button onClick={()=>toast.info('For more information check below!')} className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-nowrap text-md '>SELECT ROOMS</button>
-                                <button onClick={()=>toast.info("Select room from below!")} className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold  text-nowrap text-md '>BOOK NOW</button>
+                                <button onClick={() => toast.info('For more information check below!')} className='border px-8 hover:bg-blue-400 hover:text-white border-blue-400 py-2 text-blue-400 rounded-full font-bold text-nowrap text-md '>SELECT ROOMS</button>
+                                <button onClick={() => toast.info("Select room from below!")} className='border px-10 hover:bg-orange-600 border-orange-500  py-2 text-white bg-orange-500 rounded-full font-bold  text-nowrap text-md '>BOOK NOW</button>
                             </div>
                         </div>
                     </div>
@@ -318,7 +338,7 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                                 </div>
                             </div>
                             <div className='booknow w-1/4 py-3 pr-8 flex flex-col items-end'>
-                               <a href='#'> <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button></a>
+                                <button onClick={() => handleBookHotel(hotelData, room)} className='border px-4 hover:bg-orange-600 border-orange-500  py-1 text-white bg-orange-500 rounded-full font-bold text-md '>BOOK NOW</button>
                                 <p className='py-1 hide px-2 mt-2 mr-3 bg-green-100 font-bold text-gray-500 w-52 text-[10px]'><TiTick className='inline text-sm' />EMTSTAY Coupon code is applied</p>
                             </div>
                         </div>
@@ -327,6 +347,21 @@ function Hoteldetails({ hotelList, setHotelBookingData }) {
                     }
                 </div>
             </div>)}
+            <ReactPaginate
+                breakLabel="..."
+                nextLabel="Next"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={5}
+                pageCount={pageCount}
+                previousLabel=" Previous"
+                renderOnZeroPageCount={null}
+                containerClassName={'pagination'}
+                activeClassName={'active'}
+                previousClassName={'previous'}
+                nextClassName={'next'}
+                breakClassName={'break'}
+                disabledClassName={'disabled'}
+            />
         </div>
     );
 }
